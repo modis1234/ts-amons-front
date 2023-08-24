@@ -1,12 +1,14 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6", //어떤버전의 js로 컴파일할지 정의
     "lib": [
-      "dom",
+      //어떤 환경에서 사용하는지 정의(api자동완성 제공해줌)
+      "dom", //브라우저
       "dom.iterable",
       "esnext"
     ],
-    "allowJs": true,
+    "baseUrl": "./src", // 추가된 것 ./src를 절대 경로로 지정
+    "allowJs": true, //ts안에서 js허용(js파일 import가능)
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -21,6 +23,18 @@
     "jsx": "react-jsx"
   },
   "include": [
+    //컴파일할 폴더 입력. src의 모든파일 확인함
     "src"
-  ]
+  ],
+  "exclude": ["node_modules"] // 컴파일에서 제외하는 대상
 }
+
+/**
+compilerOptions
+설정옵션 공식문서
+include : 컴파일할 파일 경로 설정
+exclude : 컴파일에서 제외하는 대상
+compilerOptions : 컴파일할 때 적용되는 옵션들
+target : 어떤 버전으로 컴파일할 것인지 작성
+module : 어떤 모듈 방식으로 컴파일할지 설정
+*/
