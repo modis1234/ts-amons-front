@@ -98,18 +98,18 @@ function HomeContainer() {
     dispatch(receiveMonitor(123));
   }, []);
 
-  // const setContainerRender = (type) => {
-  //   switch (type) {
-  //     case 'monitor':
-  //       return MonitorContainer;
-  //     case 'dashboard':
-  //       return DashboardContainer;
-  //     case 'network':
-  //       return NetworkContainer;
-  //     default:
-  //       return Outlet;
-  //   }
-  // };
+  const setContainerRender = (type: string | undefined) => {
+    switch (type) {
+      // case 'monitor':
+      //   return MonitorContainer;
+      // case 'dashboard':
+      //   return DashboardContainer;
+      // case 'network':
+      //   return NetworkContainer;
+      default:
+        return Outlet;
+    }
+  };
 
   const alarmSoundOff = () => {
     setAlarmSound(false);
@@ -204,7 +204,7 @@ function HomeContainer() {
             />
           )}
           <Sidebar.Pusher
-            // as={setContainerRender(type)}
+            as={setContainerRender(type)}
             digInfoAction={digInfoAction}
             userInfo={userInfo}
             accessListAction={accessListAction}

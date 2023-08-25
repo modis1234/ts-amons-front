@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { asyncState, AsyncStateType } from "lib/reducerUtils";
+import { LocalType } from "modules/locals/types";
 import { BleType } from "types/beacons";
 import { DeviceType } from "types/devices";
-import { LocalType } from "types/locals";
 import { EnvironmentType, WeatherType } from "types/monitors";
 import { SensorType } from "types/sensors";
 import {

@@ -1,7 +1,7 @@
 import { DELETE_SITE, GET_SITES, POST_SITES, PUT_SITES } from "./actions";
 import * as sitesAPI from "../../api/sites";
 import { createThunk, deleteThunk, updateThunk } from "lib/createAsyncThunk";
-import { SiteType } from "types/sites";
+import { SiteType } from "./types";
 
 export const getSites = createThunk<SiteType[]>(GET_SITES, sitesAPI.getSites);
 

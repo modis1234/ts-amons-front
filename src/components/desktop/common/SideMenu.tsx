@@ -8,7 +8,7 @@ import {
 } from "@fortawesome/pro-solid-svg-icons";
 import MenuItem from "./MenuItem";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { SiteType } from "types/sites";
+import { SiteType } from "modules/sites/types";
 
 const MenuCmpt = styled.div`
   width: 260px;

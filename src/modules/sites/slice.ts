@@ -6,7 +6,6 @@ import {
   deleteActionHandler,
   updateActionHandler,
 } from "lib/reducerUtils";
-import { SiteType } from "types/sites";
 import {
   DELETE_SITE_FULFILLED,
   DELETE_SITE_PENDING,
@@ -21,6 +20,7 @@ import {
   PUT_SITES_PENDING,
   PUT_SITES_REJECTED,
 } from "./actions";
+import { SiteType } from "./types";
 // import { SiteType } from "./types";
 
 const initialState: AsyncStateType<SiteType[], Error> = asyncState.initial();

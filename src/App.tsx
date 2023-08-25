@@ -4,6 +4,8 @@ import { Route, Routes } from "react-router-dom";
 import { createGlobalStyle, css } from "styled-components";
 import MainPage from "pages/MainPage";
 import HomePage from "pages/HomePage";
+import { faRoad } from "@fortawesome/pro-solid-svg-icons";
+import Managementcontainer from "containers/desktop/Managementcontainer";
 
 const GlobalStyle = createGlobalStyle<{
   companyIdentityColor: string | undefined;
@@ -375,6 +377,160 @@ const GlobalStyle = createGlobalStyle<{
 }
 `;
 
+const contentsList = {
+  monitor: null,
+  // sosalarm: {
+  //   title: '알람이력 : 작업자',
+  //   icon: faHardHat,
+  //   component: <SosAlarmContainer />,
+  // },
+  // gasalarm: {
+  //   title: '알람이력 : 가스센서',
+  //   icon: faSensorOn,
+  //   component: <GasAlarmContainer />,
+  // },
+  // workerlog: {
+  //   title: '출입이력 : 작업자',
+  //   icon: faHardHat,
+  //   component: <LogWorkerContainer />,
+  // },
+  // vehiclelog: {
+  //   title: '출입이력 : 차량',
+  //   icon: faTruck,
+  //   component: <LogVehicleContainer />,
+  // },
+  // diglog: {
+  //   title: '굴진이력',
+  //   icon: faPersonDigging,
+  //   component: <LogDigContainer />,
+  // },
+  // sensorlog: {
+  //   title: '수신이력 : 가스센서',
+  //   icon: faSensorOn,
+  //   component: <LogGasContainer />,
+  // },
+  // networklog: {
+  //   title: '네트워크 장애이력',
+  //   icon: faGlobe,
+  //   component: <NetworkLogContainer />,
+  // },
+  // announce: {
+  //   title: '공지사항',
+  //   icon: faBullhorn,
+  //   component: <AnnounceContainer />,
+  // },
+  // local: {
+  //   title: '노선관리',
+  //   icon: faRoad,
+  //   component: <LocalContainer />,
+  // },
+  // accdig: {
+  //   title: '누적 굴진량 입력',
+  //   icon: faPersonDigging,
+  //   component: <DigContainer />,
+  // },
+  // daysdig: {
+  //   title: '일일 굴진량 입력',
+  //   icon: faPersonDigging,
+  //   component: <DaysDigContainer />,
+  // },
+  // process: {
+  //   title: '공정상태 변경',
+  //   icon: faTasks,
+  //   component: <ProcessContainer />,
+  // },
+  // company: {
+  //   title: '소속사 관리',
+  //   icon: faIdCardAlt,
+  //   component: <CompanyContainer />,
+  // },
+  // worker: {
+  //   title: '작업자 관리',
+  //   icon: faHardHat,
+  //   component: <WorkerContainer />,
+  // },
+  // vehicle: {
+  //   title: '차량 관리',
+  //   icon: faTruck,
+  //   component: <VehicleContainer />,
+  // },
+  // beacon: {
+  //   title: '비콘 관리',
+  //   icon: faBluetooth,
+  //   component: <BeaconContainer />,
+  // },
+  // scanner: {
+  //   title: '스캐너 관리',
+  //   icon: faRouter,
+  //   component: <ScannerContainer />,
+  // },
+  // cctv: {
+  //   title: '디바이스 관리 : CCTV',
+  //   icon: faCamera,
+  //   component: <CctvContainer />,
+  // },
+  // sensor: {
+  //   title: '디바이스 관리 : 가스센서',
+  //   icon: faSensorOn,
+  //   component: <SensorContainer />,
+  // },
+  // phone: {
+  //   title: '디바이스 관리 : 비상전화',
+  //   icon: faPhoneVolume,
+  //   component: <PhoneContainer />,
+  // },
+  // wifi: {
+  //   title: '디바이스 관리 : WIFI',
+  //   icon: faWifi,
+  //   component: <WifiContainer />,
+  // },
+  // tts: {
+  //   title: '디바이스 관리 : TTS비상방송',
+  //   icon: faVolume,
+  //   component: <TtsContainer />,
+  // },
+  // wireless: {
+  //   title: '디바이스 관리 : 무선장비',
+  //   icon: faMobileSignal,
+  //   component: <WirelessContainer />,
+  // },
+  // account: {
+  //   title: '계정관리',
+  //   icon: faIdCard,
+  //   component: <AccountContainer />,
+  // },
+  // settings: {
+  //   title: '환경설정',
+  //   icon: faCog,
+  //   component: <SettingsContainer />,
+  // },
+  // kickworker: {
+  //   title: '퇴출관리 : 작업자',
+  //   icon: faDoorOpen,
+  //   component: <KickOutWorkerContainer />,
+  // },
+  // kickvehicle: {
+  //   title: '퇴출관리 : 차량',
+  //   icon: faDoorOpen,
+  //   component: <KickOutVehicleContainer />,
+  // },
+  // loginlog: {
+  //   title: '로그인 기록',
+  //   icon: faRectangleHistory,
+  //   component: <LoginLogContainer />,
+  // },
+  // site: {
+  //   title: '현장관리',
+  //   icon: faLocationDot,
+  //   component: <SiteContainer />,
+  // },
+  // group: {
+  //   title: '스캐너 그룹 관리',
+  //   icon: faLocationDot,
+  //   component: <GroupContainer />,
+  // },
+};
+
 function App() {
   return (
     <>
@@ -383,7 +539,7 @@ function App() {
         <Route path="/" element={<MainPage />} />
         {/* <Route path="/amons/signin/*" element={<LoginPage />} /> */}
         <Route path="/amons/:type" element={<HomePage />}>
-          {/* <Route path=":field/:menu/*" element={<ManagementContainer />} /> */}
+          <Route path=":field/:menu/*" element={<Managementcontainer />} />
         </Route>
 
         {/*  <Route path="/qrcode">
