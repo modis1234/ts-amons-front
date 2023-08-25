@@ -3,6 +3,7 @@ import { combineReducers } from "@reduxjs/toolkit";
 // import countReducer from "./counter/counterSlice";
 // import localReducer from "./locals";
 import siteReducer from "./sites";
+import monitorReducer from "./monitors";
 
 const rootReducer = combineReducers({
   // 3번에서 만들 slice를 여기에 넣을 예정
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   // posts: postReducer,
   // locals: localReducer,
   sites: siteReducer,
+  monitors: monitorReducer,
 });
 
 export default rootReducer;

@@ -1,5 +1,11 @@
 {
-  "extends": ["react-app", "airbnb", "prettier"],
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "react-app",
+    "airbnb",
+    "prettier",
+    "plugin:@typescript-eslint/eslint-recommended"
+  ],
   "rules": {
     "linebreak-style": 0,
     // "linebreak-style": ["error", "windows"],
@@ -60,6 +66,11 @@
     "no-restricted-globals": 0,
     "import/no-extraneous-dependencies": 0,
     "import/no-named-as-default-member": 0,
-    "import/no-named-as-default": 0
+    "import/no-named-as-default": 0,
+    "react/require-default-props": "off",
+    "import/order": "off",
+    "import/extensions": "off",
+    "no-restricted-exports": "off",
+    "no-param-reassign": "off"
   }
 }

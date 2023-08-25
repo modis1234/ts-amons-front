@@ -19,6 +19,7 @@ import Header from "components/desktop/common/Header";
 import storage from "lib/storage";
 import SideMenu from "components/desktop/common/SideMenu";
 import { getSites } from "modules/sites";
+import { receiveMonitor } from "modules/monitors";
 
 const HomeCmpt = styled.div`
   .header-container {
@@ -94,6 +95,7 @@ function HomeContainer() {
 
   useLayoutEffect(() => {
     dispatch(getSites());
+    dispatch(receiveMonitor(123));
   }, []);
 
   // const setContainerRender = (type) => {

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { SiteType } from "modules/sites";
+import { SiteType } from "types/sites";
 
 
 const API = `http://${process.env.REACT_APP_API_SERVER}`;

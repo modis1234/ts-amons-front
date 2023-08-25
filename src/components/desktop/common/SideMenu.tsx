@@ -1,4 +1,3 @@
-import { SiteType } from "modules/sites";
 import React, { useEffect, useState } from "react";
 import { Menu, Sidebar } from "semantic-ui-react";
 import styled from "styled-components";
@@ -9,6 +8,7 @@ import {
 } from "@fortawesome/pro-solid-svg-icons";
 import MenuItem from "./MenuItem";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { SiteType } from "types/sites";
 
 const MenuCmpt = styled.div`
   width: 260px;

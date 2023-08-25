@@ -17,6 +17,8 @@ export function createThunk<T, F = undefined>(
   >(action, async (data, thunkAPI) => {
     console.log("param=>", data);
     console.log("action=>", action);
+    console.log("thunkAPI=>", thunkAPI);
+    console.log("getState=>", thunkAPI.getState());
     try {
       const payload = await promiseCreator(data);
       return payload;
