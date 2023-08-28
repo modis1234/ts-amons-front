@@ -126,7 +126,7 @@ type OneByTwoLayoutType = {
   firstRender: React.ReactElement; // Input Box Component
   secondRender: React.ReactElement; // Table Box Component
   rightHeader: boolean; // search Box Component
-  searchRender: React.ReactElement; // Table Box Component
+  searchRender?: React.ReactElement; // Table Box Component
 };
 
 const OneByTwoLayout = ({

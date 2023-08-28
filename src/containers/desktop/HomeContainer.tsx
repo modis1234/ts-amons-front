@@ -6,6 +6,7 @@ import React, {
   useState,
 } from "react";
 import { styled } from "styled-components";
+import qs, { ParsedQs } from "qs";
 import {
   Outlet,
   useLocation,
@@ -74,12 +75,12 @@ function HomeContainer() {
     return { sitesData: state.sites.data };
   });
 
-  const [query, setQuery] = useState<string | null>(null);
+  const [query, setQuery] = useState<string | ParsedQs | null>(null);
   const [callSideMenu, setCallSideMenu] = useState<boolean>(true);
 
   const [activeMenu, setActiveMenu] = useState<{
     param: string;
-    query: string | null;
+    query: any;
   }>({
     param: "dashboard",
     query: null,
@@ -97,6 +98,38 @@ function HomeContainer() {
     dispatch(getSites());
     dispatch(receiveMonitor(123));
   }, []);
+
+  useLayoutEffect(() => {
+    // if (!storage?.get("user")) navigate("/amons/signin");
+    const query = qs.parse(location.search, { ignoreQueryPrefix: true });
+    console.log("qyue-->", query);
+    setQuery(query);
+
+    let _currUrl: string;
+    if (
+      type === "monitor" ||
+      type === "account" ||
+      type === "dashboard" ||
+      type === "network"
+    ) {
+      _currUrl = type;
+    } else if (menu) {
+      _currUrl = menu;
+    } else if (field) {
+      _currUrl = field;
+    } else {
+      _currUrl = "";
+    }
+    if (type === "monitor" || type === "dashboard" || type === "network") {
+      setCallSideMenu(false);
+    } else {
+      setCallSideMenu(true);
+    }
+    setActiveMenu({
+      param: _currUrl,
+      query: type === "dashboard" ? query?.area : null,
+    });
+  }, [type, field, menu, location.search]);
 
   const setContainerRender = (type: string | undefined) => {
     switch (type) {
@@ -163,7 +196,7 @@ function HomeContainer() {
     <HomeCmpt className="home-container">
       <div className="header-container">
         <Header
-          query={query}
+          // query={query}
           type={type}
           //   gasAlarmPanel={gasAlarmPanel}
           //   alarmPanel={alarmPanel}

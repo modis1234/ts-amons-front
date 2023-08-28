@@ -40,7 +40,7 @@ export const receiveMonitor = createAsyncThunk(
     socket.emit("getData", process.env.REACT_APP_TS_INDEX ?? null);
     socket.on("getData", (data: MonitorType) => {
       const { beacon, sensor, scanner, locals, devices, portscan } = data;
-      console.log("data->", data);
+      // console.log("data->", data);
       dispatch({ type: SET_SOS_SITUACTION, payload: beacon });
 
       // dispatch({ type: SET_GAS_ALARM_SITUACTION, payload: sensor });

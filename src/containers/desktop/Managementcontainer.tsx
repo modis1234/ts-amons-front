@@ -1,7 +1,8 @@
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { faRoad } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import LocalContainer from "containers/field/LocalContainer";
+import React, { useState, useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
 import { styled } from "styled-components";
 
@@ -51,26 +52,36 @@ const ManagementCmpt = styled.div`
   }
 `;
 
+type ContentsType = {
+  title: string;
+  icon?: IconProp | undefined;
+  component: React.ReactElement;
+};
+type ContentsListType = {
+  [keys: string]: ContentsType;
+};
+
 type ActiveMenuType = {
   param: string;
   query: string | null;
 };
 
-const contentsList = {
+const contentsList: ContentsListType = {
   local: {
     title: "노선관리",
     icon: faRoad,
-    // component: <LocalContainer />,
+    component: <LocalContainer />,
   },
 };
 
 function Managementcontainer() {
-  const [targetMenu, setTargetMenu] = useState<{
-    title: string;
-    icon: IconProp;
-    component: string;
-  } | null>(null);
-  const context = useOutletContext<ActiveMenuType>();
+  const [targetMenu, setTargetMenu] = useState<ContentsType | null>(null);
+  const { activeMenu } = useOutletContext<{ activeMenu: ActiveMenuType }>();
+
+  useEffect(() => {
+    const _targetMenu = contentsList?.[activeMenu.param];
+    if (_targetMenu) setTargetMenu(_targetMenu);
+  }, [activeMenu]);
 
   return (
     <ManagementCmpt className="magement-component">
@@ -80,7 +91,9 @@ function Managementcontainer() {
           <div className="menu-header">
             <div className="menu-title">
               <span className="title-icon">
-                {targetMenu && <FontAwesomeIcon icon={targetMenu?.icon} />}
+                {targetMenu && targetMenu.icon && (
+                  <FontAwesomeIcon icon={targetMenu.icon} />
+                )}
               </span>
               <span className="title-text">
                 {targetMenu && targetMenu?.title}

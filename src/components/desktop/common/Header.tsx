@@ -206,7 +206,7 @@ type HeaderProps = {
   screenState: string;
   onLogout: () => void;
   activeMenu: {
-    param: string;
+    param: string | undefined;
     query: string | null;
   };
   callSideMenuHandler: () => void;
@@ -268,7 +268,9 @@ function Header({
             : `1공구 건설공사`} */}
               {activeMenu.query
                 ? tunnelTitle[activeMenu.query]
-                : tunnelTitle[activeMenu.param]}
+                : activeMenu.param
+                ? tunnelTitle[activeMenu.param]
+                : null}
             </div>
           </div>
         </div>

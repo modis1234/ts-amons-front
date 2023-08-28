@@ -20,7 +20,7 @@ type FormAreaType = {
   children: React.ReactNode;
   submitButton: React.ReactElement;
   id: string;
-  className: string;
+  className?: string;
 };
 
 const FormArea = ({ children, submitButton, id, className }: FormAreaType) => {

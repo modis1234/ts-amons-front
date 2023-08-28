@@ -1,15 +1,15 @@
-import { faTrash } from '@fortawesome/pro-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from "@fortawesome/pro-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, {
   useCallback,
   useEffect,
   useLayoutEffect,
   useState,
-} from 'react';
-import { Icon, Pagination, Table } from 'semantic-ui-react';
-import styled from 'styled-components';
-import moment from 'moment';
-import _, { random } from 'lodash';
+} from "react";
+import { Icon, Pagination, Table } from "semantic-ui-react";
+import styled from "styled-components";
+import moment from "moment";
+import _, { random } from "lodash";
 
 const TableCmpt = styled.div`
   width: 100%;
@@ -91,7 +91,75 @@ const TableCmpt = styled.div`
   }
 `;
 
-const TableElement = ({
+type GroupType = {
+  id?: string;
+  name?: string;
+  field: string;
+  textAlign?: "center" | "left" | "right";
+  sorting?: string | boolean;
+  width?: number;
+  rowSpan?: number | string;
+  colSpan?: number | string;
+  key: string;
+  callback?: (param?: string | number) => string;
+};
+
+type HeaderType = {
+  key?: string | number | undefined;
+  id?: string;
+  name?: string;
+  field: string;
+  textAlign?: "center" | "left" | "right";
+  width?: number;
+  sorting?: string | boolean;
+  callback?: (param?: string | number) => string;
+};
+
+type TableOptionType = {
+  deleteAction: boolean; // delete Icon 표출 및 delete 액션 실행 field 생성
+  pageNation?: boolean; // pagination 기능 여부
+  rowSelect?: boolean; // row 선택 액션 여부
+  newSorting?: boolean; // 새등록 된 아이템 재정렬 막기
+  kickoutAction?: boolean; // kickout Button 표출 및 kickout 액션 실행 field 생성
+};
+
+type TableElementType = {
+  tableData: {
+    group?: Array<GroupType>;
+    header: Array<HeaderType>;
+    body: Array<any> | [];
+  };
+  tableOption?: TableOptionType;
+  onRowClick?: (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    item?: any
+  ) => void;
+  activeDelete: {
+    keys: string;
+    callback: (
+      e: React.MouseEvent<SVGSVGElement, MouseEvent>,
+      item?: any
+    ) => void;
+  };
+  activeKickout: {
+    keys: string;
+    callback: (
+      e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+      item?: any
+    ) => void;
+  };
+  activeRow?: {
+    keys: string;
+    index: string | number;
+  };
+  pageInfo: {
+    activePage: number; // 현재 페이지
+    itemsPerPage: number; // 페이지 당 item 수
+  };
+  onPageChange?: () => void;
+};
+
+function TableElement({
   tableData,
   tableOption = {
     deleteAction: false, // delete Icon 표출 및 delete 액션 실행 field 생성
@@ -100,16 +168,18 @@ const TableElement = ({
     newSorting: true, // 새등록 된 아이템 재정렬 막기
     kickoutAction: false, // kickout Button 표출 및 kickout 액션 실행 field 생성
   },
-  onRowClick,
+  onRowClick = (e) => {},
   activeDelete,
   activeKickout,
   activeRow,
   pageInfo,
   onPageChange,
-}) => {
-  const [fields, setFields] = useState(null);
+}: TableElementType) {
+  const [fields, setFields] = useState<HeaderType[] | null>(null);
 
   // const [items, setItems] = useState([...tableData.body]);
+
+  // const onRowClick = (e: React.MouseEvent, item?: any) => {};
 
   const items = tableData?.body ?? [];
 
@@ -118,15 +188,15 @@ const TableElement = ({
       ? tableData.group.filter((item) => item?.field && item)
       : [];
     setFieldsHandler(
-      tableOption?.deleteAction
+      tableOption.deleteAction
         ? [
             ...groupArr,
             ...tableData.header,
             {
-              id: 'delete',
-              name: 'delete',
-              field: 'delete',
-              textAlign: 'center',
+              id: "delete",
+              name: "delete",
+              field: "delete",
+              textAlign: "center",
               width: 1,
             },
           ]
@@ -135,19 +205,23 @@ const TableElement = ({
             ...groupArr,
             ...tableData.header,
             {
-              id: 'kickout',
-              name: '강제퇴출',
-              field: 'kickout',
-              textAlign: 'center',
+              id: "kickout",
+              name: "강제퇴출",
+              field: "kickout",
+              textAlign: "center",
               width: 1,
             },
           ]
-        : [...groupArr, ...tableData.header],
+        : [...groupArr, ...tableData.header]
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const [currentData, setCurrentData] = useState({
+  const [currentData, setCurrentData] = useState<{
+    column: string | null;
+    data: Array<any>;
+    direction: "ascending" | "descending" | null;
+  }>({
     column: null,
     data: [],
     direction: null,
@@ -156,21 +230,22 @@ const TableElement = ({
   // 새로 등록했는지 판단하기 위해 현재 페이지 진입점의 기준이 되는 시간
   const [enteredTime, setEnteredTime] = useState(moment(new Date().getTime()));
 
-  const { activePage, itemsPerPage } = pageInfo;
-
-  const totalPages = Math.ceil(currentData.data.length / itemsPerPage, 1);
-  const viewItems = currentData.data.slice(
-    (activePage - 1) * itemsPerPage,
-    (activePage - 1) * itemsPerPage + itemsPerPage,
-  );
-
   useEffect(() => {
-    items && sortingCurrentData(items);
-    const _sortedEl = document.getElementsByClassName('sorted')[0];
-    if (_sortedEl) _sortedEl.classList.remove('sorted');
+    items && sortingCurrentData();
+    const _sortedEl = document.getElementsByClassName("sorted")[0];
+    if (_sortedEl) _sortedEl.classList.remove("sorted");
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tableData]);
+
+  const { activePage, itemsPerPage } = pageInfo;
+  if (!activePage) return;
+
+  const totalPages = Math.ceil(currentData.data.length / itemsPerPage);
+  const viewItems = currentData.data.slice(
+    (activePage - 1) * itemsPerPage,
+    (activePage - 1) * itemsPerPage + itemsPerPage
+  );
 
   const sortingCurrentData = () => {
     if (!tableOption?.newSorting) {
@@ -179,7 +254,7 @@ const TableElement = ({
         data: items,
       });
     } else {
-      if (items === [] || items === null || items === undefined) {
+      if (!tableData?.body && tableData.body.length === 0) {
         // return setCurrentData([]);
         return setCurrentData({
           ...currentData,
@@ -190,19 +265,19 @@ const TableElement = ({
         return a.te_name < b.te_name ? -1 : 1;
       });
 
-      const newItems = [];
-      const oldItems = [];
+      const newItems: Array<any> = [];
+      const oldItems: Array<any> = [];
 
       tempArr.forEach((item, index) => {
         if (
           item.modified_date &&
-          moment(enteredTime).format('YYYY-MM-DD HH:mm:ss') <
-            moment(item.modified_date).format('YYYY-MM-DD HH:mm:ss')
+          moment(enteredTime).format("YYYY-MM-DD HH:mm:ss") <
+            moment(item.modified_date).format("YYYY-MM-DD HH:mm:ss")
         ) {
           newItems.push(item);
         } else if (
-          moment(enteredTime).format('YYYY-MM-DD HH:mm:ss') <
-          moment(item.created_date).format('YYYY-MM-DD HH:mm:ss')
+          moment(enteredTime).format("YYYY-MM-DD HH:mm:ss") <
+          moment(item.created_date).format("YYYY-MM-DD HH:mm:ss")
         ) {
           newItems.push(item);
         } else {
@@ -219,33 +294,36 @@ const TableElement = ({
     }
   };
 
-  const setFieldsHandler = (items = []) => {
-    const reduceItems = items.reduce((acc, curr) => {
-      const { id, name, ...rest } = curr;
-      acc.push(rest);
-      return acc;
-    }, []);
+  const setFieldsHandler = (items: HeaderType[]): void => {
+    const reduceItems: Array<HeaderType> | null = items.reduce(
+      (acc: Array<any>, curr: HeaderType) => {
+        const { id, name, ...rest } = curr;
+        acc.push(rest);
+        return acc;
+      },
+      []
+    );
     setFields(reduceItems);
   };
 
-  const headerRender = (items = []) => {
+  const headerRender = (items: HeaderType[] = []) => {
     return items.map((item, index) => {
-      const { sorting = false, callback = undefined, ...rest } = item;
+      const { sorting = false, callback = undefined, width, ...rest } = item;
       return (
         <Table.HeaderCell
           key={index}
-          className={`table-header-cell ${item?.id ?? ''} ${
+          className={`table-header-cell ${item?.id ?? ""} ${
             item?.sorting &&
             item.sorting.toString() &&
             currentData.column === item?.field
-              ? `${currentData?.direction ?? ''} sorted`
-              : ''
+              ? `${currentData?.direction ?? ""} sorted`
+              : ""
           }`}
           {...rest}
           onClick={item?.sorting && (() => onChangeSort(item?.field))}
         >
           {item?.name ? (
-            item?.field !== 'delete' ? (
+            item?.field !== "delete" ? (
               item.name
             ) : (
               <FontAwesomeIcon icon={faTrash} />
@@ -256,7 +334,7 @@ const TableElement = ({
     });
   };
 
-  const bodyRender = (items = []) => {
+  const bodyRender = (items: Array<any> = []) => {
     const tempItems = [
       ...items,
       ...Array(pageInfo.itemsPerPage - items.length),
@@ -269,13 +347,14 @@ const TableElement = ({
       return (
         <Table.Row
           className={`body-row ${
-            tableOption?.rowSelect && item ? 'albled-row' : ''
+            tableOption?.rowSelect && item ? "albled-row" : ""
           }`}
           key={`tableRowKey${Math.random() * 100000}`}
           id={`scroll${index}`}
           onClick={
             tableOption?.rowSelect && item
-              ? (e) => onRowClick(e, item)
+              ? (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
+                  onRowClick(e, item)
               : undefined
           }
           // active={index && index === clickedIndex}
@@ -287,15 +366,15 @@ const TableElement = ({
               : false
           }
         >
-          {fields.map((fieldsItem) => {
+          {fields?.map((fieldsItem) => {
             const { field } = fieldsItem;
             return (
               <Table.Cell
                 key={Math.random()}
-                className={`table-body-cell ${field ?? ''} ${
-                  item?.[`u_${field}`] ? 'update_cell' : ''
+                className={`table-body-cell ${field ?? ""} ${
+                  item?.[`u_${field}`] ? "update_cell" : ""
                 }`}
-                textAlign={fieldsItem?.textAlign ?? 'left'}
+                textAlign={fieldsItem?.textAlign ?? "left"}
                 verticalAlign="middle"
               >
                 {item?.[field] ||
@@ -306,72 +385,70 @@ const TableElement = ({
                   ) : (
                     item[field]
                   )
-                ) : field === 'no' && item ? (
-                  item?.[fieldsItem.key] !== undefined ||
+                ) : field === "no" && item ? (
+                  (fieldsItem.key ? item?.[fieldsItem.key] : null) ||
                   item?.modified_date !== undefined ||
                   item?.record_time ? (
                     tableNo
                   ) : (
-                    '새등록'
+                    "새등록"
                   )
-                ) : field === 'delete' &&
+                ) : field === "delete" &&
                   item &&
-                  item?.[activeRow.keys] === activeRow.index ? (
+                  item?.[activeRow?.keys ?? 1] ===
+                    (activeRow?.index ?? null) ? (
                   <FontAwesomeIcon
                     icon={faTrash}
                     className="delete-icon"
                     onClick={
-                      field === 'delete'
+                      field === "delete"
                         ? (e) => {
                             // 상위 테이블 로우에 걸어줬던 버튼 떄문에 이벤트 버블링 생긴다.
                             // 버블링 막고 독립적인 버튼으로 만들어 주기.
                             e.stopPropagation();
-                            const delKeys = activeDelete?.keys;
-                            activeDelete?.callback(e, item?.[delKeys]);
+                            const delKeys = activeDelete.keys;
+                            activeDelete.callback(e, item[delKeys]);
                           }
                         : undefined
                     }
                   />
-                ) : field === 'kickout' && item ? (
+                ) : field === "kickout" && item ? (
                   <div
-                    icon={faTrash}
                     className="kickout-button"
                     onClick={
-                      field === 'kickout'
+                      field === "kickout"
                         ? (e) => {
                             e.stopPropagation();
-                            const kickKeys = activeKickout?.keys;
-                            activeKickout?.callback(e, item?.[kickKeys]);
+                            const kickKeys = activeKickout.keys;
+                            activeKickout?.callback(e, item[kickKeys]);
                           }
                         : undefined
                     }
                   >
                     강제퇴출
                   </div>
-                ) : (
-                  ''
-                )}
+                ) : null}
               </Table.Cell>
             );
-          })}
+          }) ?? null}
         </Table.Row>
       );
     });
   };
 
-  const onChangeSort = (col) => {
+  const onChangeSort = (col: string) => {
     const { column, data, direction } = currentData;
     if (column === col) {
       setCurrentData({
         ...currentData,
         data: data.slice().reverse(),
-        direction: direction === 'ascending' ? 'descending' : 'ascending',
+        direction: direction === "ascending" ? "descending" : "ascending",
       });
     } else {
       setCurrentData({
         column: col,
         data: _.sortBy(data, [col]),
-        direction: 'ascending',
+        direction: "ascending",
       });
     }
   };
@@ -398,10 +475,10 @@ const TableElement = ({
                 ? [
                     ...tableData.header,
                     {
-                      id: 'delete',
-                      name: 'delete',
-                      field: 'delete',
-                      textAlign: 'center',
+                      id: "delete",
+                      name: "delete",
+                      field: "delete",
+                      textAlign: "center",
                       width: 1,
                     },
                   ]
@@ -409,14 +486,14 @@ const TableElement = ({
                 ? [
                     ...tableData.header,
                     {
-                      id: 'kickout',
-                      name: '강제퇴출',
-                      field: 'kickout',
-                      textAlign: 'center',
+                      id: "kickout",
+                      name: "강제퇴출",
+                      field: "kickout",
+                      textAlign: "center",
                       width: 1,
                     },
                   ]
-                : tableData.header,
+                : tableData.header
             )}
           </Table.Row>
         </Table.Header>
@@ -429,7 +506,7 @@ const TableElement = ({
           <Table.Footer className="table-footer">
             <Table.Row className="table-pagination-row">
               <Table.HeaderCell
-                colSpan={fields ? fields.length : '5'}
+                colSpan={fields ? fields.length : "5"}
                 className="table-pagination-row"
               >
                 {totalPages > 1 && (
@@ -441,14 +518,14 @@ const TableElement = ({
                     firstItem={
                       // 페이지 수가 5개 이상일 때 >> << 맨 앞 맨 뒤 페이지 호출
                       totalPages <= 5 || {
-                        'aria-label': 'First item',
+                        "aria-label": "First item",
                         content: <Icon name="angle double left" />,
                         icon: true,
                       }
                     }
                     lastItem={
                       totalPages <= 5 || {
-                        'aria-label': 'Last item',
+                        "aria-label": "Last item",
                         content: <Icon name="angle double right" />,
                         icon: true,
                       }
@@ -472,6 +549,6 @@ const TableElement = ({
       </Table>
     </TableCmpt>
   );
-};
+}
 
-export default React.memo(TableElement);
+export default TableElement;

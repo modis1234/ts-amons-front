@@ -40,8 +40,8 @@ const MenuCmpt = styled.div`
 type SideProps = {
   callSideMenu: boolean;
   activeMenu: {
-    param: string | null;
-    query: string | null;
+    param: string | undefined;
+    query: any;
   };
   userInfo: {
     login_date: Date | string;
@@ -60,7 +60,7 @@ type SideProps = {
 function SideMenu({
   callSideMenu,
   activeMenu = {
-    param: null,
+    param: undefined,
     query: null,
   },
   userInfo,

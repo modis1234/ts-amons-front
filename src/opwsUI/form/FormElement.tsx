@@ -35,20 +35,33 @@ registerLocale("ko", ko);
 
 type FormElementType = {
   kind: string;
-  label: string;
-  name: string;
-  value: any;
-  id: string;
-  required: boolean;
+  label?: string;
+  type?: string;
+  name?: string;
+  value?: any;
+  id?: string;
+  required?: boolean;
   // disabled = false,
   className?: string;
-  error?: {
-    content: string;
-  };
+  error?:
+    | {
+        [keys: string]: string;
+        content: string | null;
+      }
+    | string
+    | null;
   startYears?: number;
   endYears?: number;
-  unit?: string | null;
+  unit?: { basic: boolean; content: string };
   options?: Array<any>;
+  disabled?: boolean;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  content?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>, option: Object) => void;
+  onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
+  placeholder?: string;
+  labelPosition?: "right" | "left";
+  maxLength?: number | string;
   // rest?: {
   //   className: string;
   // };
@@ -171,11 +184,11 @@ const FormElement = ({
         <FormSelectCmpt
           className={`select-component select-${name}-component`}
           // control="select"
-          // options={rest?.options}
+          options={rest?.options}
           name={name}
           value={value}
           label={label}
-          // {...rest}
+          {...rest}
           required={required}
         />
       )}

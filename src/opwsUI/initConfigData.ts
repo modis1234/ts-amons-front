@@ -1,13 +1,13 @@
-import moment from 'moment';
-import { format, getYear, getMonth, getDate } from 'date-fns';
-import storage from '../lib/storage';
+import moment from "moment";
+import { format, getYear, getMonth, getDate } from "date-fns";
+import storage from "../lib/storage";
 
-const TS_INDEX = process.env.REACT_APP_TS_INDEX;
+const TS_INDEX = process.env.REACT_APP_TS_INDEX ?? null;
 const today = moment();
 export default {
   sosAlarm: {
     formData: {
-      emg_writer: storage.get('user')?.acc_name ?? undefined,
+      emg_writer: storage.get("user")?.acc_name ?? undefined,
       emg_result: undefined,
     },
     error: {
@@ -16,8 +16,8 @@ export default {
     },
     searchData: {
       local_index: undefined,
-      from_date: moment().format('YYYY-MM-DD 00:00:00'),
-      to_date: moment().format('YYYY-MM-DD 23:59:59'),
+      from_date: moment().format("YYYY-MM-DD 00:00:00"),
+      to_date: moment().format("YYYY-MM-DD 23:59:59"),
     },
   },
   gasAlarm: {
@@ -28,10 +28,10 @@ export default {
     searchData: {
       local_index: undefined,
       // from_date: moment().format('YYYY-MM-DD 00:00:00'),
-      from_date: moment(moment().subtract(1, 'months')).format(
-        'YYYY-MM-DD 00:00:00',
+      from_date: moment(moment().subtract(1, "months")).format(
+        "YYYY-MM-DD 00:00:00"
       ),
-      to_date: moment().format('YYYY-MM-DD 23:59:59'),
+      to_date: moment().format("YYYY-MM-DD 23:59:59"),
       ts_index: TS_INDEX,
     },
   },
@@ -42,10 +42,10 @@ export default {
     },
     searchData: {
       local_index: undefined,
-      from_date: moment(moment().subtract(1, 'months')).format(
-        'YYYY-MM-DD 00:00:00',
+      from_date: moment(moment().subtract(1, "months")).format(
+        "YYYY-MM-DD 00:00:00"
       ),
-      to_date: moment().format('YYYY-MM-DD 23:59:59'),
+      to_date: moment().format("YYYY-MM-DD 23:59:59"),
     },
   },
   logWorker: {
@@ -56,8 +56,8 @@ export default {
     searchData: {
       local_index: undefined,
       co_id: undefined,
-      from_date: moment().format('YYYY-MM-DD 00:00:00'),
-      to_date: moment().format('YYYY-MM-DD 23:59:59'),
+      from_date: moment().format("YYYY-MM-DD 00:00:00"),
+      to_date: moment().format("YYYY-MM-DD 23:59:59"),
       name: undefined,
     },
   },
@@ -69,8 +69,8 @@ export default {
     searchData: {
       local_index: undefined,
       co_id: undefined,
-      from_date: moment().format('YYYY-MM-DD 00:00:00'),
-      to_date: moment().format('YYYY-MM-DD 23:59:59'),
+      from_date: moment().format("YYYY-MM-DD 00:00:00"),
+      to_date: moment().format("YYYY-MM-DD 23:59:59"),
       name: undefined,
     },
   },
@@ -81,8 +81,8 @@ export default {
     },
     searchData: {
       local_index: undefined,
-      from_date: moment().format('YYYY-MM-DD 00:00:00'),
-      to_date: moment().format('YYYY-MM-DD 23:59:59'),
+      from_date: moment().format("YYYY-MM-DD 00:00:00"),
+      to_date: moment().format("YYYY-MM-DD 23:59:59"),
       ts_index: TS_INDEX,
     },
   },
@@ -94,10 +94,10 @@ export default {
     searchData: {
       local_index: undefined,
       device_code: undefined,
-      from_date: moment(moment().subtract(1, 'months')).format(
-        'YYYY-MM-DD 00:00:00',
+      from_date: moment(moment().subtract(1, "months")).format(
+        "YYYY-MM-DD 00:00:00"
       ),
-      to_date: moment().format('YYYY-MM-DD 23:59:59'),
+      to_date: moment().format("YYYY-MM-DD 23:59:59"),
       name: undefined,
     },
   },
@@ -105,7 +105,7 @@ export default {
     formData: {
       ann_title: undefined,
       ann_contents: undefined,
-      ann_writer: storage.get('user')?.acc_name ?? undefined,
+      ann_writer: storage.get("user")?.acc_name ?? undefined,
       ann_preview: 1,
       ts_index: TS_INDEX,
     },
@@ -114,30 +114,31 @@ export default {
   },
   local: {
     formData: {
-      local_id: undefined,
-      local_index: undefined,
-      created_date: undefined,
-      modified_date: undefined,
-      local_name: undefined,
-      local_entrance: undefined,
-      local_plan_length: 0,
-      local_process: 0,
-      local_description: undefined,
-      local_used: 1,
-      local_number: undefined,
-      monitor_number: undefined,
-      local_type: 0,
-      local_area: undefined,
+      created_date: null,
+      modified_date: null,
+      local_id: null,
+      local_index: null,
+      local_entrance: null,
       ts_index: TS_INDEX,
+      local_name: null,
+      local_number: 0,
+      monitor_number: 0,
+      local_type: 0,
+      local_area: 0,
+      local_plan_length: 0,
+      local_curr_length: 0,
+      local_process: 0,
+      local_description: null,
+      local_used: 0,
     },
     error: {
-      local_name: undefined,
-      local_index: undefined,
-      local_plan_length: undefined,
-      local_area: undefined,
-      local_type: undefined,
-      local_number: undefined,
-      monitor_number: undefined,
+      local_name: null,
+      local_index: null,
+      local_plan_length: null,
+      local_area: null,
+      local_type: null,
+      local_number: null,
+      monitor_number: null,
     },
   },
   notice: {
@@ -174,7 +175,7 @@ export default {
       local_process: undefined,
       local_type: undefined,
       local_used: undefined,
-      dig_type: 'acc',
+      dig_type: "acc",
       dig_sub_length: undefined,
       ts_index: TS_INDEX,
     },
@@ -212,7 +213,7 @@ export default {
       wk_phone: undefined,
       wk_position: undefined,
       wk_nation: undefined,
-      wk_birth: '1990-01-01',
+      wk_birth: "1990-01-01",
       wk_blood_type: 0,
       wk_blood_group: 0,
       wk_sms_yn: 0,
@@ -619,8 +620,8 @@ export default {
     searchData: {
       local_index: undefined,
       co_id: undefined,
-      from_date: moment().format('YYYY-MM-DD 00:00:00'),
-      to_date: moment().format('YYYY-MM-DD 23:59:59'),
+      from_date: moment().format("YYYY-MM-DD 00:00:00"),
+      to_date: moment().format("YYYY-MM-DD 23:59:59"),
       name: undefined,
       ts_index: TS_INDEX,
     },
@@ -634,8 +635,8 @@ export default {
     searchData: {
       local_index: undefined,
       co_id: undefined,
-      from_date: moment().format('YYYY-MM-DD 00:00:00'),
-      to_date: moment().format('YYYY-MM-DD 23:59:59'),
+      from_date: moment().format("YYYY-MM-DD 00:00:00"),
+      to_date: moment().format("YYYY-MM-DD 23:59:59"),
       name: undefined,
       ts_index: TS_INDEX,
     },
@@ -647,19 +648,19 @@ export default {
       datepicker: false,
     },
     searchData: {
-      from_date: moment().format('YYYY-MM-DD 00:00:00'),
-      to_date: moment().format('YYYY-MM-DD 23:59:59'),
+      from_date: moment().format("YYYY-MM-DD 00:00:00"),
+      to_date: moment().format("YYYY-MM-DD 23:59:59"),
       ip: undefined,
       ts_index: TS_INDEX,
     },
   },
   site: {
     formData: {
-      modified_date: moment().format('YYYY-MM-DD HH:mm:ss.SSS'),
+      modified_date: moment().format("YYYY-MM-DD HH:mm:ss.SSS"),
       ts_id: null,
       ts_main_title: null,
       ts_sub_title: null,
-      te_index: 'ENP0001',
+      te_index: "ENP0001",
       nms_action: 0,
       cctv_action: 0,
       gas_action: 0,

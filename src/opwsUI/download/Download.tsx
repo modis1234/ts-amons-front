@@ -1,9 +1,9 @@
-import { faFileArrowDown } from '@fortawesome/pro-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import axios from 'axios';
-import React from 'react';
-import { saveAs } from 'file-saver';
-import styled from 'styled-components';
+import { faFileArrowDown } from "@fortawesome/pro-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "axios";
+import React from "react";
+import { saveAs } from "file-saver";
+import styled from "styled-components";
 
 const DownloadCmpt = styled.div`
   /* width: 100%; */
@@ -46,14 +46,24 @@ const TS_INDEX = process.env.REACT_APP_TS_INDEX;
  * @param  {String} data 요청 조건 데이터
  * @param  {String} fileName 다운로드 파일명
  * */
-export const downloadAction = async ({ url, data, fileName }) => {
+
+type DownLoadActionType = {
+  url: string;
+  data: string;
+  fileName: string;
+};
+export const downloadAction = async ({
+  url,
+  data,
+  fileName,
+}: DownLoadActionType) => {
   try {
     const response = await axios({
-      method: 'POST',
+      method: "POST",
       url: `${API}${url}`,
-      responseType: 'blob',
+      responseType: "blob",
       data: {
-        ...data,
+        data,
         ts_index: TS_INDEX,
       },
     }).then((response) => {
@@ -69,10 +79,16 @@ export const downloadAction = async ({ url, data, fileName }) => {
  * @descrition download버튼 컴포넌트
  * @param  {Function} onDownload click 이벤트
  * */
-export const Download = ({ onDownload, disabled }) => {
+
+type DownLoadType = {
+  onDownload: () => void;
+  disabled: boolean;
+};
+
+export const Download = ({ onDownload, disabled }: DownLoadType) => {
   return (
     <DownloadCmpt
-      className={`download-button ${disabled ? 'disabled' : ''}`}
+      className={`download-button ${disabled ? "disabled" : ""}`}
       onClick={disabled ? undefined : onDownload}
     >
       <span className="button-name">다운로드</span>

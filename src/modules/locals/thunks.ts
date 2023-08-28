@@ -3,23 +3,23 @@ import * as localAPI from "../../api/locals";
 import { createThunk, deleteThunk, updateThunk } from "lib/createAsyncThunk";
 import { LocalType } from "./types";
 
-export const getSites = createThunk<LocalType[]>(
+export const getLocals = createThunk<LocalType[]>(
   GET_LOCALS,
   localAPI.getLocals
 );
 
-export const postSites = createThunk<LocalType[], LocalType>(
+export const postLocal = createThunk<LocalType[], LocalType>(
   POST_LOCAL,
   localAPI.postLocal
 );
 
-export const putSites = updateThunk<LocalType, LocalType>(
+export const putLocal = updateThunk<LocalType, LocalType>(
   "local_id",
   PUT_LOCAL,
   localAPI.putLocal
 );
 
-export const deleteSite = deleteThunk<LocalType, LocalType>(
+export const deleteLocal = deleteThunk<LocalType, LocalType>(
   "local_id",
   DELETE_LOCAL,
   localAPI.deleteLocal
