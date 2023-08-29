@@ -22,9 +22,9 @@ const LocalInputCmpt = styled.div`
 type LocalInputType = {
   formData: LocalType;
   selectedRow: {
-    selectedId: string | null;
+    selectedId: string | number | null;
     selectedItem: Object | null;
-    clickedIndex: string | null;
+    clickedIndex: string | number | null;
   };
   error?: LocalErrorType;
   modalData: {
@@ -88,13 +88,13 @@ const LocalInput = ({
     ],
   });
 
-  // const [monitorNumberOption, setMonitorNumberOptions] = useState([
-  //   { key: 0, text: '지정안함', value: 0 },
-  //   { key: 1, text: '상단 좌측 패널', value: 1 },
-  //   { key: 2, text: '상단 우측 패널', value: 2 },
-  //   { key: 3, text: '하단 좌측 패널', value: 3 },
-  //   { key: 4, text: '하단 우측 패널', value: 4 },
-  // ]);
+  const [monitorNumberOption, setMonitorNumberOptions] = useState([
+    { key: 0, text: "지정안함", value: 0 },
+    { key: 1, text: "상단 좌측 패널", value: 1 },
+    { key: 2, text: "상단 우측 패널", value: 2 },
+    { key: 3, text: "하단 좌측 패널", value: 3 },
+    { key: 4, text: "하단 우측 패널", value: 4 },
+  ]);
 
   return (
     <LocalInputCmpt className="local-input-component">
@@ -190,7 +190,7 @@ const LocalInput = ({
           }
           required
         />
-        {/* <FormElement
+        <FormElement
           kind="select"
           label="진행 현황 배치 순서"
           id="local_number"
@@ -205,19 +205,19 @@ const LocalInput = ({
           value={formData.local_number}
           onChange={(e, option) => onChange({ e, option })}
           placeholder="진행 현황 배치 순서를 선택해 주세요."
-        /> */}
-        {/* <FormElement
-            kind="select"
-            label="노선 패널 배치 순서"
-            id="monitor_number"
-            name="monitor_number"
-            options={monitorNumberOption}
-            value={formData.monitor_number}
-            onChange={(e, option) => onChange({ e, option })}
-            placeholder="사용 용도를 선택해 주세요."
-            required
-          /> */}
-        {/* <FormElement
+        />
+        <FormElement
+          kind="select"
+          label="노선 패널 배치 순서"
+          id="monitor_number"
+          name="monitor_number"
+          options={monitorNumberOption}
+          value={formData.monitor_number}
+          onChange={(e, option) => onChange({ e, option })}
+          placeholder="사용 용도를 선택해 주세요."
+          required
+        />
+        <FormElement
           kind="textarea"
           label="비고"
           id="local_description"
@@ -225,7 +225,7 @@ const LocalInput = ({
           value={formData.local_description}
           onChange={(e) => onChange({ e })}
           placeholder="비고 입력란"
-        /> */}
+        />
       </FormArea>
       {/* <FormElement
         kind="modal"

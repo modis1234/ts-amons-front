@@ -123,10 +123,10 @@ const OneByTwoCmpt = styled.div<{ rightHeader: boolean | undefined }>`
 type OneByTwoLayoutType = {
   inputTitle: string; // Input Box Title
   tableTitle: string; // Table Box Title
-  firstRender: React.ReactElement; // Input Box Component
-  secondRender: React.ReactElement; // Table Box Component
+  firstRender: React.ReactNode; // Input Box Component
+  secondRender: React.ReactNode; // Table Box Component
   rightHeader: boolean; // search Box Component
-  searchRender?: React.ReactElement; // Table Box Component
+  searchRender?: React.ReactNode; // Table Box Component
 };
 
 const OneByTwoLayout = ({

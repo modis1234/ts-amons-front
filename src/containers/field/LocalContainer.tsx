@@ -11,6 +11,8 @@ import initConfigData from "opwsUI/initConfigData";
 import { getLocals, LocalErrorType, LocalType } from "modules/locals";
 import { useAppDispatch, useAppSelector } from "modules/hooks";
 import { addComma } from "opwsUI/util";
+import LocalTable from "components/field/local/LocalTable";
+import { getSites } from "modules/sites";
 
 const LocalCmpt = styled.div`
   width: 100%;
@@ -33,12 +35,16 @@ const {
 } = initConfigData;
 
 function LocalContainer() {
-  const { localsData } = useAppSelector((state) => {
-    return { localsData: state.locals.data };
+  const { localsData, sitesData } = useAppSelector((state) => {
+    return { localsData: state.locals.data, sitesData: state.sites.data };
   });
   const dispatch = useAppDispatch();
 
-  const [selectedRow, setSelectedRow] = useState({
+  const [selectedRow, setSelectedRow] = useState<{
+    selectedId: string | number | null;
+    selectedItem: Object | null;
+    clickedIndex: string | number | null;
+  }>({
     selectedId: null,
     selectedItem: null,
     clickedIndex: null,
@@ -69,6 +75,7 @@ function LocalContainer() {
 
   useLayoutEffect(() => {
     dispatch(getLocals());
+    dispatch(getSites());
   }, [dispatch]);
 
   useEffect(() => {
@@ -94,6 +101,11 @@ function LocalContainer() {
       setEntranceOptions(reduceEntranceOption);
     }
   }, [localsData]);
+
+  /**@descrition formData 초기화 */
+  const initForm = useCallback((): void => {
+    setFormData(initFormData);
+  }, []);
 
   /**@descrition input 입력란 onChange 핸들러 */
   const onChange = useCallback(
@@ -206,6 +218,72 @@ function LocalContainer() {
     }
   };
 
+  /**@description  table 컴포넌트 Row 클릭 이벤트 핸들러*/
+  const onRowClick = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, item: LocalType) => {
+      const { local_id: itemIndex = null } = item;
+      if (itemIndex === selectedRow.selectedId) {
+        setSelectedRow({
+          selectedId: null,
+          selectedItem: null,
+          clickedIndex: null,
+        });
+        initForm();
+      } else {
+        setSelectedRow({
+          selectedId: itemIndex,
+          selectedItem: item,
+          clickedIndex: itemIndex,
+        });
+        setFormData({
+          ...item,
+        });
+        setError(initError);
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [selectedRow.selectedId]
+  );
+
+  /**@descrition delete 버튼 클릭 이벤트 핸들러 */
+  const onDelete = (
+    e: React.MouseEvent<SVGSVGElement, MouseEvent>,
+    id: number
+  ): void => {
+    const _items: LocalType[] | null = localsData;
+    if (!_items) return;
+    const findItem = _items.find((item) => item.local_id === id && item);
+    if (findItem) {
+      setModalData({
+        ...modalData,
+        open: true,
+        type: "delete",
+      });
+    }
+  };
+
+  const setPageInfoHandler = useCallback(
+    ({
+      activePage,
+      itemsPerPage,
+    }: {
+      activePage: number;
+      itemsPerPage: number;
+    }) => {
+      setPageInfo({
+        ...pageInfo,
+        activePage,
+        itemsPerPage,
+      });
+      setSelectedRow({
+        selectedId: null,
+        selectedItem: null,
+        clickedIndex: null,
+      });
+    },
+    [pageInfo]
+  );
+
   return (
     <LocalCmpt className="local-container">
       <OneByTwoLayout
@@ -224,16 +302,19 @@ function LocalContainer() {
           />
         }
         secondRender={
-          // <LocalTable
-          //   data={localItems}
-          //   selectedRow={selectedRow}
-          //   onRowClick={onRowClick}
-          //   onDelete={onDelete}
-          //   initForm={initForm}
-          //   pageInfo={pageInfo}
-          //   setPageInfoHandler={setPageInfoHandler}
-          // />
-          <div></div>
+          sitesData &&
+          localItems && (
+            <LocalTable
+              data={localItems}
+              selectedRow={selectedRow}
+              onRowClick={onRowClick}
+              onDelete={onDelete}
+              initForm={initForm}
+              pageInfo={pageInfo}
+              setPageInfoHandler={setPageInfoHandler}
+              siteItem={sitesData[0]}
+            />
+          )
         }
         rightHeader={false}
       />

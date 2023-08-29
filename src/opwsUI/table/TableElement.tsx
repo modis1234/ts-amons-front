@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { faTrash } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, {
@@ -6,7 +7,7 @@ import React, {
   useLayoutEffect,
   useState,
 } from "react";
-import { Icon, Pagination, Table } from "semantic-ui-react";
+import { Icon, Pagination, PaginationProps, Table } from "semantic-ui-react";
 import styled from "styled-components";
 import moment from "moment";
 import _, { random } from "lodash";
@@ -91,7 +92,7 @@ const TableCmpt = styled.div`
   }
 `;
 
-type GroupType = {
+export type GroupType = {
   id?: string;
   name?: string;
   field: string;
@@ -104,7 +105,7 @@ type GroupType = {
   callback?: (param?: string | number) => string;
 };
 
-type HeaderType = {
+export type HeaderType = {
   key?: string | number | undefined;
   id?: string;
   name?: string;
@@ -112,10 +113,10 @@ type HeaderType = {
   textAlign?: "center" | "left" | "right";
   width?: number;
   sorting?: string | boolean;
-  callback?: (param?: string | number) => string;
+  callback?: (param?: string | number) => string | null;
 };
 
-type TableOptionType = {
+export type TableOptionType = {
   deleteAction: boolean; // delete Icon 표출 및 delete 액션 실행 field 생성
   pageNation?: boolean; // pagination 기능 여부
   rowSelect?: boolean; // row 선택 액션 여부
@@ -123,11 +124,11 @@ type TableOptionType = {
   kickoutAction?: boolean; // kickout Button 표출 및 kickout 액션 실행 field 생성
 };
 
-type TableElementType = {
+export type TableElementType = {
   tableData: {
     group?: Array<GroupType>;
     header: Array<HeaderType>;
-    body: Array<any> | [];
+    body: Array<any> | [] | null;
   };
   tableOption?: TableOptionType;
   onRowClick?: (
@@ -141,7 +142,7 @@ type TableElementType = {
       item?: any
     ) => void;
   };
-  activeKickout: {
+  activeKickout?: {
     keys: string;
     callback: (
       e: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -150,13 +151,16 @@ type TableElementType = {
   };
   activeRow?: {
     keys: string;
-    index: string | number;
+    index: string | number | null;
   };
   pageInfo: {
     activePage: number; // 현재 페이지
     itemsPerPage: number; // 페이지 당 item 수
   };
-  onPageChange?: () => void;
+  onPageChange?: (
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+    data: PaginationProps
+  ) => void;
 };
 
 function TableElement({
@@ -254,7 +258,7 @@ function TableElement({
         data: items,
       });
     } else {
-      if (!tableData?.body && tableData.body.length === 0) {
+      if (tableData.body ? tableData?.body.length === 0 : []) {
         // return setCurrentData([]);
         return setCurrentData({
           ...currentData,
@@ -294,8 +298,8 @@ function TableElement({
     }
   };
 
-  const setFieldsHandler = (items: HeaderType[]): void => {
-    const reduceItems: Array<HeaderType> | null = items.reduce(
+  const setFieldsHandler = (items: any): void => {
+    const reduceItems: Array<HeaderType> = items.reduce(
       (acc: Array<any>, curr: HeaderType) => {
         const { id, name, ...rest } = curr;
         acc.push(rest);
@@ -306,7 +310,7 @@ function TableElement({
     setFields(reduceItems);
   };
 
-  const headerRender = (items: HeaderType[] = []) => {
+  const headerRender = (items: any[] = []) => {
     return items.map((item, index) => {
       const { sorting = false, callback = undefined, width, ...rest } = item;
       return (
@@ -419,6 +423,7 @@ function TableElement({
                       field === "kickout"
                         ? (e) => {
                             e.stopPropagation();
+                            if (!activeKickout) return undefined;
                             const kickKeys = activeKickout.keys;
                             activeKickout?.callback(e, item[kickKeys]);
                           }
