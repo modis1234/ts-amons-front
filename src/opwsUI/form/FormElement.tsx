@@ -33,6 +33,12 @@ import {
 
 registerLocale("ko", ko);
 
+export type ModalDataType = {
+  open: boolean;
+  type: "update" | "delete" | "warning" | null; //type: update/delete/warning
+  content?: string | null;
+};
+
 type FormElementType = {
   kind: string;
   label?: string;

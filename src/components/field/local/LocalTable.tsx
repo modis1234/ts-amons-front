@@ -1,16 +1,21 @@
 // @ts-nocheck
 
+import { SelectedRowType } from "containers/field/LocalContainer";
 import _ from "lodash";
 import { LocalType } from "modules/locals";
 import { SiteType } from "modules/sites";
 import moment from "moment";
 import "moment/locale/pt-br";
+import {
+  OnDeleteType,
+  OnRowClickType,
+  PageInfoType,
+  TableDataType,
+} from "opwsUI/table/types";
 import React, { useCallback, useEffect, useState } from "react";
 import { PaginationProps } from "semantic-ui-react";
 import styled from "styled-components";
 import TableElement, {
-  GroupType,
-  HeaderType,
   TableOptionType,
 } from "../../../opwsUI/table/TableElement";
 import { addComma, getLocalType, getTunnelName } from "../../../opwsUI/util";
@@ -23,30 +28,11 @@ const LocalTableCmpt = styled.div`
 type LocalTableType = {
   initForm: () => void;
   data: LocalType[] | null;
-  selectedRow: {
-    selectedId: string | number | null;
-    selectedItem: Object | null;
-    clickedIndex: string | number | null;
-  };
-  pageInfo: {
-    activePage: number; // 현재 페이지
-    itemsPerPage: number; // 페이지 당 item 수
-  };
-  onRowClick?: (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    item?: any
-  ) => void;
-  onDelete: (
-    e: React.MouseEvent<SVGSVGElement, MouseEvent>,
-    id: number
-  ) => void;
-  setPageInfoHandler: ({
-    activePage,
-    itemsPerPage,
-  }: {
-    activePage: number;
-    itemsPerPage: number;
-  }) => void;
+  selectedRow: SelectedRowType;
+  pageInfo: PageInfoType;
+  onRowClick?: OnRowClickType;
+  onDelete: OnDeleteType;
+  setPageInfoHandler: ({ activePage, itemsPerPage }: PageInfoType) => void;
   siteItem: SiteType;
 };
 
@@ -60,11 +46,7 @@ function LocalTable({
   setPageInfoHandler,
   siteItem,
 }: LocalTableType) {
-  const [tableData, setTableData] = useState<{
-    group?: Array<GroupType>;
-    header: Array<HeaderType>;
-    body: Array<any> | null;
-  }>({
+  const [tableData, setTableData] = useState<TableDataType<LocalType>>({
     header: [
       {
         id: "no",
@@ -80,7 +62,7 @@ function LocalTable({
         textAlign: "center",
         width: 1,
         sorting: "true",
-        callback: (item: any): string | null => {
+        callback: (item: LocalType): void => {
           return item?.local_area ? getTunnelName(item.local_area) : null;
         },
       },
@@ -99,7 +81,7 @@ function LocalTable({
         textAlign: "center",
         width: 2,
         sorting: "true",
-        callback: (item: LocalType) => {
+        callback: (item: LocalType): void => {
           return getLocalType(item.local_type);
         },
       },
@@ -109,7 +91,7 @@ function LocalTable({
         field: "local_plan_length",
         textAlign: "center",
         width: 1,
-        callback: (item: LocalType) => {
+        callback: (item: LocalType): void => {
           return item?.local_plan_length
             ? `${addComma(item.local_plan_length)}m`
             : "0m";
@@ -121,7 +103,7 @@ function LocalTable({
         field: "created_date",
         textAlign: "center",
         width: 2,
-        callback: (item: LocalType) => {
+        callback: (item: LocalType): void => {
           return moment(new Date(item.created_date)).format(
             "YYYY-MM-DD HH:mm:ss"
           );
@@ -133,7 +115,7 @@ function LocalTable({
         field: "modified_date",
         textAlign: "center",
         width: 2,
-        callback: (item: LocalType) => {
+        callback: (item: LocalType): void => {
           return moment(new Date(item.modified_date)).format(
             "YYYY-MM-DD HH:mm:ss"
           );

@@ -1,16 +1,12 @@
 // @ts-nocheck
 import { faTrash } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useState,
-} from "react";
-import { Icon, Pagination, PaginationProps, Table } from "semantic-ui-react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
+import { Icon, Pagination, Table } from "semantic-ui-react";
 import styled from "styled-components";
 import moment from "moment";
-import _, { random } from "lodash";
+import _ from "lodash";
+import { TableElementType } from "./types";
 
 const TableCmpt = styled.div`
   width: 100%;
@@ -91,77 +87,6 @@ const TableCmpt = styled.div`
     }
   }
 `;
-
-export type GroupType = {
-  id?: string;
-  name?: string;
-  field: string;
-  textAlign?: "center" | "left" | "right";
-  sorting?: string | boolean;
-  width?: number;
-  rowSpan?: number | string;
-  colSpan?: number | string;
-  key: string;
-  callback?: (param?: string | number) => string;
-};
-
-export type HeaderType = {
-  key?: string | number | undefined;
-  id?: string;
-  name?: string;
-  field: string;
-  textAlign?: "center" | "left" | "right";
-  width?: number;
-  sorting?: string | boolean;
-  callback?: (param?: string | number) => string | null;
-};
-
-export type TableOptionType = {
-  deleteAction: boolean; // delete Icon 표출 및 delete 액션 실행 field 생성
-  pageNation?: boolean; // pagination 기능 여부
-  rowSelect?: boolean; // row 선택 액션 여부
-  newSorting?: boolean; // 새등록 된 아이템 재정렬 막기
-  kickoutAction?: boolean; // kickout Button 표출 및 kickout 액션 실행 field 생성
-};
-
-export type TableElementType = {
-  tableData: {
-    group?: Array<GroupType>;
-    header: Array<HeaderType>;
-    body: Array<any> | [] | null;
-  };
-  tableOption?: TableOptionType;
-  onRowClick?: (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    item?: any
-  ) => void;
-  activeDelete: {
-    keys: string;
-    callback: (
-      e: React.MouseEvent<SVGSVGElement, MouseEvent>,
-      item?: any
-    ) => void;
-  };
-  activeKickout?: {
-    keys: string;
-    callback: (
-      e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-      item?: any
-    ) => void;
-  };
-  activeRow?: {
-    keys: string;
-    index: string | number | null;
-  };
-  pageInfo: {
-    activePage: number; // 현재 페이지
-    itemsPerPage: number; // 페이지 당 item 수
-  };
-  onPageChange?: (
-    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
-    data: PaginationProps
-  ) => void;
-};
 
 function TableElement({
   tableData,
@@ -556,4 +481,4 @@ function TableElement({
   );
 }
 
-export default TableElement;
+export default React.memo(TableElement);

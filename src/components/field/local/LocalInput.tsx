@@ -1,10 +1,13 @@
-import { EntranceOptionType } from "containers/field/LocalContainer";
+import {
+  EntranceOptionType,
+  SelectedRowType,
+} from "containers/field/LocalContainer";
 import { LocalErrorType, LocalType } from "modules/locals";
 import React, { useState } from "react";
 import { Form } from "semantic-ui-react";
 import styled from "styled-components";
 import FormArea from "../../../opwsUI/form/FormArea";
-import FormElement from "../../../opwsUI/form/FormElement";
+import FormElement, { ModalDataType } from "../../../opwsUI/form/FormElement";
 import { addComma } from "../../../opwsUI/util";
 
 const LocalInputCmpt = styled.div`
@@ -21,17 +24,9 @@ const LocalInputCmpt = styled.div`
 
 type LocalInputType = {
   formData: LocalType;
-  selectedRow: {
-    selectedId: string | number | null;
-    selectedItem: Object | null;
-    clickedIndex: string | number | null;
-  };
+  selectedRow: SelectedRowType;
   error?: LocalErrorType;
-  modalData: {
-    open: boolean;
-    type: "update" | "delete" | "warning" | null; //type: update/delete/warning
-    content?: string | null;
-  };
+  modalData: ModalDataType;
   onChange: ({
     e,
     option,

@@ -13,6 +13,8 @@ import { useAppDispatch, useAppSelector } from "modules/hooks";
 import { addComma } from "opwsUI/util";
 import LocalTable from "components/field/local/LocalTable";
 import { getSites } from "modules/sites";
+import { PageInfoType } from "opwsUI/table/types";
+import { ModalDataType } from "opwsUI/form/FormElement";
 
 const LocalCmpt = styled.div`
   width: 100%;
@@ -23,6 +25,12 @@ export type EntranceOptionType = {
   key: number;
   text: string | null;
   value: string | null;
+};
+
+export type SelectedRowType = {
+  selectedId: string | number | null;
+  selectedItem: Object | null;
+  clickedIndex: string | number | null;
 };
 
 // 초기화 데이터 '../../config/initConfigData'
@@ -40,11 +48,7 @@ function LocalContainer() {
   });
   const dispatch = useAppDispatch();
 
-  const [selectedRow, setSelectedRow] = useState<{
-    selectedId: string | number | null;
-    selectedItem: Object | null;
-    clickedIndex: string | number | null;
-  }>({
+  const [selectedRow, setSelectedRow] = useState<SelectedRowType>({
     selectedId: null,
     selectedItem: null,
     clickedIndex: null,
@@ -58,17 +62,13 @@ function LocalContainer() {
   const [formData, setFormData] = useState<LocalType>(initFormData);
   const [error, setError] = useState<LocalErrorType>(initError);
 
-  const [modalData, setModalData] = useState<{
-    open: boolean;
-    type: "update" | "delete" | "warning" | null; //type: update/delete/warning
-    content?: string | null;
-  }>({
+  const [modalData, setModalData] = useState<ModalDataType>({
     open: false,
     type: null, //type: update/delete/warning
     content: null,
   });
 
-  const [pageInfo, setPageInfo] = useState({
+  const [pageInfo, setPageInfo] = useState<PageInfoType>({
     activePage: 1, // 현재 페이지
     itemsPerPage: 15, // 페이지 당 item 수
   });
