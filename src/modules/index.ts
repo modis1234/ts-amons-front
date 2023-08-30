@@ -2,6 +2,7 @@ import { combineReducers } from "@reduxjs/toolkit";
 // import postReducer from "./posts";
 // import countReducer from "./counter/counterSlice";
 import localReducer from "./locals";
+import companyReducer from "./companies";
 import siteReducer from "./sites";
 import monitorReducer from "./monitors";
 
@@ -10,6 +11,7 @@ const rootReducer = combineReducers({
   // name으로 설정했던 것을 key로 사용한다.
   // counter: countReducer,
   // posts: postReducer,
+  companies: companyReducer,
   locals: localReducer,
   sites: siteReducer,
   monitors: monitorReducer,

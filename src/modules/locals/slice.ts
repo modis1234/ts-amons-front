@@ -42,6 +42,11 @@ export const localSlice = createSlice({
     [GET_LOCALS_FULFILLED]: (state, action) =>
       asyncState.success(action.payload),
     [GET_LOCALS_REJECTED]: (state, action) => asyncState.error(action.payload),
+    /**@GET */
+    [GET_LOCAL_PENDING]: (state, action) => asyncState.load(),
+    [GET_LOCAL_FULFILLED]: (state, action) =>
+      asyncState.success(action.payload),
+    [GET_LOCAL_REJECTED]: (state, action) => asyncState.error(action.payload),
     /**@POST */
     [POST_LOCAL_PENDING]: (state, action) => asyncState.load(state.data),
     [POST_LOCAL_FULFILLED]: (state, action) => postLocalHandler(state, action),

@@ -8,12 +8,18 @@ import OneByTwoLayout from "../../opwsUI/layout/OneByTwoLayout";
 import { styled } from "styled-components";
 import LocalInput from "components/field/local/LocalInput";
 import initConfigData from "opwsUI/initConfigData";
-import { getLocals, LocalErrorType, LocalType } from "modules/locals";
+import {
+  deleteLocal,
+  getLocals,
+  LocalErrorType,
+  LocalType,
+  putLocal,
+} from "modules/locals";
 import { useAppDispatch, useAppSelector } from "modules/hooks";
 import { addComma } from "opwsUI/util";
 import LocalTable from "components/field/local/LocalTable";
 import { getSites } from "modules/sites";
-import { PageInfoType } from "opwsUI/table/types";
+import { PageInfoType, SelectedRowType } from "opwsUI/table/types";
 import { ModalDataType } from "opwsUI/form/FormElement";
 
 const LocalCmpt = styled.div`
@@ -27,11 +33,11 @@ export type EntranceOptionType = {
   value: string | null;
 };
 
-export type SelectedRowType = {
-  selectedId: string | number | null;
-  selectedItem: Object | null;
-  clickedIndex: string | number | null;
-};
+// export type SelectedRowType = {
+//   selectedId: string | number | null;
+//   selectedItem: LocalType | null;
+//   clickedIndex: string | number | null;
+// };
 
 // 초기화 데이터 '../../config/initConfigData'
 const {
@@ -48,7 +54,7 @@ function LocalContainer() {
   });
   const dispatch = useAppDispatch();
 
-  const [selectedRow, setSelectedRow] = useState<SelectedRowType>({
+  const [selectedRow, setSelectedRow] = useState<SelectedRowType<LocalType>>({
     selectedId: null,
     selectedItem: null,
     clickedIndex: null,
@@ -284,6 +290,81 @@ function LocalContainer() {
     [pageInfo]
   );
 
+  /**@descrition modal button Action */
+  const setOpen = ({ action, open }: { action: boolean; open: boolean }) => {
+    setModalData((prev) => {
+      if (prev.type === "update" && action) updateDispatch();
+      else if (prev.type === "delete" && action) deleteDispatch();
+
+      return {
+        open: open,
+        type: null,
+        content: null,
+        header: null,
+      };
+    });
+  };
+
+  const onValidate = () => {
+    if (!formData.local_name) {
+      setError({
+        ...error,
+        local_name: "노선명을 입력해 주세요.",
+      });
+      return false;
+    }
+    if (!formData.local_type) {
+      setError({
+        ...error,
+        local_type: "굴진방향을 선택해 주세요.",
+      });
+      return false;
+    }
+
+    return true;
+  };
+
+  /**@descrition update dispatch action 함수 */
+  const updateDispatch = () => {
+    //수정
+    let updateItem = { ...formData };
+
+    // 유효성 체크
+    const validate = onValidate();
+    if (!validate) return;
+
+    const updatedKeys = {};
+
+    // eslint-disable-next-line no-restricted-syntax
+    // for (let key in updateItem) {
+    //   if (updateItem[key] !== selectedRow.selectedItem[key]) {
+    //     updatedKeys[`u_${key}`] = true;
+    //   }
+    // }
+
+    // updateItem = {
+    //   ...updateItem,
+    //   ...updatedKeys,
+    // };
+
+    const { local_id: _id } = updateItem;
+
+    dispatch(putLocal(updateItem));
+  };
+
+  /**@descrition delete dispatch 액션 실행 함수 */
+  const deleteDispatch = () => {
+    const _item = selectedRow?.selectedItem ?? null;
+    if (_item === null) return;
+    dispatch(deleteLocal(_item));
+    initForm();
+    setSelectedRow({
+      selectedId: null,
+      selectedItem: null,
+      clickedIndex: null,
+    });
+  };
+
   return (
     <LocalCmpt className="local-container">
       <OneByTwoLayout
@@ -295,7 +376,7 @@ function LocalContainer() {
             error={error}
             onChange={onChange}
             onSubmit={onSubmit}
-            // setOpen={setOpen}
+            setOpen={setOpen}
             selectedRow={selectedRow}
             modalData={modalData}
             entranceOptions={entranceOptions}

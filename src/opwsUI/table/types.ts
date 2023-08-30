@@ -78,3 +78,9 @@ export type TableElementType = {
     data: PaginationProps
   ) => void;
 };
+
+export type SelectedRowType<T = any> = {
+  selectedId: string | number | null;
+  selectedItem: T | null;
+  clickedIndex: string | number | null;
+};

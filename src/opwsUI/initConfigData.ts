@@ -554,18 +554,18 @@ export default {
   },
   company: {
     formData: {
-      co_id: undefined,
-      created_date: undefined,
-      monified_data: undefined,
+      co_id: null,
+      created_date: null,
+      modified_date: null,
       co_main: 2,
-      co_name: undefined,
-      co_sectors: undefined,
-      co_description: undefined,
+      co_name: null,
+      co_sectors: null,
+      co_description: null,
       ts_index: TS_INDEX,
     },
     error: {
-      co_name: undefined, // 필수 입력
-      co_sectors: undefined, // 필수 입력
+      co_name: null, // 필수 입력
+      co_sectors: null, // 필수 입력
     },
     searchData: {},
   },

@@ -1,13 +1,14 @@
-import {
-  EntranceOptionType,
-  SelectedRowType,
-} from "containers/field/LocalContainer";
+import { EntranceOptionType } from "containers/field/LocalContainer";
 import { LocalErrorType, LocalType } from "modules/locals";
+import { SelectedRowType } from "opwsUI/table/types";
 import React, { useState } from "react";
 import { Form } from "semantic-ui-react";
 import styled from "styled-components";
 import FormArea from "../../../opwsUI/form/FormArea";
-import FormElement, { ModalDataType } from "../../../opwsUI/form/FormElement";
+import FormElement, {
+  ModalDataType,
+  SetOpenModalType,
+} from "../../../opwsUI/form/FormElement";
 import { addComma } from "../../../opwsUI/util";
 
 const LocalInputCmpt = styled.div`
@@ -35,7 +36,7 @@ type LocalInputType = {
     option?: any;
   }) => void;
   onSubmit: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  setOpen?: () => void;
+  setOpen?: SetOpenModalType;
   entranceOptions?: EntranceOptionType[];
 };
 
@@ -222,12 +223,12 @@ const LocalInput = ({
           placeholder="비고 입력란"
         />
       </FormArea>
-      {/* <FormElement
+      <FormElement
         kind="modal"
         modalData={modalData}
         setOpen={setOpen}
         // action={true}
-      /> */}
+      />
     </LocalInputCmpt>
   );
 };

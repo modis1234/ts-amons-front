@@ -106,12 +106,10 @@ export function deleteActionHandler<T>(key: string) {
   ) => {
     console.log("state->", state);
     console.log("action->", action);
-    return {
-      loading: false,
-      error: null,
-      data: state?.data?.filter(
-        (item: any) => item?.[key] !== action.payload?.[key] && item
-      ) ?? [...[action.payload]],
-    };
+    state.loading = false;
+    state.data = state?.data?.filter(
+      (item: any) => item?.[key] !== Number(action.payload?.param) && item
+    ) ?? [...[action.payload]];
+    state.error = null;
   };
 }

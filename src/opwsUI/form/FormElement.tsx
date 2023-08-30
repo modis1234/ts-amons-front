@@ -37,7 +37,13 @@ export type ModalDataType = {
   open: boolean;
   type: "update" | "delete" | "warning" | null; //type: update/delete/warning
   content?: string | null;
+  header?: string | null;
 };
+
+export type SetOpenModalType = (data: {
+  action: boolean;
+  open: boolean;
+}) => void;
 
 type FormElementType = {
   kind: string;
@@ -68,6 +74,9 @@ type FormElementType = {
   placeholder?: string;
   labelPosition?: "right" | "left";
   maxLength?: number | string;
+  modalData?: ModalDataType;
+  setOpen?: SetOpenModalType;
+
   // rest?: {
   //   className: string;
   // };
@@ -147,7 +156,12 @@ const FormElement = ({
           required={required}
         >
           <LabelTag>{label}</LabelTag>
-          <InputCmpt name={name} value={value} label={rest?.unit} {...rest} />
+          <InputCmpt
+            name={name}
+            value={value ?? ""}
+            label={rest?.unit}
+            {...rest}
+          />
           {rest?.error && (
             <div
               className="ui pointing above prompt label"
