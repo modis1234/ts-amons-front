@@ -13,7 +13,7 @@ export type GroupType = {
   callback?: (param?: string | number) => string;
 };
 
-export type HeaderType = {
+export type HeaderType<T> = {
   key?: string | number | undefined;
   id?: string;
   name?: string;
@@ -21,7 +21,7 @@ export type HeaderType = {
   textAlign?: "center" | "left" | "right";
   width?: number;
   sorting?: string | boolean;
-  callback?: (param?: string | number) => string | null;
+  callback?: (param: any) => any;
 };
 
 export type TableOptionType = {
@@ -34,7 +34,7 @@ export type TableOptionType = {
 
 export type TableDataType<T = any> = {
   group?: Array<GroupType>;
-  header: Array<HeaderType>;
+  header: Array<HeaderType<T>>;
   body: Array<T> | [] | null;
 };
 

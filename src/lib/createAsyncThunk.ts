@@ -42,7 +42,17 @@ export function updateThunk<T, F = undefined>(
     { rejectValue: MyKnownError } // ThunkApi 정의({dispatch?, state?, extra?, rejectValue?})
   >(action, async (data: any, thunkAPI) => {
     try {
-      let _key: any = data[key];
+      let _key: any;
+      if (data?.[key]) {
+        _key = data[key];
+      } else {
+        /**
+          @description data 타입이 FormData 일 경우/ 작업자,인원,장비 등  이미지 등록은 FormDatam로 전달  
+        */
+        const _item = JSON.parse(data.get("reqBody"));
+        _key = _item[key];
+      }
+
       const payload = await promiseCreator(_key, data);
       return payload;
     } catch (e) {

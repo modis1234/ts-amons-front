@@ -69,14 +69,25 @@ type FormElementType = {
   disabled?: boolean;
   onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   content?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>, option: Object) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>, option?: any) => void;
   onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
   placeholder?: string;
   labelPosition?: "right" | "left";
   maxLength?: number | string;
   modalData?: ModalDataType;
   setOpen?: SetOpenModalType;
-
+  checked?: boolean;
+  startDate?: Date | string;
+  minDate?: Date | string;
+  search?: boolean;
+  uploadAction?: boolean;
+  src?: string | ArrayBuffer | null;
+  fileName?: string | null;
+  file?: string | Blob;
+  preview?: boolean;
+  onPreview?: () => void;
+  onImageRemove?: () => void;
+  onUpload?: () => void;
   // rest?: {
   //   className: string;
   // };

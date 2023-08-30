@@ -29,6 +29,8 @@ export const postWorker = async (data: WorkerType) => {
 
 // 데이터 수정을 위한 put 비동기 함수
 export const putWorker = async (id: number, data: WorkerType) => {
+  console.log("put id =>", id);
+  console.log("put data =>", data);
   const response = await axios.put(
     `${API}/api/worker/workers/${id}?siteIndex=${TS_INDEX}&type=worker`,
     data

@@ -1,5 +1,5 @@
+import { BleType } from "modules/beacons";
 import { LocalType } from "modules/locals/types";
-import { BleType } from "./beacons";
 import { DeviceType } from "./devices";
 import { SensorType } from "./sensors";
 // import { SensorType } from "./sensors";

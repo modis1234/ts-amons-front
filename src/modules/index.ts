@@ -6,6 +6,9 @@ import companyReducer from "./companies";
 import siteReducer from "./sites";
 import monitorReducer from "./monitors";
 
+import beaconReducer from "./beacons";
+import workerReducer from "./workers";
+
 const rootReducer = combineReducers({
   // 3번에서 만들 slice를 여기에 넣을 예정
   // name으로 설정했던 것을 key로 사용한다.
@@ -15,6 +18,8 @@ const rootReducer = combineReducers({
   locals: localReducer,
   sites: siteReducer,
   monitors: monitorReducer,
+  beacons: beaconReducer,
+  workers: workerReducer,
 });
 
 export default rootReducer;

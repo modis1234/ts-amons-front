@@ -1,3 +1,45 @@
+export type BeaconType = {
+  created_date: Date | string | null;
+  modified_date: Date | string | null;
+  bc_id: number | null;
+  bc_index: string | null;
+  bc_management: number | null;
+  bc_address: string;
+  bc_description: string | null;
+  bc_used_type: 0 | 1 | 2;
+  bc_battery_remain: string | null;
+  bc_battery_time: Date | null;
+  bc_scn_group: string | null;
+  bc_receive_time: Date | null;
+  bc_io_state: string | null;
+  bc_input_time: Date | null;
+  bc_out_time: Date | null;
+  bc_pos_x: number | null;
+  bc_emergency: number;
+  ts_index: string | null;
+  wk_id?: number;
+  wk_index?: string;
+  wk_name?: string;
+  wk_phone?: string;
+  wk_tel?: null;
+  wk_position?: string;
+  wk_nation?: string;
+  wk_birth?: Date;
+  wk_blood_type?: number;
+  wk_blood_group?: number;
+  wk_sms_yn?: number;
+  wk_image?: null;
+  wk_io_state?: string;
+  co_id?: number;
+  te_index?: string;
+  co_main?: number;
+  co_name?: string;
+  co_sectors?: null;
+  co_description?: null;
+  te_id?: number;
+  te_name?: string;
+};
+
 export type BleType = {
   bc_id: number;
   bc_index: string;

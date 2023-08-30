@@ -350,7 +350,7 @@ export const addZero = (str: string, digit = 3) => {
 /**
  * @description 자리수 만큼 남은 공간을 0으로 채우기
  */
-export const zeroFill = (num: string, width: number) => {
+export const zeroFill = (num: number, width: number) => {
   let _num = `${num} `;
   return _num.length >= width + 1
     ? _num

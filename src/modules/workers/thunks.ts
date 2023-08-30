@@ -8,19 +8,19 @@ export const getWorkers = createThunk<WorkerType[]>(
   workerAPI.getWorkers
 );
 
-export const postWorker = createThunk<WorkerType[], WorkerType>(
+export const postWorker = createThunk<WorkerType[], FormData>(
   POST_WORKER,
   workerAPI.postWorker
 );
 
-export const putWorker = updateThunk<WorkerType, WorkerType>(
-  "local_id",
+export const putWorker = updateThunk<WorkerType, FormData>(
+  "wk_id",
   PUT_WORKER,
   workerAPI.putWorker
 );
 
 export const deleteWorker = deleteThunk<WorkerType, WorkerType>(
-  "local_id",
+  "wk_id",
   DELETE_WORKER,
   workerAPI.deleteWorker
 );
