@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { DigType } from 'modules/digs';
 
 const API = `http://${process.env.REACT_APP_API_SERVER}`;
 const TS_INDEX = process.env.REACT_APP_TS_INDEX ?? null;
@@ -11,7 +12,7 @@ export const getDigs = async () => {
 
 // INDEX로 조회하는 비동기 함수
 export const getDigById = async (id: number) => {
-  const response = await axios.get(`${API}/api/dig/digs/${index}`);
+  const response = await axios.get(`${API}/api/dig/digs/${id}`);
   return response.data;
 };
 
