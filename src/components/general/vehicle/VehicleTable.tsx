@@ -1,5 +1,4 @@
-import _ from "lodash";
-import { WorkerType } from "modules/workers";
+import { VehicleType } from "modules/vehicles";
 import {
   OnDeleteType,
   OnRowClickType,
@@ -9,24 +8,19 @@ import {
   TableOptionType,
 } from "opwsUI/table/types";
 import React, { useCallback, useEffect, useState } from "react";
-import { Checkbox, PaginationProps } from "semantic-ui-react";
+import { PaginationProps } from "semantic-ui-react";
 import styled from "styled-components";
 import TableElement from "../../../opwsUI/table/TableElement";
-import {
-  splitByColonInput,
-  TransBloodGroup,
-  TransBloodType,
-  zeroFill,
-} from "../../../opwsUI/util";
+import { splitByColonInput, zeroFill } from "../../../opwsUI/util";
 
-const WorkerTableCmpt = styled.div`
+const VehicleTableCmpt = styled.div`
   width: 100%;
-  height: 100%;
+  height: 1005;
 `;
 
-type WorkerTableType = {
+type VehicleTableType = {
   initForm: () => void;
-  data: WorkerType[] | null;
+  data: VehicleType[] | null;
   selectedRow: SelectedRowType;
   pageInfo: PageInfoType;
   onRowClick?: OnRowClickType;
@@ -34,7 +28,7 @@ type WorkerTableType = {
   setPageInfoHandler: ({ activePage, itemsPerPage }: PageInfoType) => void;
 };
 
-const WorkerTable = ({
+const VehicleTable = ({
   initForm,
   data,
   selectedRow,
@@ -42,8 +36,8 @@ const WorkerTable = ({
   onRowClick,
   onDelete,
   setPageInfoHandler,
-}: WorkerTableType) => {
-  const [tableData, setTableData] = useState<TableDataType<WorkerType>>({
+}: VehicleTableType) => {
+  const [tableData, setTableData] = useState<TableDataType<VehicleType>>({
     header: [
       {
         id: "no",
@@ -53,116 +47,67 @@ const WorkerTable = ({
         width: 1,
       },
       {
-        id: "company",
+        id: "companyName",
         name: "소속사",
         field: "co_name",
         width: 2,
         sorting: "true",
       },
       {
-        id: "name",
-        name: "이름",
-        field: "wk_name",
+        id: "vhName",
+        name: "차량 종류",
+        field: "vh_name",
         width: 2,
-      },
-      {
-        id: "position",
-        name: "직위",
-        field: "wk_position",
-        width: 2,
-        textAlign: "center",
         sorting: "true",
       },
       {
-        id: "sms",
-        name: "SMS",
-        field: "wk_sms_yn",
-        width: 1,
-        textAlign: "center",
-        callback: (item: WorkerType) => {
-          const _smsYN = item.wk_sms_yn;
-
-          return (
-            <Checkbox
-              className="sms-check"
-              checked={_smsYN === 1 ? true : false}
-              disabled={false}
-            />
-          );
-        },
-      },
-      {
-        id: "age",
-        name: "나이",
-        field: "wk_birth",
-        width: 1,
-        textAlign: "center",
-        callback: (item: WorkerType) => {
-          const birth = item?.wk_birth ?? null;
-          if (!birth) return null;
-          const today = new Date();
-          const currentYear = today.getFullYear();
-          const diffBirth = String(birth).substring(0, 4);
-          const age = currentYear - Number(diffBirth) + 1;
-          return age;
-        },
-      },
-      {
-        id: "blood",
-        name: "혈액형",
-        field: "wk_blood_type",
+        id: "vhNumber",
+        name: "차량 번호",
+        field: "vh_number",
         width: 3,
-        textAlign: "center",
-        callback: (item: WorkerType) => {
-          const { wk_blood_type, wk_blood_group } = item;
-
-          return `${TransBloodType(wk_blood_type)} ${TransBloodGroup(
-            wk_blood_group
-          )}`;
-        },
       },
       {
-        id: "nation",
-        name: "국적",
-        field: "wk_nation",
-        width: 2,
-      },
-      {
-        id: "beacon",
+        id: "beaconAddress",
         name: "비콘 사용 정보",
         field: "bc_address",
-        width: 2,
+        width: 3,
         textAlign: "center",
         sorting: "true",
-        callback: (item: WorkerType) => {
+        callback: (item: VehicleType) => {
           if (item.bc_index) {
             return `${
               item.bc_management ? zeroFill(item.bc_management, 3) : "000"
-            } - ${item?.bc_address ? splitByColonInput(item.bc_address) : ""}`;
+            } - ${item.bc_address ? splitByColonInput(item.bc_address) : ""}`;
           } else {
             return "미할당";
           }
         },
       },
+      {
+        id: "description",
+        name: "비고",
+        field: "vh_description",
+        textAlign: "center",
+        width: 4,
+      },
     ],
-    body: [],
+    body: null,
   });
-
   const [tableOption, setTableOption] = useState<TableOptionType>({
     deleteAction: true, // delete Icon 표출 및 delete 액션 실행 field 생성
     // deleteKeys: 'te_id', // delete ActionKey
     // deleteHandler: onDelete, // delete ActionHandler
     pageNation: true, // pagination 기능 여부
     rowSelect: true, // row 선택 액션 여부
-    newSorting: false,
+    // newSorting: true,
   });
 
-  useEffect(() => {
-    const sortData = _.sortBy(data, "wk_id").reverse();
+  useEffect(() => {}, []);
 
+  useEffect(() => {
     setTableData({
       ...tableData,
-      body: sortData,
+      body: data,
     });
   }, [data]);
 
@@ -190,7 +135,7 @@ const WorkerTable = ({
   );
 
   return (
-    <WorkerTableCmpt>
+    <VehicleTableCmpt>
       {tableData.body && (
         <TableElement
           tableData={tableData}
@@ -199,17 +144,17 @@ const WorkerTable = ({
           onPageChange={onPageChange}
           onRowClick={onRowClick}
           activeDelete={{
-            keys: "wk_id", // delete ActionKey
+            keys: "vh_id", // delete ActionKey
             callback: onDelete, // delete ActionHandler
           }}
           activeRow={{
-            keys: "wk_index",
+            keys: "vh_index",
             index: selectedRow.selectedId,
           }}
         />
       )}
-    </WorkerTableCmpt>
+    </VehicleTableCmpt>
   );
 };
 
-export default WorkerTable;
+export default VehicleTable;

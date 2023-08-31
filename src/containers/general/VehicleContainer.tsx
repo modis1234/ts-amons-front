@@ -1,8 +1,5 @@
-import WorkerInput from "components/general/worker/WorkerInput";
-import WorkerSearch from "components/general/worker/WorkerSearch";
-import WorkerTable from "components/general/worker/WorkerTable";
 import { useAppDispatch, useAppSelector } from "modules/hooks";
-import moment from "moment";
+
 import { ModalDataType } from "opwsUI/form/FormElement";
 import { PageInfoType, SelectedRowType } from "opwsUI/table/types";
 import React, {
@@ -13,28 +10,31 @@ import React, {
 } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { BeaconType, getUnUsedBeacons } from "../../modules/beacons";
-import { getCompanies } from "../../modules/companies";
-import {
-  deleteWorker,
-  getWorkers,
-  postWorker,
-  putWorker,
-  WorkerErrorType,
-  WorkerSearchDataType,
-  WorkerType,
-} from "../../modules/workers";
+
 import initConfigData from "../../opwsUI/initConfigData";
 import OneByTwoLayout from "../../opwsUI/layout/OneByTwoLayout";
 import {
-  autoHypenPhone,
+  deleteVehicle,
+  getVehicles,
+  postVehicle,
+  putVehicle,
+  VehicleErrorType,
+  VehicleSearchDataType,
+  VehicleType,
+} from "modules/vehicles";
+import { BeaconType, getUnUsedBeacons } from "../../modules/beacons";
+import { getCompanies } from "../../modules/companies";
+import {
   isKorean,
   sortFn,
   splitByColonInput,
   zeroFill,
 } from "../../opwsUI/util";
+import VehicleInput from "components/general/vehicle/VehicleInput";
+import VehicleTable from "components/general/vehicle/VehicleTable";
+import VehicleSearch from "components/general/vehicle/VehicleSearch";
 
-const WorkerCmpt = styled.div`
+const VehicleCmpt = styled.div`
   width: 100%;
   height: 100%;
 `;
@@ -60,18 +60,18 @@ export interface ImageFileType {
 
 // 초기화 데이터 '../../config/initConfigData'
 const {
-  worker: {
+  vehicle: {
     formData: initFormData,
     error: initError,
     searchData: initSearchData,
   },
 } = initConfigData;
 
-const WorkerContainer = () => {
-  const { workersData, companiesData, beaconsData } = useAppSelector(
+const VehicleContainer = () => {
+  const { vehiclesData, companiesData, beaconsData } = useAppSelector(
     (state) => {
       return {
-        workersData: state.workers.data,
+        vehiclesData: state.vehicles.data,
         companiesData: state.companies.data,
         beaconsData: state.beacons.data,
       };
@@ -80,18 +80,18 @@ const WorkerContainer = () => {
 
   const dispatch = useAppDispatch();
 
-  const [selectedRow, setSelectedRow] = useState<SelectedRowType<WorkerType>>({
+  const [selectedRow, setSelectedRow] = useState<SelectedRowType<VehicleType>>({
     selectedId: null,
     selectedItem: null,
     clickedIndex: null,
   });
 
-  const [workerItems, setWorkerItems] = useState<WorkerType[] | null>(null);
+  const [vehicleItems, setVehicleItems] = useState<VehicleType[] | null>(null);
 
-  const [formData, setFormData] = useState<WorkerType>(initFormData);
-  const [error, setError] = useState<WorkerErrorType>(initError);
+  const [formData, setFormData] = useState<VehicleType>(initFormData);
+  const [error, setError] = useState<VehicleErrorType>(initError);
   const [searchData, setSearchData] =
-    useState<WorkerSearchDataType>(initSearchData);
+    useState<VehicleSearchDataType>(initSearchData);
 
   const [imageFile, setImageFile] = useState<ImageFileType>({
     preview: false,
@@ -110,8 +110,6 @@ const WorkerContainer = () => {
     activePage: 1, // 현재 페이지
     itemsPerPage: 14, // 페이지 당 item 수
   });
-
-  const [smsDisabled, setSmsDisabled] = useState<boolean>(false);
 
   const [companyOptions, setCompanyOptions] = useState<OptionsType[]>([]);
   const [beaconOptions, setBeaconOptions] = useState<BeaconOptionsType[]>([]);
@@ -169,35 +167,19 @@ const WorkerContainer = () => {
   }, [companiesData, beaconsData]);
 
   useEffect(() => {
-    if (workersData) {
-      if (searchData.bc_address || searchData.co_id || searchData.wk_name) {
-        filterWorkerItems(workersData);
+    if (vehiclesData) {
+      // setVehicleItems(vehiclesData);
+      if (searchData.bc_address || searchData.co_id || searchData.vh_name) {
+        filterVehicleItems(vehiclesData);
       } else {
-        setWorkerItems(workersData);
+        setVehicleItems(vehiclesData);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [workersData]);
-
-  /**@descrition pageInfo setting Handler */
-  useEffect(() => {
-    const filterItems = workersData?.filter((item) => item?.wk_sms_yn === 1);
-    const itemLength: number = filterItems?.length ?? 0;
-    if (
-      itemLength >= 10 ||
-      (itemLength >= 10 && selectedRow?.selectedItem?.wk_sms_yn === 0)
-    ) {
-      setSmsDisabled(true);
-    }
-    if (itemLength >= 10 && selectedRow?.selectedItem?.wk_sms_yn === 1) {
-      setSmsDisabled(false);
-    }
-
-    // setSmsDisabled();
-  }, [workersData, selectedRow.selectedId]);
+  }, [vehiclesData]);
 
   const getDispatch = () => {
-    dispatch(getWorkers());
+    dispatch(getVehicles());
     dispatch(getCompanies());
     dispatch(getUnUsedBeacons());
   };
@@ -227,11 +209,6 @@ const WorkerContainer = () => {
         activePage,
         itemsPerPage,
       });
-      setSelectedRow({
-        selectedId: null,
-        selectedItem: null,
-        clickedIndex: null,
-      });
     },
     [pageInfo]
   );
@@ -249,28 +226,24 @@ const WorkerContainer = () => {
       };
     }) => {
       const { name, value } = rest?.option ? rest.option : e.target;
+
       let _value = value;
       let _tempValue = {};
       if (name === "bc_index") {
-        const _findObj = beaconOptions?.find(
+        const _findObj = beaconOptions.find(
           (option) => option.value === value && option
         );
-
         _tempValue = {
           bc_address: _findObj ? _findObj?.address?.replace(/:/g, "") : null,
           bc_management: _findObj ? _findObj?.mgtNumber : null,
         };
       } else if (name === "co_id") {
-        const _findObj = companyOptions?.find(
+        const _findObj = companyOptions.find(
           (option) => option.value === value && option
         );
         _tempValue = {
           co_name: _findObj ? _findObj?.text : null,
         };
-      } else if (name === "wk_phone") {
-        _value = autoHypenPhone(String(_value));
-      } else if (name === "wk_sms_yn") {
-        _value = e.target.checked ? 1 : 0;
       }
 
       if (error?.[name])
@@ -288,20 +261,10 @@ const WorkerContainer = () => {
     [formData, beaconOptions, companyOptions, error]
   );
 
-  const onChangeDate = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    date: Date | string
-  ) => {
-    setFormData({
-      ...formData,
-      wk_birth: moment(date).format("YYYY-MM-DD"),
-    });
-  };
-
   /**@description  table 컴포넌트 Row 클릭 이벤트 핸들러*/
   const onRowClick = useCallback(
-    (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, item: WorkerType) => {
-      const { wk_index: itemIndex = null, wk_image = null } = item;
+    (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, item: VehicleType) => {
+      const { vh_index: itemIndex = null, vh_image } = item;
       if (itemIndex === selectedRow.selectedId) {
         setSelectedRow({
           selectedId: null,
@@ -309,8 +272,9 @@ const WorkerContainer = () => {
           clickedIndex: null,
         });
         initForm();
-        const _tempBeaconOptions =
-          beaconOptions?.filter((item) => !item.used && item) ?? [];
+        const _tempBeaconOptions = beaconOptions.filter(
+          (item) => !item.used && item
+        );
         setBeaconOptions(_tempBeaconOptions);
       } else {
         setSelectedRow({
@@ -320,8 +284,7 @@ const WorkerContainer = () => {
         });
         setImageFile({
           ...imageFile,
-          fileName: wk_image,
-          // src: wk_image,
+          fileName: vh_image,
         });
         setFormData({
           ...item,
@@ -330,7 +293,6 @@ const WorkerContainer = () => {
         setBeaconOptionHandler(item, beaconOptions);
       }
     },
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [selectedRow.selectedId, beaconOptions]
   );
@@ -340,7 +302,7 @@ const WorkerContainer = () => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
-    const { wk_index: index } = formData;
+    const { vh_index: index } = formData;
 
     /**@description 유효성 체크 */
     if (!formData.co_id) {
@@ -349,10 +311,16 @@ const WorkerContainer = () => {
         co_id: "소속사를 입력해 주세요.",
       });
       return false;
-    } else if (!formData.wk_name || formData.wk_name.length < 1) {
+    } else if (!formData.vh_name || formData.vh_name.length < 1) {
       setError({
         ...error,
-        wk_name: "이름을 입력해 주세요.",
+        vh_name: "차량 종류를 입력해 주세요.",
+      });
+      return false;
+    } else if (!formData.vh_number || formData.vh_number.length < 1) {
+      setError({
+        ...error,
+        vh_number: "차량 번호를 입력해 주세요.",
       });
       return false;
     }
@@ -363,12 +331,12 @@ const WorkerContainer = () => {
       const createData = new FormData();
       let postData = {
         ...formData,
-        wk_index: imageFile.src ? imageFile.fileName : formData.wk_index,
+        vh_image: imageFile.src ? imageFile.fileName : formData.vh_image,
         bc_index: formData.bc_index ? formData.bc_index : null,
       };
       const updatedKeys = {};
 
-      // eslint-disable-next-line no-restricted-syntax
+      // // eslint-disable-next-line no-restricted-syntax
       // for (let key in postData) {
       //   if (key !== undefined || key !== null) {
       //     updatedKeys[`u_${key}`] = true;
@@ -379,11 +347,11 @@ const WorkerContainer = () => {
         ...postData,
         ...updatedKeys,
       };
-      createData.append("file", imageFile.file);
+      createData.append("file", imageFile.file ?? null);
       createData.append("reqBody", JSON.stringify(postData));
 
       try {
-        await dispatch(postWorker(createData));
+        await dispatch(postVehicle(createData));
         setFormData(initFormData);
         if (postData.bc_index) {
           dispatch(getUnUsedBeacons());
@@ -402,7 +370,6 @@ const WorkerContainer = () => {
     }
   };
 
-  /**@descrition modal button Action */
   const setOpen = ({ action, open }: { action: boolean; open: boolean }) => {
     setModalData((prev) => {
       if (prev.type === "update" && action) updateDispatch();
@@ -436,18 +403,19 @@ const WorkerContainer = () => {
       ...putData,
       ...updatedKeys,
       bc_index: formData.bc_index ? formData.bc_index : null,
-      wk_image: imageFile.src ? imageFile.fileName : null,
+      vh_image: imageFile.src ? imageFile.fileName : formData.vh_image,
     };
     const updateData = new FormData();
 
-    updateData.append("file", imageFile?.file ?? null);
+    updateData.append("file", imageFile.file ?? null);
     updateData.append("reqBody", JSON.stringify(putData));
     try {
-      await dispatch(putWorker(updateData));
+      await dispatch(putVehicle(updateData));
+      dispatch(getUnUsedBeacons());
       dispatch(getUnUsedBeacons());
       setFormData({
         ...putData,
-        wk_image: imageFile.fileName,
+        vh_image: imageFile.fileName,
       });
       setImageFile({
         preview: false,
@@ -466,7 +434,7 @@ const WorkerContainer = () => {
     id: number
   ) => {
     const findItem =
-      workersData?.find((item) => item.wk_id === id && item) ?? null;
+      vehiclesData?.find((item) => item.vh_id === id && item) ?? null;
     if (findItem) {
       setModalData({
         ...modalData,
@@ -482,8 +450,9 @@ const WorkerContainer = () => {
 
     try {
       if (_item === null) return;
-      await dispatch(deleteWorker(_item));
+      await dispatch(deleteVehicle(_item));
       dispatch(getUnUsedBeacons());
+
       initForm();
       setSelectedRow({
         selectedId: null,
@@ -538,6 +507,15 @@ const WorkerContainer = () => {
     });
   };
 
+  // const onImageRemove = () => {
+  //   setImageFile({
+  //     preview: false,
+  //     fileName: formData.vh_image ? formData.vh_image : null,
+  //     file: null,
+  //     src: formData.vh_image ? formData.vh_image : null,
+  //   });
+  // };
+
   /**@description image input upload 버튼 이벤트(장비 등록시 필요) */
   const onUpload = () => {};
 
@@ -580,19 +558,20 @@ const WorkerContainer = () => {
                 .toUpperCase()
                 .replace(/[^a-z|^A-Z|^0-9|^ㄱ-ㅎ|^ㅏ-ㅣ]*$/g, "")
             : value;
-      } else if (name === "wk_search") {
+      } else if (name === "vh_search") {
         if (value) {
           _tempObj = {
-            bc_address: undefined,
+            bc_address: null,
           };
         } else {
           _tempObj = {
-            co_id: undefined,
-            wk_name: undefined,
+            co_id: null,
+            vh_name: null,
           };
         }
         _value = value;
-        setWorkerItems(workersData);
+
+        setVehicleItems(vehiclesData);
         setSelectedRow({
           selectedId: null,
           selectedItem: null,
@@ -612,11 +591,11 @@ const WorkerContainer = () => {
       });
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [searchData, workersData]
+    [searchData, vehiclesData]
   );
 
   const onSearchAction = () => {
-    filterWorkerItems(workersData ?? []);
+    filterVehicleItems(vehiclesData ?? []);
 
     setSelectedRow({
       selectedId: null,
@@ -631,50 +610,51 @@ const WorkerContainer = () => {
   };
 
   const onSearchRefresh = () => {
-    setSearchData({ ...initSearchData, wk_search: searchData.wk_search });
+    setSearchData({ ...initSearchData, vh_search: searchData.vh_search });
     setSelectedRow({
       selectedId: null,
       selectedItem: null,
       clickedIndex: null,
     });
     initForm();
-    setWorkerItems(workersData);
+    setVehicleItems(vehiclesData);
   };
 
-  const filterWorkerItems = (items: WorkerType[]) => {
-    const { co_id: coId, wk_name, wk_search, bc_address } = searchData;
+  const filterVehicleItems = (items: VehicleType[]) => {
+    const { co_id: coId, vh_name, vh_search, bc_address } = searchData;
 
-    if (wk_search) {
+    if (vh_search) {
       /* case1)소속사 검색 조건 O, 이름 검색 조건 O
        * case2)소속사 검색 조건 O, 이름 검색 조건 X
        * case3)소속사 검색 조건 X, 이름 검색 조건 X
        * case2)소속사 검색 조건 X, 이름 검색 조건 X
        */
-      const _replaceStr = wk_name ? wk_name.replace(/ /gi, "") : null;
-      const wkName =
+      const _replaceStr = vh_name ? vh_name.replace(/ /gi, "") : null;
+      const vhName =
         _replaceStr && _replaceStr.length !== 0 ? _replaceStr : null;
 
-      const filterItems = items.filter((item) => {
-        if (coId && wkName) {
-          // case1
-          if (
-            coId === item.co_id &&
-            item?.wk_name &&
-            item?.wk_name.includes(wkName)
-          )
+      const filterItems =
+        vehiclesData?.filter((item) => {
+          if (coId && vhName) {
+            // case1
+            if (
+              coId === item.co_id &&
+              item?.vh_name &&
+              item.vh_name.includes(vhName)
+            )
+              return item;
+          } else if (coId && !vhName) {
+            // case2
+            if (coId === item.co_id) return item;
+          } else if (!coId && vhName) {
+            // case3
+            if (item?.vh_name && item.vh_name.includes(vhName)) return item;
+          } else {
+            // case4
             return item;
-        } else if (coId && !wkName) {
-          // case2
-          if (coId === item.co_id) return item;
-        } else if (!coId && wkName) {
-          // case3
-          if (item?.wk_name && item.wk_name.includes(wkName)) return item;
-        } else {
-          // case4
-          return item;
-        }
-      });
-      setWorkerItems(filterItems);
+          }
+        }) ?? [];
+      setVehicleItems(filterItems);
     } else {
       // eslint-disable-next-line no-lonely-if
       if (bc_address) {
@@ -682,65 +662,62 @@ const WorkerContainer = () => {
           (item) =>
             item?.bc_address && item.bc_address.includes(bc_address) && item
         );
-
-        setWorkerItems(filterItems);
+        setVehicleItems(filterItems);
       } else {
-        setWorkerItems(workersData);
+        setVehicleItems(vehiclesData);
       }
     }
   };
 
   const setBeaconOptionHandler = (
-    item: WorkerType,
+    item: VehicleType,
     options: BeaconOptionsType[]
   ) => {
-    // if (item.bc_index) {
-    //   if (
-    //     !options.find(
-    //       (option) => option.used && option.key !== item.bc_id && option
-    //     )
-    //   ) {
-    //     const _tempBeaconOption:BeaconOptionsType =
-    //       {
-    //         key: item.bc_id,
-    //         text: `${zeroFill(
-    //           String(item.bc_management),
-    //           3
-    //         )} - ${splitByColonInput(String(item.bc_address))}`,
-    //         value: item.bc_index,
-    //         used: true,
-    //       },
-    //     setBeaconOptions([...options, ...[_tempBeaconOption]]);
-    //   } else {
-    //     const _tempBeaconOptions = options.map((option) =>
-    //       option.used && option.bc_index !== item.bc_address
-    //         ? {
-    //             ...option,
-    //             key: item.bc_id,
-    //             text: `${zeroFill(item.bc_management, 3)} - ${splitByColonInput(
-    //               item.bc_address
-    //             )}`,
-    //             value: item.bc_index,
-    //           }
-    //         : option
-    //     );
-    //     setBeaconOptions(_tempBeaconOptions);
-    //   }
-    // } else {
-    //   const _tempBeaconOptions = options.filter(
-    //     (option) => !option.used && option
-    //   );
-    //   setBeaconOptions(_tempBeaconOptions);
-    // }
+    if (item.bc_index) {
+      const optionItem = options.find(
+        (option) => option.used && option.key !== item.bc_id && option
+      );
+      if (!optionItem) {
+        const _tempBeaconOption = {
+          key: Number(item.bc_id),
+          text: `${zeroFill(item?.bc_management ?? 0, 3)} - ${
+            item.bc_address ? splitByColonInput(item.bc_address) : ""
+          }`,
+          value: item.bc_index,
+          used: true,
+        };
+
+        setBeaconOptions([...options, ...[_tempBeaconOption]]);
+      } else {
+        const _tempBeaconOptions = options.map((option) =>
+          option.used && option.value !== item.bc_address
+            ? {
+                ...option,
+                key: Number(item.bc_id),
+                text: `${zeroFill(item?.bc_management ?? 0, 3)} - ${
+                  item.bc_address ? splitByColonInput(item.bc_address) : ""
+                }`,
+                value: item.bc_index,
+              }
+            : option
+        );
+        setBeaconOptions(_tempBeaconOptions);
+      }
+    } else {
+      const _tempBeaconOptions = options.filter(
+        (option) => !option.used && option
+      );
+      setBeaconOptions(_tempBeaconOptions);
+    }
   };
 
   return (
-    <WorkerCmpt>
+    <VehicleCmpt>
       <OneByTwoLayout
-        inputTitle="작업자 등록"
-        tableTitle="작업자 목록"
+        inputTitle="차량 등록"
+        tableTitle="차량 목록"
         firstRender={
-          <WorkerInput
+          <VehicleInput
             formData={formData}
             error={error}
             selectedRow={selectedRow}
@@ -748,7 +725,6 @@ const WorkerContainer = () => {
             onChange={onChange}
             onSubmit={onSubmit}
             setOpen={setOpen}
-            onChangeDate={onChangeDate}
             // ...rest
             companyOptions={companyOptions}
             beaconOptions={beaconOptions}
@@ -757,12 +733,12 @@ const WorkerContainer = () => {
             onPreview={onPreview}
             onImageRemove={onImageRemove}
             onUpload={onUpload}
-            smsDisabled={smsDisabled}
+            // scnGroupPrefix={scnGroupPrefix}
           />
         }
         secondRender={
-          <WorkerTable
-            data={workerItems}
+          <VehicleTable
+            data={vehicleItems}
             selectedRow={selectedRow}
             onRowClick={onRowClick}
             onDelete={onDelete}
@@ -772,7 +748,7 @@ const WorkerContainer = () => {
           />
         }
         searchRender={
-          <WorkerSearch
+          <VehicleSearch
             searchData={searchData}
             onSearchChange={onSearchChange}
             onSearchAction={onSearchAction}
@@ -784,8 +760,8 @@ const WorkerContainer = () => {
         }
         rightHeader
       />
-    </WorkerCmpt>
+    </VehicleCmpt>
   );
 };
 
-export default WorkerContainer;
+export default VehicleContainer;

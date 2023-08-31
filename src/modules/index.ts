@@ -8,6 +8,9 @@ import monitorReducer from "./monitors";
 
 import beaconReducer from "./beacons";
 import workerReducer from "./workers";
+import vehicleReducer from "./vehicles";
+
+import announcesReducer from "./announces";
 
 const rootReducer = combineReducers({
   // 3번에서 만들 slice를 여기에 넣을 예정
@@ -20,6 +23,8 @@ const rootReducer = combineReducers({
   monitors: monitorReducer,
   beacons: beaconReducer,
   workers: workerReducer,
+  vehicles: vehicleReducer,
+  announces: announcesReducer,
 });
 
 export default rootReducer;

@@ -159,9 +159,9 @@ const WorkerSearch = ({
                 { key: 1, text: "작업자", value: true },
                 { key: 2, text: "비콘", value: false },
               ]}
-              value={searchData.co_id ?? 0}
-              onChange={(e, option) => onSearchChange({ e, option })}
+              value={searchData?.wk_search ?? null}
               placeholder="작업자"
+              onChange={(e, option) => onSearchChange({ e, option })}
               search
             />
           </div>

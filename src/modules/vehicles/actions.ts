@@ -1,0 +1,36 @@
+import { asyncActions } from "lib/reducerUtils";
+
+export const [
+  GET_VEHICLES,
+  GET_VEHICLES_PENDING,
+  GET_VEHICLES_FULFILLED,
+  GET_VEHICLES_REJECTED,
+] = asyncActions("vehicles/GET_VEHICLES");
+
+export const [
+  GET_VEHICLE,
+  GET_VEHICLE_PENDING,
+  GET_VEHICLE_FULFILLED,
+  GET_VEHICLE_REJECTED,
+] = asyncActions("vehicles/GET_VEHICLE");
+
+export const [
+  POST_VEHICLE,
+  POST_VEHICLE_PENDING,
+  POST_VEHICLE_FULFILLED,
+  POST_VEHICLE_REJECTED,
+] = asyncActions("vehicles/POST_VEHICLE");
+
+export const [
+  PUT_VEHICLE,
+  PUT_VEHICLE_PENDING,
+  PUT_VEHICLE_FULFILLED,
+  PUT_VEHICLE_REJECTED,
+] = asyncActions("vehicles/PUT_VEHICLE");
+
+export const [
+  DELETE_VEHICLE,
+  DELETE_VEHICLE_PENDING,
+  DELETE_VEHICLE_FULFILLED,
+  DELETE_VEHICLE_REJECTED,
+] = asyncActions("vehicles/DELETE_VEHICLE");

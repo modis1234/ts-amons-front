@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { AnnounceType } from 'types/announces';
+import { AnnounceType } from 'modules/announces';
 
 const API = `http://${process.env.REACT_APP_API_SERVER}`;
 const TS_INDEX = process.env.REACT_APP_TS_INDEX ?? null;
