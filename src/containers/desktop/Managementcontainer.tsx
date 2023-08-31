@@ -3,10 +3,12 @@ import {
   faHardHat,
   faIdCardAlt,
   faRoad,
+  faTruck,
 } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import LocalContainer from "containers/field/LocalContainer";
 import CompanyContainer from "containers/general/CompanyContainer";
+import VehicleContainer from "containers/general/VehicleContainer";
 import WorkerContainer from "containers/general/WorkerContainer";
 import React, { useState, useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
@@ -87,6 +89,11 @@ const contentsList: ContentsListType = {
     title: "작업자 관리",
     icon: faHardHat,
     component: <WorkerContainer />,
+  },
+  vehicle: {
+    title: "차량 관리",
+    icon: faTruck,
+    component: <VehicleContainer />,
   },
 };
 

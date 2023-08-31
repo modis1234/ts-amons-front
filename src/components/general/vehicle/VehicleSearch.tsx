@@ -1,5 +1,5 @@
-import { OptionsType } from "containers/general/WorkerContainer";
-import { WorkerErrorType, WorkerSearchDataType } from "modules/workers";
+import { OptionsType } from "containers/general/VehicleContainer";
+import { VehicleErrorType, VehicleSearchDataType } from "modules/vehicles";
 import FormElement from "opwsUI/form/FormElement";
 import React from "react";
 import {
@@ -12,17 +12,17 @@ import {
 } from "semantic-ui-react";
 import styled from "styled-components";
 
-const WorkerSearchCmpt = styled.div`
+const VehicleSearchCmpt = styled.div`
   width: 100%;
   height: 100%;
   .search-panel {
     width: 100%;
     height: 100%;
-    background-color: aliceblue;
     .table-search-menu {
       border: 0px;
+      display: flex;
       .search-dropdown-menu {
-        width: 143px;
+        width: 196px;
         .dropdown-component {
           width: inherit;
           background-color: #f2f2f2 !important;
@@ -35,12 +35,6 @@ const WorkerSearchCmpt = styled.div`
             border-radius: 0px;
             border-top-left-radius: 4px;
             border-bottom-left-radius: 4px;
-            .divider {
-              width: 98px;
-              overflow: hidden;
-              white-space: nowrap;
-              text-overflow: ellipsis;
-            }
           }
 
           &:focus {
@@ -67,7 +61,8 @@ const WorkerSearchCmpt = styled.div`
           border: 0px;
           font-family: NotoSansCJKkr-Regular;
           min-width: 20em;
-          &.input-worker-name {
+          height: 41px;
+          &.input-vehicle-name {
             input {
               border-radius: 0px;
               border-left-width: 0px;
@@ -107,7 +102,7 @@ const WorkerSearchCmpt = styled.div`
           /* box-shadow: 0 0 0 0 rgba(34, 36, 38, 0.15) inset; */
           color: #212121 !important;
           font-size: 15px;
-          padding: 11.5px;
+          padding: 13px;
           border-radius: 0px 4px 4px 0px;
           &:hover {
             color: var(--company-identity-color, #0000ff) !important;
@@ -119,8 +114,8 @@ const WorkerSearchCmpt = styled.div`
   }
 `;
 
-type WorkerSearchType = {
-  searchData: WorkerSearchDataType;
+type VehicleSearchType = {
+  searchData: VehicleSearchDataType;
   onSearchChange: ({
     e,
     option,
@@ -130,11 +125,11 @@ type WorkerSearchType = {
   }) => void;
   onSearchAction: () => void;
   onSearchRefresh: () => void;
-  error: WorkerErrorType;
+  error: VehicleErrorType;
   companyOptions?: OptionsType[] | DropdownItemProps[] | undefined;
 };
 
-const WorkerSearch = ({
+const VehicleSearch = ({
   searchData,
   onSearchChange,
   onSearchAction,
@@ -142,61 +137,30 @@ const WorkerSearch = ({
   error,
   companyOptions,
   ...rest
-}: WorkerSearchType) => {
+}: VehicleSearchType) => {
   return (
-    <WorkerSearchCmpt>
+    <VehicleSearchCmpt>
       <div className="search-panel">
-        <Menu className="table-search-menu">
-          <Menu.Menu className="search-dropdown-menu">
-            {/* <Dropdown
-              button
-              basic
-              fluid
-              selection
-              id="wk_search"
-              name="wk_search"
-              options={[
-                { key: 1, text: "작업자", value: true },
-                { key: 2, text: "비콘", value: false },
-              ]}
-              className="dropdown-component search-type"
-              value={searchData?.wk_search ?? null}
-              placeholder="작업자"
-              onChange={(e, option) => onSearchChange({ e, option })}
-            /> */}
-
+        <div className="table-search-menu">
+          <div className="search-dropdown-menu">
             <FormElement
               kind="select"
-              // label="소속사"
-              id="wk_search"
-              name="wk_search"
+              id="vh_search"
+              name="vh_search"
               className="dropdown-component search-type"
               options={[
-                { key: 1, text: "작업자", value: true },
+                { key: 1, text: "차량", value: true },
                 { key: 2, text: "비콘", value: false },
               ]}
-              value={searchData.co_id ?? 0}
+              value={searchData?.vh_search ?? null}
+              placeholder="차량"
               onChange={(e, option) => onSearchChange({ e, option })}
-              placeholder="작업자"
               search
             />
-          </Menu.Menu>
-          {searchData.wk_search ? (
+          </div>
+          {searchData.vh_search ? (
             <>
-              <Menu.Menu className="search-dropdown-menu">
-                {/* <Dropdown
-                  button
-                  basic
-                  fluid
-                  selection
-                  id="co_id"
-                  name="co_id"
-                  options={companyOptions ?? []}
-                  className="dropdown-component dropdown-company"
-                  value={searchData?.co_id ?? ""}
-                  placeholder="소속사 전체"
-                  onChange={(e, option) => onSearchChange({ e, option })}
-                /> */}
+              <div className="search-dropdown-menu">
                 <FormElement
                   kind="select"
                   // label="소속사"
@@ -215,22 +179,18 @@ const WorkerSearch = ({
                   required
                   search
                 />
-              </Menu.Menu>
-              <Menu.Menu className="search-input-menu" position="left">
+              </div>
+              <div className="search-input-menu">
                 <Input
-                  className="input-component input-worker-name"
-                  id="wk_name"
-                  name="wk_name"
-                  value={searchData?.wk_name ?? ""}
-                  icon={{
-                    name: "search",
-                    link: true,
-                    onClick: onSearchAction,
-                  }}
+                  className="input-component input-vehicle-name"
+                  id="vh_name"
+                  name="vh_name"
+                  value={searchData?.vh_name ?? ""}
+                  icon={{ name: "search", link: true, onClick: onSearchAction }}
                   onKeyPress={(e: React.KeyboardEvent<HTMLInputElement>) => {
                     if (e.key === "Enter") onSearchAction();
                   }}
-                  placeholder="작업자 이름을 입력해 주세요."
+                  placeholder="차량 종류를 입력해 주세요."
                   onChange={(e) => onSearchChange({ e })}
                 />
                 <Button
@@ -241,10 +201,10 @@ const WorkerSearch = ({
                 >
                   <Icon name="redo" />
                 </Button>
-              </Menu.Menu>
+              </div>
             </>
           ) : (
-            <Menu.Menu className="search-input-menu" position="left">
+            <div className="search-input-menu">
               <Input
                 className="input-component input-beacon-address"
                 id="bc_address"
@@ -267,12 +227,12 @@ const WorkerSearch = ({
               >
                 <Icon name="redo" />
               </Button>
-            </Menu.Menu>
+            </div>
           )}
-        </Menu>
+        </div>
       </div>
-    </WorkerSearchCmpt>
+    </VehicleSearchCmpt>
   );
 };
 
-export default WorkerSearch;
+export default VehicleSearch;
