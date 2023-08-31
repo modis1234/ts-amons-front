@@ -1,0 +1,36 @@
+import { asyncActions } from 'lib/reducerUtils';
+
+export const [
+  GET_ANNOUNCES,
+  GET_ANNOUNCES_PENDING,
+  GET_ANNOUNCES_FULFILLED,
+  GET_ANNOUNCES_REJECTED,
+] = asyncActions('announces/GET_ANNOUNCES');
+
+export const [
+  GET_ANNOUNCE,
+  GET_ANNOUNCE_PENDING,
+  GET_ANNOUNCE_FULFILLED,
+  GET_ANNOUNCE_REJECTED,
+] = asyncActions('announces/GET_ANNOUNCE');
+
+export const [
+  POST_ANNOUNCE,
+  POST_ANNOUNCE_PENDING,
+  POST_ANNOUNCE_FULFILLED,
+  POST_ANNOUNCE_REJECTED,
+] = asyncActions('announces/POST_ANNOUNCE');
+
+export const [
+  PUT_ANNOUNCE,
+  PUT_ANNOUNCE_PENDING,
+  PUT_ANNOUNCE_FULFILLED,
+  PUT_ANNOUNCE_REJECTED,
+] = asyncActions('announces/PUT_ANNOUNCE');
+
+export const [
+  DELETE_ANNOUNCE,
+  DELETE_ANNOUNCE_PENDING,
+  DELETE_ANNOUNCE_FULFILLED,
+  DELETE_ANNOUNCE_REJECTED,
+] = asyncActions('announces/DELETE_ANNOUNCE');

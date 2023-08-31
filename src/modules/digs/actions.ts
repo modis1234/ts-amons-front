@@ -1,0 +1,42 @@
+import { asyncActions } from 'lib/reducerUtils';
+
+export const [
+  GET_DIGS,
+  GET_DIGS_PENDING,
+  GET_DIGS_FULFILLED,
+  GET_DIGS_REJECTED,
+] = asyncActions('digs/GET_DIGS');
+
+export const [GET_DIG, GET_DIG_PENDING, GET_DIG_FULFILLED, GET_DIG_REJECTED] =
+  asyncActions('digs/GET_DIG');
+
+export const [
+  POST_DIG,
+  POST_DIG_PENDING,
+  POST_DIG_FULFILLED,
+  POST_DIG_REJECTED,
+] = asyncActions('digs/POST_DIG');
+
+export const [PUT_DIG, PUT_DIG_PENDING, PUT_DIG_FULFILLED, PUT_DIG_REJECTED] =
+  asyncActions('digs/PUT_DIG');
+
+export const [
+  DELETE_DIG,
+  DELETE_DIG_PENDING,
+  DELETE_DIG_FULFILLED,
+  DELETE_DIG_REJECTED,
+] = asyncActions('digs/DELETE_DIG');
+
+export const [
+  GET_LOGDIGMONTH,
+  GET_LOGDIGMONTH_PENDING,
+  GET_LOGDIGMONTH_FULFILLED,
+  GET_LOGDIGMONTH_REJECTED,
+] = asyncActions('digs/GET_LOGDIGMONTH');
+
+export const [
+  POST_LOGDIGSEARCH,
+  POST_LOGDIGSEARCH_PENDING,
+  POST_LOGDIGSEARCH_FULFILLED,
+  POST_LOGDIGSEARCH_REJECTED,
+] = asyncActions('digs/POST_LOGDIGSEARCH');
