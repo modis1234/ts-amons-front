@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import styled from "styled-components";
+import React, { useEffect } from 'react';
+import styled from 'styled-components';
 
 const OneByTwoCmpt = styled.div<{ rightHeader: boolean | undefined }>`
   width: 100%;
@@ -94,9 +94,9 @@ const OneByTwoCmpt = styled.div<{ rightHeader: boolean | undefined }>`
     }
     .right-body {
       width: 100%;
-      height: ${(props) => (props.rightHeader ? "calc(100% - 58px)" : "100%")};
+      height: ${(props) => (props.rightHeader ? 'calc(100% - 58px)' : '100%')};
       /* padding-top: 22px; */
-      padding-top: ${(props) => (props.rightHeader ? "10px" : "22px")};
+      padding-top: ${(props) => (props.rightHeader ? '10px' : '22px')};
       padding-left: 17px;
       padding-right: 17px;
       padding-bottom: 18px;
@@ -130,8 +130,8 @@ type OneByTwoLayoutType = {
 };
 
 const OneByTwoLayout = ({
-  inputTitle = "", // Input Box Title
-  tableTitle = "", // Table Box Title
+  inputTitle = '', // Input Box Title
+  tableTitle = '', // Table Box Title
   firstRender = <div>Left_Box</div>, // Input Box Component
   secondRender = <div>Right_Box</div>, // Table Box Component
   rightHeader = true, // search Box Component

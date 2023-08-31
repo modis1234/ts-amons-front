@@ -1,5 +1,5 @@
-import axios from "axios";
-import { VehicleType } from "modules/vehicles";
+import axios from 'axios';
+import { VehicleType } from 'modules/vehicles';
 
 const API = `http://${process.env.REACT_APP_API_SERVER}`;
 const TS_INDEX = process.env.REACT_APP_TS_INDEX ?? null;
@@ -7,7 +7,7 @@ const TS_INDEX = process.env.REACT_APP_TS_INDEX ?? null;
 // 포스트 목록을 가져오는 비동기 함수
 export const getVehicles = async () => {
   const response = await axios.get(
-    `${API}/api/vehicle/vehicles?siteIndex=${TS_INDEX}`
+    `${API}/api/vehicle/vehicles?siteIndex=${TS_INDEX}`,
   );
   return response.data;
 };
@@ -22,7 +22,7 @@ export const getVehicleById = async (id: number) => {
 export const postVehicle = async (data: VehicleType) => {
   const response = await axios.post(
     `${API}/api/vehicle/vehicles?siteIndex=${TS_INDEX}&type=vehicle`,
-    data
+    data,
   );
   return response.data;
 };
@@ -31,7 +31,7 @@ export const postVehicle = async (data: VehicleType) => {
 export const putVehicle = async (id: number, data: VehicleType) => {
   const response = await axios.put(
     `${API}/api/vehicle/vehicles/${id}?siteIndex=${TS_INDEX}&type=vehicle`,
-    data
+    data,
   );
   return response.data;
 };

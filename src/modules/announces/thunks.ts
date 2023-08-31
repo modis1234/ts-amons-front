@@ -11,26 +11,26 @@ import {
 
 export const getAnnounces = createThunk<AnnounceType[]>(
   GET_ANNOUNCES,
-  announceAPI.getAnnounces
+  announceAPI.getAnnounces,
 );
 export const getAnnounce = createThunk<AnnounceType[]>(
   GET_ANNOUNCE,
-  announceAPI.getAnnounceById
+  announceAPI.getAnnounceById,
 );
 
 export const postAnnounce = createThunk<AnnounceType[], AnnounceType>(
   POST_ANNOUNCE,
-  announceAPI.postAnnounce
+  announceAPI.postAnnounce,
 );
 
 export const putAnnounce = updateThunk<AnnounceType, AnnounceType>(
   'ann_id',
   PUT_ANNOUNCE,
-  announceAPI.putAnnounce
+  announceAPI.putAnnounce,
 );
 
 export const deleteAnnounce = deleteThunk<AnnounceType, AnnounceType>(
   'ann_id',
   DELETE_ANNOUNCE,
-  announceAPI.deleteAnnounce
+  announceAPI.deleteAnnounce,
 );

@@ -5,13 +5,17 @@ const TS_INDEX = process.env.REACT_APP_TS_INDEX ?? null;
 
 // location 모니터링 정보
 export const getMonitor = async () => {
-  const response = await axios.get(`${API}/api/monitor/monitors?siteIndex=${TS_INDEX}`);
+  const response = await axios.get(
+    `${API}/api/monitor/monitors?siteIndex=${TS_INDEX}`,
+  );
   return response.data;
 };
 
 // 스캐너 정보
 export const getScanner = async () => {
-  const response = await axios.get(`${API}/api/monitor/scanners?siteIndex=${TS_INDEX}`);
+  const response = await axios.get(
+    `${API}/api/monitor/scanners?siteIndex=${TS_INDEX}`,
+  );
   return response.data;
 };
 
@@ -23,13 +27,17 @@ export const getWeather = async () => {
 
 // ble beacon input 정보
 export const getBleBeacon = async () => {
-  const response = await axios.get(`${API}/api/monitor/beacons?siteIndex=${TS_INDEX}`);
+  const response = await axios.get(
+    `${API}/api/monitor/beacons?siteIndex=${TS_INDEX}`,
+  );
   return response.data;
 };
 
 // 대시보드 환경설정
 export const getEnvironment = async () => {
-  const response = await axios.get(`${API}/api/environment/environments/${TS_INDEX}`);
+  const response = await axios.get(
+    `${API}/api/environment/environments/${TS_INDEX}`,
+  );
   return response.data;
 };
 

@@ -1,18 +1,18 @@
-import { useAppDispatch, useAppSelector } from "modules/hooks";
+import { useAppDispatch, useAppSelector } from 'modules/hooks';
 
-import { ModalDataType } from "opwsUI/form/FormElement";
-import { PageInfoType, SelectedRowType } from "opwsUI/table/types";
+import { ModalDataType } from 'opwsUI/form/FormElement';
+import { PageInfoType, SelectedRowType } from 'opwsUI/table/types';
 import React, {
   useCallback,
   useEffect,
   useLayoutEffect,
   useState,
-} from "react";
-import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
+} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
 
-import initConfigData from "../../opwsUI/initConfigData";
-import OneByTwoLayout from "../../opwsUI/layout/OneByTwoLayout";
+import initConfigData from '../../opwsUI/initConfigData';
+import OneByTwoLayout from '../../opwsUI/layout/OneByTwoLayout';
 import {
   deleteVehicle,
   getVehicles,
@@ -21,18 +21,18 @@ import {
   VehicleErrorType,
   VehicleSearchDataType,
   VehicleType,
-} from "modules/vehicles";
-import { BeaconType, getUnUsedBeacons } from "../../modules/beacons";
-import { getCompanies } from "../../modules/companies";
+} from 'modules/vehicles';
+import { BeaconType, getUnUsedBeacons } from '../../modules/beacons';
+import { getCompanies } from '../../modules/companies';
 import {
   isKorean,
   sortFn,
   splitByColonInput,
   zeroFill,
-} from "../../opwsUI/util";
-import VehicleInput from "components/general/vehicle/VehicleInput";
-import VehicleTable from "components/general/vehicle/VehicleTable";
-import VehicleSearch from "components/general/vehicle/VehicleSearch";
+} from '../../opwsUI/util';
+import VehicleInput from 'components/general/vehicle/VehicleInput';
+import VehicleTable from 'components/general/vehicle/VehicleTable';
+import VehicleSearch from 'components/general/vehicle/VehicleSearch';
 
 const VehicleCmpt = styled.div`
   width: 100%;
@@ -75,7 +75,7 @@ const VehicleContainer = () => {
         companiesData: state.companies.data,
         beaconsData: state.beacons.data,
       };
-    }
+    },
   );
 
   const dispatch = useAppDispatch();
@@ -96,7 +96,7 @@ const VehicleContainer = () => {
   const [imageFile, setImageFile] = useState<ImageFileType>({
     preview: false,
     fileName: null,
-    file: "",
+    file: '',
     src: null,
   });
 
@@ -131,20 +131,20 @@ const VehicleContainer = () => {
           acc.push(tempObj);
           return acc;
         },
-        []
+        [],
       );
       setCompanyOptions(_companiesOption);
     }
 
     if (beaconsData) {
-      const sortBeaconsData = sortFn(beaconsData, "bc_address");
+      const sortBeaconsData = sortFn(beaconsData, 'bc_address');
       const _beaconsOption = sortBeaconsData.reduce(
         (acc, curr, index) => {
           const { bc_id, bc_index, bc_address, bc_management } = curr;
           const tempObj = {
             key: bc_id,
             text: `${
-              bc_management ? zeroFill(bc_management, 3) : "000"
+              bc_management ? zeroFill(bc_management, 3) : '000'
             } - ${splitByColonInput(bc_address)}`,
             address: splitByColonInput(bc_address),
             mgtNumber: bc_management,
@@ -154,7 +154,7 @@ const VehicleContainer = () => {
           acc.push(tempObj);
           return acc;
         },
-        [{ key: 0, text: "할당 없음", value: 0 }]
+        [{ key: 0, text: '할당 없음', value: 0 }],
       );
       if (!formData.bc_id) {
         setBeaconOptions(_beaconsOption);
@@ -190,7 +190,7 @@ const VehicleContainer = () => {
     setImageFile({
       preview: false,
       fileName: null,
-      file: "",
+      file: '',
       src: null,
     });
   }, []);
@@ -210,7 +210,7 @@ const VehicleContainer = () => {
         itemsPerPage,
       });
     },
-    [pageInfo]
+    [pageInfo],
   );
 
   /**@descrition input 입력란 onChange 핸들러 */
@@ -229,17 +229,17 @@ const VehicleContainer = () => {
 
       let _value = value;
       let _tempValue = {};
-      if (name === "bc_index") {
+      if (name === 'bc_index') {
         const _findObj = beaconOptions.find(
-          (option) => option.value === value && option
+          (option) => option.value === value && option,
         );
         _tempValue = {
-          bc_address: _findObj ? _findObj?.address?.replace(/:/g, "") : null,
+          bc_address: _findObj ? _findObj?.address?.replace(/:/g, '') : null,
           bc_management: _findObj ? _findObj?.mgtNumber : null,
         };
-      } else if (name === "co_id") {
+      } else if (name === 'co_id') {
         const _findObj = companyOptions.find(
-          (option) => option.value === value && option
+          (option) => option.value === value && option,
         );
         _tempValue = {
           co_name: _findObj ? _findObj?.text : null,
@@ -258,7 +258,7 @@ const VehicleContainer = () => {
         ..._tempValue,
       });
     },
-    [formData, beaconOptions, companyOptions, error]
+    [formData, beaconOptions, companyOptions, error],
   );
 
   /**@description  table 컴포넌트 Row 클릭 이벤트 핸들러*/
@@ -273,7 +273,7 @@ const VehicleContainer = () => {
         });
         initForm();
         const _tempBeaconOptions = beaconOptions.filter(
-          (item) => !item.used && item
+          (item) => !item.used && item,
         );
         setBeaconOptions(_tempBeaconOptions);
       } else {
@@ -294,12 +294,12 @@ const VehicleContainer = () => {
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [selectedRow.selectedId, beaconOptions]
+    [selectedRow.selectedId, beaconOptions],
   );
 
   /**@descrition form 컴포넌트 onSubmit 핸들러 */
   const onSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     e.preventDefault();
     const { vh_index: index } = formData;
@@ -308,19 +308,19 @@ const VehicleContainer = () => {
     if (!formData.co_id) {
       setError({
         ...error,
-        co_id: "소속사를 입력해 주세요.",
+        co_id: '소속사를 입력해 주세요.',
       });
       return false;
     } else if (!formData.vh_name || formData.vh_name.length < 1) {
       setError({
         ...error,
-        vh_name: "차량 종류를 입력해 주세요.",
+        vh_name: '차량 종류를 입력해 주세요.',
       });
       return false;
     } else if (!formData.vh_number || formData.vh_number.length < 1) {
       setError({
         ...error,
-        vh_number: "차량 번호를 입력해 주세요.",
+        vh_number: '차량 번호를 입력해 주세요.',
       });
       return false;
     }
@@ -347,8 +347,8 @@ const VehicleContainer = () => {
         ...postData,
         ...updatedKeys,
       };
-      createData.append("file", imageFile.file ?? null);
-      createData.append("reqBody", JSON.stringify(postData));
+      createData.append('file', imageFile.file ?? null);
+      createData.append('reqBody', JSON.stringify(postData));
 
       try {
         await dispatch(postVehicle(createData));
@@ -358,22 +358,22 @@ const VehicleContainer = () => {
         }
         initForm();
       } catch (error) {
-        console.log("POST ERROR!!");
+        console.log('POST ERROR!!');
       }
     } else {
       //수정
       setModalData({
         ...modalData,
         open: true,
-        type: "update",
+        type: 'update',
       });
     }
   };
 
   const setOpen = ({ action, open }: { action: boolean; open: boolean }) => {
     setModalData((prev) => {
-      if (prev.type === "update" && action) updateDispatch();
-      else if (prev.type === "delete" && action) deleteDispatch();
+      if (prev.type === 'update' && action) updateDispatch();
+      else if (prev.type === 'delete' && action) deleteDispatch();
 
       return {
         ...prev,
@@ -407,8 +407,8 @@ const VehicleContainer = () => {
     };
     const updateData = new FormData();
 
-    updateData.append("file", imageFile.file ?? null);
-    updateData.append("reqBody", JSON.stringify(putData));
+    updateData.append('file', imageFile.file ?? null);
+    updateData.append('reqBody', JSON.stringify(putData));
     try {
       await dispatch(putVehicle(updateData));
       dispatch(getUnUsedBeacons());
@@ -420,18 +420,18 @@ const VehicleContainer = () => {
       setImageFile({
         preview: false,
         fileName: imageFile.fileName,
-        file: "",
+        file: '',
         src: null,
       });
     } catch (error) {
-      console.log("UPDATE ERROR!!");
+      console.log('UPDATE ERROR!!');
     }
   };
 
   /**@descrition delete 버튼 클릭 이벤트 핸들러 */
   const onDelete = (
     e: React.MouseEvent<SVGSVGElement, MouseEvent>,
-    id: number
+    id: number,
   ) => {
     const findItem =
       vehiclesData?.find((item) => item.vh_id === id && item) ?? null;
@@ -439,7 +439,7 @@ const VehicleContainer = () => {
       setModalData({
         ...modalData,
         open: true,
-        type: "delete",
+        type: 'delete',
       });
     }
   };
@@ -460,7 +460,7 @@ const VehicleContainer = () => {
         clickedIndex: null,
       });
     } catch (error) {
-      console.log("DELETE FAIL");
+      console.log('DELETE FAIL');
     }
   };
 
@@ -472,7 +472,7 @@ const VehicleContainer = () => {
       const target = e.target as HTMLInputElement;
       const theFile = target?.files ? target?.files[0] : null;
       if (!theFile) return;
-      console.log("theFile->", theFile);
+      console.log('theFile->', theFile);
       if (theFile) {
         const reader = new FileReader();
         reader.readAsDataURL(theFile);
@@ -486,7 +486,7 @@ const VehicleContainer = () => {
         };
       }
     },
-    [imageFile]
+    [imageFile],
   );
 
   /**@description image input 미리보기 */
@@ -502,7 +502,7 @@ const VehicleContainer = () => {
     setImageFile({
       preview: false,
       fileName: null,
-      file: "",
+      file: '',
       src: null,
     });
   };
@@ -538,12 +538,12 @@ const VehicleContainer = () => {
 
       let _value;
       let _tempObj = {};
-      if (name === "bc_address") {
-        const _isKorean = typeof value === "string" ? isKorean(value) : false;
+      if (name === 'bc_address') {
+        const _isKorean = typeof value === 'string' ? isKorean(value) : false;
         if (_isKorean) {
           setError({
             ...error,
-            bc_address: "영어 또는 숫자만 입력 가능합니다.",
+            bc_address: '영어 또는 숫자만 입력 가능합니다.',
           });
           return;
         } else if (!_isKorean && error?.bc_address) {
@@ -553,12 +553,12 @@ const VehicleContainer = () => {
           });
         }
         _value =
-          typeof value === "string"
+          typeof value === 'string'
             ? value
                 .toUpperCase()
-                .replace(/[^a-z|^A-Z|^0-9|^ㄱ-ㅎ|^ㅏ-ㅣ]*$/g, "")
+                .replace(/[^a-z|^A-Z|^0-9|^ㄱ-ㅎ|^ㅏ-ㅣ]*$/g, '')
             : value;
-      } else if (name === "vh_search") {
+      } else if (name === 'vh_search') {
         if (value) {
           _tempObj = {
             bc_address: null,
@@ -591,7 +591,7 @@ const VehicleContainer = () => {
       });
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [searchData, vehiclesData]
+    [searchData, vehiclesData],
   );
 
   const onSearchAction = () => {
@@ -629,7 +629,7 @@ const VehicleContainer = () => {
        * case3)소속사 검색 조건 X, 이름 검색 조건 X
        * case2)소속사 검색 조건 X, 이름 검색 조건 X
        */
-      const _replaceStr = vh_name ? vh_name.replace(/ /gi, "") : null;
+      const _replaceStr = vh_name ? vh_name.replace(/ /gi, '') : null;
       const vhName =
         _replaceStr && _replaceStr.length !== 0 ? _replaceStr : null;
 
@@ -660,7 +660,7 @@ const VehicleContainer = () => {
       if (bc_address) {
         const filterItems = items.filter(
           (item) =>
-            item?.bc_address && item.bc_address.includes(bc_address) && item
+            item?.bc_address && item.bc_address.includes(bc_address) && item,
         );
         setVehicleItems(filterItems);
       } else {
@@ -671,17 +671,17 @@ const VehicleContainer = () => {
 
   const setBeaconOptionHandler = (
     item: VehicleType,
-    options: BeaconOptionsType[]
+    options: BeaconOptionsType[],
   ) => {
     if (item.bc_index) {
       const optionItem = options.find(
-        (option) => option.used && option.key !== item.bc_id && option
+        (option) => option.used && option.key !== item.bc_id && option,
       );
       if (!optionItem) {
         const _tempBeaconOption = {
           key: Number(item.bc_id),
           text: `${zeroFill(item?.bc_management ?? 0, 3)} - ${
-            item.bc_address ? splitByColonInput(item.bc_address) : ""
+            item.bc_address ? splitByColonInput(item.bc_address) : ''
           }`,
           value: item.bc_index,
           used: true,
@@ -695,17 +695,17 @@ const VehicleContainer = () => {
                 ...option,
                 key: Number(item.bc_id),
                 text: `${zeroFill(item?.bc_management ?? 0, 3)} - ${
-                  item.bc_address ? splitByColonInput(item.bc_address) : ""
+                  item.bc_address ? splitByColonInput(item.bc_address) : ''
                 }`,
                 value: item.bc_index,
               }
-            : option
+            : option,
         );
         setBeaconOptions(_tempBeaconOptions);
       }
     } else {
       const _tempBeaconOptions = options.filter(
-        (option) => !option.used && option
+        (option) => !option.used && option,
       );
       setBeaconOptions(_tempBeaconOptions);
     }

@@ -3,29 +3,29 @@ import {
   POST_VEHICLE,
   PUT_VEHICLE,
   DELETE_VEHICLE,
-} from "./actions";
-import * as vehicleAPI from "../../api/vehicles";
-import { createThunk, deleteThunk, updateThunk } from "lib/createAsyncThunk";
-import { VehicleType } from "./types";
+} from './actions';
+import * as vehicleAPI from '../../api/vehicles';
+import { createThunk, deleteThunk, updateThunk } from 'lib/createAsyncThunk';
+import { VehicleType } from './types';
 
 export const getVehicles = createThunk<VehicleType[]>(
   GET_VEHICLES,
-  vehicleAPI.getVehicles
+  vehicleAPI.getVehicles,
 );
 
 export const postVehicle = createThunk<VehicleType[], FormData>(
   POST_VEHICLE,
-  vehicleAPI.postVehicle
+  vehicleAPI.postVehicle,
 );
 
 export const putVehicle = updateThunk<VehicleType, FormData>(
-  "wk_id",
+  'wk_id',
   PUT_VEHICLE,
-  vehicleAPI.putVehicle
+  vehicleAPI.putVehicle,
 );
 
 export const deleteVehicle = deleteThunk<VehicleType, VehicleType>(
-  "wk_id",
+  'wk_id',
   DELETE_VEHICLE,
-  vehicleAPI.deleteVehicle
+  vehicleAPI.deleteVehicle,
 );

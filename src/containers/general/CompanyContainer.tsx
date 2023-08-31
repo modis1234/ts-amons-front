@@ -3,9 +3,9 @@ import React, {
   useEffect,
   useLayoutEffect,
   useState,
-} from "react";
-import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
+} from 'react';
+import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   CompanyErrorType,
   CompanyType,
@@ -13,14 +13,14 @@ import {
   getCompanies,
   postCompany,
   putCompany,
-} from "../../modules/companies";
-import initConfigData from "../../opwsUI/initConfigData";
-import OneByTwoLayout from "../../opwsUI/layout/OneByTwoLayout";
-import { useAppDispatch, useAppSelector } from "modules/hooks";
-import { PageInfoType, SelectedRowType } from "opwsUI/table/types";
-import { ModalDataType } from "opwsUI/form/FormElement";
-import CompanyInput from "components/general/company/CompanyInput";
-import CompanyTable from "components/general/company/CompanyTable";
+} from '../../modules/companies';
+import initConfigData from '../../opwsUI/initConfigData';
+import OneByTwoLayout from '../../opwsUI/layout/OneByTwoLayout';
+import { useAppDispatch, useAppSelector } from 'modules/hooks';
+import { PageInfoType, SelectedRowType } from 'opwsUI/table/types';
+import { ModalDataType } from 'opwsUI/form/FormElement';
+import CompanyInput from 'components/general/company/CompanyInput';
+import CompanyTable from 'components/general/company/CompanyTable';
 // import CompanyTable from "../../components/general/company/CompanyTable";
 // import CompanyInput from "../../components/general/company/CompanyInput";
 
@@ -111,7 +111,7 @@ function CompanyContainer() {
         [name]: _value,
       });
     },
-    [formData, error]
+    [formData, error],
   );
   /**@description  table 컴포넌트 Row 클릭 이벤트 핸들러*/
   const onRowClick = useCallback(
@@ -138,7 +138,7 @@ function CompanyContainer() {
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [selectedRow.selectedId]
+    [selectedRow.selectedId],
   );
 
   const setPageInfoHandler = useCallback(
@@ -160,7 +160,7 @@ function CompanyContainer() {
         clickedIndex: null,
       });
     },
-    [pageInfo]
+    [pageInfo],
   );
 
   /**@descrition form 컴포넌트 onSubmit 핸들러 */
@@ -173,13 +173,13 @@ function CompanyContainer() {
     if (!formData.co_name || formData.co_name.length < 1) {
       setError({
         ...error,
-        co_name: "소속사를 입력해 주세요.",
+        co_name: '소속사를 입력해 주세요.',
       });
       return false;
     } else if (!formData.co_sectors || formData.co_sectors.length < 1) {
       setError({
         ...error,
-        co_sectors: "업종을 입력해 주세요.",
+        co_sectors: '업종을 입력해 주세요.',
       });
 
       return false;
@@ -197,7 +197,7 @@ function CompanyContainer() {
       setModalData({
         ...modalData,
         open: true,
-        type: "update",
+        type: 'update',
       });
     }
   };
@@ -205,8 +205,8 @@ function CompanyContainer() {
   /**@descrition modal button Action */
   const setOpen = ({ action, open }: { action: boolean; open: boolean }) => {
     setModalData((prev) => {
-      if (prev.type === "update" && action) updateDispatch();
-      else if (prev.type === "delete" && action) deleteDispatch();
+      if (prev.type === 'update' && action) updateDispatch();
+      else if (prev.type === 'delete' && action) deleteDispatch();
 
       return {
         open: open,
@@ -241,7 +241,7 @@ function CompanyContainer() {
   /**@descrition delete 버튼 클릭 이벤트 핸들러 */
   const onDelete = (
     e: React.MouseEvent<SVGSVGElement, MouseEvent>,
-    id: number
+    id: number,
   ): void => {
     const _items: CompanyType[] | null = companiesData;
     if (!_items) return;
@@ -250,7 +250,7 @@ function CompanyContainer() {
       setModalData({
         ...modalData,
         open: true,
-        type: "delete",
+        type: 'delete',
       });
     }
   };
@@ -258,8 +258,8 @@ function CompanyContainer() {
   return (
     <CompanyCmpt>
       <OneByTwoLayout
-        inputTitle={"소속사 등록"}
-        tableTitle={"소속사 목록"}
+        inputTitle={'소속사 등록'}
+        tableTitle={'소속사 목록'}
         firstRender={
           <CompanyInput
             formData={formData}

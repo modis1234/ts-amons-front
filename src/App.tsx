@@ -1,11 +1,11 @@
-import React from "react";
-import "./App.css";
-import { Route, Routes } from "react-router-dom";
-import { createGlobalStyle, css } from "styled-components";
-import MainPage from "pages/MainPage";
-import HomePage from "pages/HomePage";
-import { faRoad } from "@fortawesome/pro-solid-svg-icons";
-import Managementcontainer from "containers/desktop/Managementcontainer";
+import React from 'react';
+import './App.css';
+import { Route, Routes } from 'react-router-dom';
+import { createGlobalStyle, css } from 'styled-components';
+import MainPage from 'pages/MainPage';
+import HomePage from 'pages/HomePage';
+import { faRoad } from '@fortawesome/pro-solid-svg-icons';
+import Managementcontainer from 'containers/desktop/Managementcontainer';
 
 const GlobalStyle = createGlobalStyle<{
   companyIdentityColor: string | undefined;

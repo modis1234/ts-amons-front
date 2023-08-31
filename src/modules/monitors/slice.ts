@@ -1,17 +1,17 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { asyncState, AsyncStateType } from "lib/reducerUtils";
-import { BleType } from "modules/beacons";
-import { LocalType } from "modules/locals/types";
-import { DeviceType } from "types/devices";
-import { EnvironmentType, WeatherType } from "types/monitors";
-import { SensorType } from "types/sensors";
+import { createSlice } from '@reduxjs/toolkit';
+import { asyncState, AsyncStateType } from 'lib/reducerUtils';
+import { BleType } from 'modules/beacons';
+import { LocalType } from 'modules/locals/types';
+import { DeviceType } from 'types/devices';
+import { EnvironmentType, WeatherType } from 'types/monitors';
+import { SensorType } from 'types/sensors';
 import {
   GET_MONITOR,
   GET_MONITOR_FULFILLED,
   GET_MONITOR_REJECTED,
   GET_RECEIVE_SOCKET,
   SET_SOS_SITUACTION,
-} from "./actions";
+} from './actions';
 
 type InitialType = {
   monitor?: AsyncStateType<any[], Error>;
@@ -60,7 +60,7 @@ const initialState: InitialType = {
 };
 
 export const monitorSlice = createSlice({
-  name: "monitor",
+  name: 'monitor',
   initialState,
   reducers: {
     // [SET_SOS_SITUACTION]: (state) => {
@@ -79,7 +79,7 @@ export const monitorSlice = createSlice({
           item.bc_emergency === 2 &&
           item.bc_sos_action === 1 &&
           (item.bc_used_type === 1 || item.bc_used_type === 0) &&
-          item
+          item,
       );
       state.alarmPanel = filterSOS.length > 0 ? true : false;
       state.sosList = filterSOS.length > 0 ? filterSOS : [];

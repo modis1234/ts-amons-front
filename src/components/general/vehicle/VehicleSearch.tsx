@@ -1,7 +1,7 @@
-import { OptionsType } from "containers/general/VehicleContainer";
-import { VehicleErrorType, VehicleSearchDataType } from "modules/vehicles";
-import FormElement from "opwsUI/form/FormElement";
-import React from "react";
+import { OptionsType } from 'containers/general/VehicleContainer';
+import { VehicleErrorType, VehicleSearchDataType } from 'modules/vehicles';
+import FormElement from 'opwsUI/form/FormElement';
+import React from 'react';
 import {
   Button,
   Dropdown,
@@ -9,8 +9,8 @@ import {
   Icon,
   Input,
   Menu,
-} from "semantic-ui-react";
-import styled from "styled-components";
+} from 'semantic-ui-react';
+import styled from 'styled-components';
 
 const VehicleSearchCmpt = styled.div`
   width: 100%;
@@ -78,7 +78,7 @@ const VehicleSearchCmpt = styled.div`
             }
             &.error {
               &::before {
-                content: "영문 또는 숫자만 입력하세요.";
+                content: '영문 또는 숫자만 입력하세요.';
                 position: absolute;
                 top: 40px;
                 font-size: 13px;
@@ -149,8 +149,8 @@ const VehicleSearch = ({
               name="vh_search"
               className="dropdown-component search-type"
               options={[
-                { key: 1, text: "차량", value: true },
-                { key: 2, text: "비콘", value: false },
+                { key: 1, text: '차량', value: true },
+                { key: 2, text: '비콘', value: false },
               ]}
               value={searchData?.vh_search ?? null}
               placeholder="차량"
@@ -185,10 +185,10 @@ const VehicleSearch = ({
                   className="input-component input-vehicle-name"
                   id="vh_name"
                   name="vh_name"
-                  value={searchData?.vh_name ?? ""}
-                  icon={{ name: "search", link: true, onClick: onSearchAction }}
+                  value={searchData?.vh_name ?? ''}
+                  icon={{ name: 'search', link: true, onClick: onSearchAction }}
                   onKeyPress={(e: React.KeyboardEvent<HTMLInputElement>) => {
-                    if (e.key === "Enter") onSearchAction();
+                    if (e.key === 'Enter') onSearchAction();
                   }}
                   placeholder="차량 종류를 입력해 주세요."
                   onChange={(e) => onSearchChange({ e })}
@@ -209,12 +209,12 @@ const VehicleSearch = ({
                 className="input-component input-beacon-address"
                 id="bc_address"
                 name="bc_address"
-                value={searchData?.bc_address ?? ""}
-                icon={{ name: "search", link: true, onClick: onSearchAction }}
+                value={searchData?.bc_address ?? ''}
+                icon={{ name: 'search', link: true, onClick: onSearchAction }}
                 placeholder="비콘정보를 입력해 주세요."
                 onChange={(e) => onSearchChange({ e })}
                 onKeyPress={(e: React.KeyboardEvent<HTMLImageElement>) => {
-                  if (e.key === "Enter") onSearchAction();
+                  if (e.key === 'Enter') onSearchAction();
                 }}
                 error={error?.bc_address ? true : false}
                 maxLength={12}

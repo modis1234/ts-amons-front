@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-useless-fragment */
-import React from "react";
-import { isBrowser } from "react-device-detect";
-import DeskHomeContainer from "containers/desktop/HomeContainer";
+import React from 'react';
+import { isBrowser } from 'react-device-detect';
+import DeskHomeContainer from 'containers/desktop/HomeContainer';
 // import MobileHomeContainer from 'containers/mobile/HomeContainer';
 
 const HomePage = () => {

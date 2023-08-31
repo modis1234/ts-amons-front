@@ -1,21 +1,21 @@
-import _ from "lodash";
-import { GroupType } from "modules/groups/types";
-import { LocalType } from "modules/locals";
-import moment from "moment";
-import "moment/locale/ko";
+import _ from 'lodash';
+import { GroupType } from 'modules/groups/types';
+import { LocalType } from 'modules/locals';
+import moment from 'moment';
+import 'moment/locale/ko';
 
 /**
  * @description deviceCode
  * @return {object} * 터널명
  * */
 export const deviceCode = {
-  1: { code: 1, name: "CCTV", key: "cctv" },
-  2: { code: 2, name: "스캐너", key: "scn" },
-  3: { code: 3, name: "가스센서", key: "sensor" },
-  4: { code: 4, name: "와이파이", key: "wifi" },
-  5: { code: 5, name: "비상방송", key: "tts" },
-  6: { code: 6, name: "비상전화", key: "phone" },
-  7: { code: 7, name: "무선장비", key: "wireless" },
+  1: { code: 1, name: 'CCTV', key: 'cctv' },
+  2: { code: 2, name: '스캐너', key: 'scn' },
+  3: { code: 3, name: '가스센서', key: 'sensor' },
+  4: { code: 4, name: '와이파이', key: 'wifi' },
+  5: { code: 5, name: '비상방송', key: 'tts' },
+  6: { code: 6, name: '비상전화', key: 'phone' },
+  7: { code: 7, name: '무선장비', key: 'wireless' },
 };
 
 /**
@@ -27,9 +27,9 @@ export const getLocalType = (param: number) => {
   const _localType = param;
   switch (_localType) {
     case 1:
-      return "왕십리방향";
+      return '왕십리방향';
     case 2:
-      return "종암동방향";
+      return '종암동방향';
     // case 3:
     //   return '환기구';
     // case 4:
@@ -37,7 +37,7 @@ export const getLocalType = (param: number) => {
     // case 5:
     //   return '환승통로';
     default:
-      return "";
+      return '';
   }
 };
 
@@ -50,17 +50,17 @@ export const getTunnelName = (param: number) => {
   const _localArea = param;
   switch (_localArea) {
     case 0:
-      return "수직구";
+      return '수직구';
     case 1:
-      return "1터널";
+      return '1터널';
     case 2:
-      return "2터널";
+      return '2터널';
     case 3:
-      return "3터널";
+      return '3터널';
     case 4:
-      return "4터널";
+      return '4터널';
     default:
-      return "미지정";
+      return '미지정';
   }
 };
 
@@ -75,20 +75,20 @@ export const getPosition = (item: GroupType) => {
 
     if (local_type === 1 || local_type === 2) {
       return group_kind === 3
-        ? `${group_pos_x?.toLocaleString("ko-KR")}m`
+        ? `${group_pos_x?.toLocaleString('ko-KR')}m`
         : group_kind === 1
-        ? "입장"
+        ? '입장'
         : group_kind === 2
-        ? "퇴장"
+        ? '퇴장'
         : group_kind === 3
-        ? `${group_pos_x?.toLocaleString("ko-KR")}m`
+        ? `${group_pos_x?.toLocaleString('ko-KR')}m`
         : group_kind === 4
-        ? "막장"
-        : "-";
+        ? '막장'
+        : '-';
     } else if (local_type === 4) {
-      return "정거장";
+      return '정거장';
     } else {
-      return group_pos_x < 0 ? "지상부" : "하부";
+      return group_pos_x < 0 ? '지상부' : '하부';
     }
   }
 };
@@ -102,20 +102,20 @@ export const getPosX = ({
 }) => {
   const _posX = posX;
   if (localType === 1 || localType === 2 || localType === 5) {
-    return `${posX >= 0 ? addComma(posX) : "- "}m`;
+    return `${posX >= 0 ? addComma(posX) : '- '}m`;
   } else if (localType === 3) {
     switch (_posX) {
       case -1:
-        return "지상부";
+        return '지상부';
       case 1:
-        return "하부";
+        return '하부';
       default:
         return `${_posX}m`;
     }
   } else if (localType === 4) {
     //정거장
-    return "정거장";
-  } else return "-";
+    return '정거장';
+  } else return '-';
 };
 
 /**
@@ -125,7 +125,7 @@ export const getPosX = ({
  * */
 export const getLocalsOptions = (items: LocalType[], isAll: boolean = true) => {
   const _localItems = items;
-  console.log("localarea->");
+  console.log('localarea->');
 
   const _localsOptions = _localItems.reduce(
     (acc: Array<any>, curr: LocalType) => {
@@ -147,7 +147,7 @@ export const getLocalsOptions = (items: LocalType[], isAll: boolean = true) => {
       const tempObj = {
         key,
         text: `${_tunnelName} ${local_name} ${
-          _localType ? `${_localType}` : ""
+          _localType ? `${_localType}` : ''
         }`,
         value,
         // description: _tunnelName,
@@ -160,9 +160,9 @@ export const getLocalsOptions = (items: LocalType[], isAll: boolean = true) => {
       acc.push(tempObj);
       return acc;
     },
-    isAll ? [{ key: 0, text: "전체", value: null, area: 0 }] : []
+    isAll ? [{ key: 0, text: '전체', value: null, area: 0 }] : [],
   );
-  return sortFn(_localsOptions, "area");
+  return sortFn(_localsOptions, 'area');
 };
 
 /**
@@ -191,7 +191,7 @@ export const getGroupKindOptions = (items: Array<any>) => {
               posX: group_pos_x,
               localType: local_type,
             })}`
-          : "막장",
+          : '막장',
       // text: `${local_name}${local_type ? `_${getLocalType(local_type)}` : ''}`,
       value: value,
       type: local_type,
@@ -205,7 +205,7 @@ export const getGroupKindOptions = (items: Array<any>) => {
     acc.push(tempObj);
     return acc;
   }, []);
-  return sortFn(_groupOptions, "kind");
+  return sortFn(_groupOptions, 'kind');
 };
 
 /**
@@ -216,17 +216,17 @@ export const getGroupKindOptions = (items: Array<any>) => {
 export const getGroupKind = (groupKind: number) => {
   switch (groupKind) {
     case 0:
-      return "지정안함";
+      return '지정안함';
     case 1:
-      return "입장";
+      return '입장';
     case 2:
-      return "퇴장";
+      return '퇴장';
     case 3:
-      return "위치추적";
+      return '위치추적';
     case 4:
-      return "막장";
+      return '막장';
     default:
-      return "-";
+      return '-';
   }
 };
 
@@ -250,7 +250,7 @@ export const getCompaniesOptions = (items: Array<any>) => {
       acc.push(tempObj);
       return acc;
     },
-    [{ key: 0, text: "전체", value: null, area: 0 }]
+    [{ key: 0, text: '전체', value: null, area: 0 }],
   );
   return _companieOptions;
 };
@@ -270,7 +270,7 @@ export const addComma = (number: number) => {
   //     ? _number
   //     : _number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
-  return isNaN(number) ? 0 : Number(number).toLocaleString("ko-kr");
+  return isNaN(number) ? 0 : Number(number).toLocaleString('ko-kr');
 };
 
 /**
@@ -281,7 +281,7 @@ export const addComma = (number: number) => {
 export const percentBind = (
   childNum: number,
   parentNum: number,
-  decimalPoint = 10
+  decimalPoint = 10,
 ) => {
   if (childNum === 0) {
     return 0;
@@ -292,14 +292,14 @@ export const percentBind = (
 };
 
 /**@description 12자리 이상 일 때, 입력된 값을 두자로 잘라서 : 를 넣는다. */
-export const splitByColon = (str = "") => {
+export const splitByColon = (str = '') => {
   const length = str.length;
   let point = str.length % 2;
-  let splitedStr = "";
+  let splitedStr = '';
 
   splitedStr = str.substring(0, point);
   while (point < length) {
-    if (splitedStr !== "") splitedStr += ":";
+    if (splitedStr !== '') splitedStr += ':';
     splitedStr += str.substring(point, point + 2);
     point += 2;
   }
@@ -309,17 +309,17 @@ export const splitByColon = (str = "") => {
 
 /**@description 12자리 이하 일 때,  입력된 값을 두자로 잘라서 : 를 넣는다. */
 export const splitByColonInput = (str: string) => {
-  const _str = str.replace(/:/g, "");
+  const _str = str.replace(/:/g, '');
   if (_str.length > 12) {
     return splitByColon(_str.substring(0, 12));
   }
 
   const length = _str.length;
   let point = _str.length % 2;
-  let splitedStr = "";
+  let splitedStr = '';
   splitedStr = _str.substring(0, point);
   while (point < length) {
-    if (splitedStr !== "") splitedStr += ":";
+    if (splitedStr !== '') splitedStr += ':';
     splitedStr += _str.substring(point, point + 2);
     point += 2;
   }
@@ -336,13 +336,13 @@ export const addZero = (str: string, digit = 3) => {
   if (str !== (null || undefined) && digit) {
     try {
       const _str = str.toString();
-      let zeros = "";
+      let zeros = '';
       for (let i = 0; i < digit - _str.length; i++) {
-        zeros += "0";
+        zeros += '0';
       }
       return zeros + _str;
     } catch (e) {
-      showError && console.log("<addZero Error>", e);
+      showError && console.log('<addZero Error>', e);
     }
   }
 };
@@ -354,7 +354,7 @@ export const zeroFill = (num: number, width: number) => {
   let _num = `${num} `;
   return _num.length >= width + 1
     ? _num
-    : new Array(width + 1 - _num.length + 1).join("0") + _num;
+    : new Array(width + 1 - _num.length + 1).join('0') + _num;
 };
 
 /**
@@ -364,7 +364,7 @@ export const zeroFill = (num: number, width: number) => {
 export const sortFn = (
   items: Array<any> = [],
   key: string,
-  oderBy: string = "asc"
+  oderBy: string = 'asc',
 ) => {
   // return items.sort((a, b) => {
   //   if (oderBy === 'asc') {
@@ -377,7 +377,7 @@ export const sortFn = (
   //     return 0;
   //   }
   // });
-  return oderBy === "asc"
+  return oderBy === 'asc'
     ? _.sortBy(items, key)
     : _.sortBy(items, key).reverse();
 };
@@ -386,27 +386,27 @@ export const sortFn = (
  * @description input에 전화번호 입력시 하이픈(-)이 글자수에 따라 자동으로 붙는 스크립트
  */
 export const autoHypenPhone = (string: string) => {
-  let str = string.replace(/[^0-9]/g, "");
-  let tmp = "";
+  let str = string.replace(/[^0-9]/g, '');
+  let tmp = '';
   if (str.length < 4) {
     return str;
   } else if (str.length < 7) {
     tmp += str.substr(0, 3);
-    tmp += "-";
+    tmp += '-';
     tmp += str.substr(3);
     return tmp;
   } else if (str.length < 11) {
     tmp += str.substr(0, 3);
-    tmp += "-";
+    tmp += '-';
     tmp += str.substr(3, 3);
-    tmp += "-";
+    tmp += '-';
     tmp += str.substr(6);
     return tmp;
   } else if (str.length === 11) {
     tmp += str.substr(0, 3);
-    tmp += "-";
+    tmp += '-';
     tmp += str.substr(3, 4);
-    tmp += "-";
+    tmp += '-';
     tmp += str.substr(7);
     return tmp;
   } else {
@@ -429,7 +429,7 @@ export const getDiffTime = (toDate: Date | string, fromDate: Date | string) => {
     .duration(_toDate.diff(_fromDate))
     .asMilliseconds();
 
-  let str = "";
+  let str = '';
 
   if (month > 0) {
     str += `0${month}개월 `;
@@ -441,7 +441,7 @@ export const getDiffTime = (toDate: Date | string, fromDate: Date | string) => {
     str += `${hour < 10 ? `0${hour}` : hour}시간 `;
   }
   if (minute > 0) {
-    str += `${hour === 0 ? "" : ""} ${minute < 10 ? `0${minute}` : minute}분`;
+    str += `${hour === 0 ? '' : ''} ${minute < 10 ? `0${minute}` : minute}분`;
   }
   if (day <= 0 && hour <= 0 && minute <= 0 && milliseconds > 0) {
     str += `1분 미만`;
@@ -456,7 +456,7 @@ export const getDiffTime = (toDate: Date | string, fromDate: Date | string) => {
  */
 export const getDurationTime = (
   toDate: Date | string,
-  fromDate: Date | string
+  fromDate: Date | string,
 ) => {
   const _toDate = moment(toDate);
   const _fromDate = moment(fromDate);
@@ -468,7 +468,7 @@ export const getDurationTime = (
     .duration(_toDate.diff(_fromDate))
     .asMilliseconds();
 
-  let str = "";
+  let str = '';
 
   // if (month > 0) {
   //   str += `0${month}개월 `;
@@ -481,7 +481,7 @@ export const getDurationTime = (
     str += `${_hour < 10 ? `0${_hour}` : _hour >= 999 ? 999 : _hour}시간 `;
   }
   if (minute > 0) {
-    str += `${hour === 0 ? "" : ""} ${minute < 10 ? `0${minute}` : minute}분`;
+    str += `${hour === 0 ? '' : ''} ${minute < 10 ? `0${minute}` : minute}분`;
   }
   if (day <= 0 && hour <= 0 && minute <= 0 && milliseconds > 0) {
     str += `1분 미만`;
@@ -496,9 +496,9 @@ export const getDurationTime = (
 
 export const getDecimalPoint = (value: string, decimalNum = 1) => {
   // eslint-disable-next-line no-useless-escape
-  const _value = value.replace(/[^0-9|^\.]/g, "");
-  const parts = _value.toString().split(".");
-  let result = "";
+  const _value = value.replace(/[^0-9|^\.]/g, '');
+  const parts = _value.toString().split('.');
+  let result = '';
 
   if (parts[0] && parts[0].length > 5) {
     parts[0] = parts[0].toString().substring(0, 5);
@@ -507,9 +507,9 @@ export const getDecimalPoint = (value: string, decimalNum = 1) => {
     parts[1] = parts[1].toString().substring(0, decimalNum);
   }
   if (parts.length > 2) {
-    result = parts[0] + (parts[1] || parts[1] === "" ? `.${parts[1]}` : "");
+    result = parts[0] + (parts[1] || parts[1] === '' ? `.${parts[1]}` : '');
   } else {
-    result = parts[0] + (parts[1] || parts[1] === "" ? `.${parts[1]}` : "");
+    result = parts[0] + (parts[1] || parts[1] === '' ? `.${parts[1]}` : '');
   }
   return result;
 };
@@ -518,7 +518,7 @@ export const getDecimalPoint = (value: string, decimalNum = 1) => {
  * @description 작업자 나이 계산
  */
 export const birthCalculator = (birth: string) => {
-  const splitBirth = birth.split("-");
+  const splitBirth = birth.split('-');
   const Years: number =
     Number(splitBirth[0]) >= 30
       ? Number(splitBirth[0])
@@ -538,11 +538,11 @@ export const birthCalculator = (birth: string) => {
 export const TransBloodGroup = (bloodGroup: number) => {
   switch (bloodGroup) {
     case 0:
-      return "-";
+      return '-';
     case 1:
-      return "Rh+";
+      return 'Rh+';
     case 2:
-      return "Rh-";
+      return 'Rh-';
     default:
       return null;
   }
@@ -554,15 +554,15 @@ export const TransBloodGroup = (bloodGroup: number) => {
 export const TransBloodType = (bloodType: number) => {
   switch (bloodType) {
     case 0:
-      return "-";
+      return '-';
     case 1:
-      return "A";
+      return 'A';
     case 2:
-      return "B";
+      return 'B';
     case 3:
-      return "O";
+      return 'O';
     case 4:
-      return "AB";
+      return 'AB';
     default:
       return null;
   }
@@ -603,36 +603,36 @@ export const mathRound = (number: number, point: number = 2) => {
 export const getProcessCode = (code: number) => {
   switch (code) {
     case 1:
-      return { name: "미착공", color: "#286e41" };
+      return { name: '미착공', color: '#286e41' };
     case 2:
-      return { name: "천공", color: "#7c3795" };
+      return { name: '천공', color: '#7c3795' };
     case 3:
-      return { name: "장약", color: "#636363" };
+      return { name: '장약', color: '#636363' };
     case 4:
-      return { name: "발파", color: "#971717" };
+      return { name: '발파', color: '#971717' };
     case 5:
-      return { name: "버력처리", color: "#375795" };
+      return { name: '버력처리', color: '#375795' };
     case 6:
-      return { name: "숏크리트", color: "#7c4c17" };
+      return { name: '숏크리트', color: '#7c4c17' };
     case 7:
-      return { name: "강지보", color: "#707017" };
+      return { name: '강지보', color: '#707017' };
     case 8:
-      return { name: "격자지보", color: "#a1922b" };
+      return { name: '격자지보', color: '#a1922b' };
     case 9:
-      return { name: "록볼트", color: "#175c59" };
+      return { name: '록볼트', color: '#175c59' };
     case 10:
-      return { name: "방수시트", color: "#1b2f54" };
+      return { name: '방수시트', color: '#1b2f54' };
     case 11:
-      return { name: "라이닝", color: "#3c3a3a" };
+      return { name: '라이닝', color: '#3c3a3a' };
     case 12:
-      return { name: "근무교대", color: "#407d23" };
+      return { name: '근무교대', color: '#407d23' };
     case 13:
-      return { name: "장비점검", color: "#4c7e7c" };
+      return { name: '장비점검', color: '#4c7e7c' };
     case 14:
-      return { name: "기타", color: "#351c3e" };
+      return { name: '기타', color: '#351c3e' };
     case 15:
-      return { name: "굴진중", color: "#ce3f3f" };
+      return { name: '굴진중', color: '#ce3f3f' };
     default:
-      return { name: null, color: "#ffffff" };
+      return { name: null, color: '#ffffff' };
   }
 };

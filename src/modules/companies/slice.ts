@@ -1,11 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 import {
   asyncState,
   AsyncStateType,
   createActionHandler,
   deleteActionHandler,
   updateActionHandler,
-} from "lib/reducerUtils";
+} from 'lib/reducerUtils';
 import {
   DELETE_COMPANY_FULFILLED,
   DELETE_COMPANY_PENDING,
@@ -22,17 +22,17 @@ import {
   PUT_COMPANY_FULFILLED,
   PUT_COMPANY_PENDING,
   PUT_COMPANY_REJECTED,
-} from "./actions";
-import { CompanyType } from "./types";
+} from './actions';
+import { CompanyType } from './types';
 
 const initialState: AsyncStateType<CompanyType[], Error> = asyncState.initial();
 
 const postCompanyHandler = createActionHandler<CompanyType>();
-const putCompanyHandler = updateActionHandler<CompanyType>("co_id");
-const deleteCompanyHandler = deleteActionHandler<CompanyType>("co_id");
+const putCompanyHandler = updateActionHandler<CompanyType>('co_id');
+const deleteCompanyHandler = deleteActionHandler<CompanyType>('co_id');
 
 export const companySlice = createSlice({
-  name: "companies",
+  name: 'companies',
   initialState,
   reducers: {},
   extraReducers: {

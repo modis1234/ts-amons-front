@@ -4,23 +4,23 @@ import React, {
   useLayoutEffect,
   useRef,
   useState,
-} from "react";
-import { styled } from "styled-components";
-import qs, { ParsedQs } from "qs";
+} from 'react';
+import { styled } from 'styled-components';
+import qs, { ParsedQs } from 'qs';
 import {
   Outlet,
   useLocation,
   useNavigate,
   useParams,
   useSearchParams,
-} from "react-router-dom";
-import { Sidebar } from "semantic-ui-react";
-import { useAppDispatch, useAppSelector } from "modules/hooks";
-import Header from "components/desktop/common/Header";
-import storage from "lib/storage";
-import SideMenu from "components/desktop/common/SideMenu";
-import { getSites } from "modules/sites";
-import { receiveMonitor } from "modules/monitors";
+} from 'react-router-dom';
+import { Sidebar } from 'semantic-ui-react';
+import { useAppDispatch, useAppSelector } from 'modules/hooks';
+import Header from 'components/desktop/common/Header';
+import storage from 'lib/storage';
+import SideMenu from 'components/desktop/common/SideMenu';
+import { getSites } from 'modules/sites';
+import { receiveMonitor } from 'modules/monitors';
 
 const HomeCmpt = styled.div`
   .header-container {
@@ -82,7 +82,7 @@ function HomeContainer() {
     param: string;
     query: any;
   }>({
-    param: "dashboard",
+    param: 'dashboard',
     query: null,
   });
 
@@ -90,7 +90,7 @@ function HomeContainer() {
   const [digInfoAction, setDigInfoAction] = useState<boolean>(false);
   const [accessListAction, setAccessListAction] = useState<boolean>(false);
   const [userInfo, setUserInfo] = useState(null);
-  const [screenState, setScreenState] = useState<string>("normal");
+  const [screenState, setScreenState] = useState<string>('normal');
 
   const socketHandleID = useRef<number | null>(null);
 
@@ -102,15 +102,15 @@ function HomeContainer() {
   useLayoutEffect(() => {
     // if (!storage?.get("user")) navigate("/amons/signin");
     const query = qs.parse(location.search, { ignoreQueryPrefix: true });
-    console.log("qyue-->", query);
+    console.log('qyue-->', query);
     setQuery(query);
 
     let _currUrl: string;
     if (
-      type === "monitor" ||
-      type === "account" ||
-      type === "dashboard" ||
-      type === "network"
+      type === 'monitor' ||
+      type === 'account' ||
+      type === 'dashboard' ||
+      type === 'network'
     ) {
       _currUrl = type;
     } else if (menu) {
@@ -118,16 +118,16 @@ function HomeContainer() {
     } else if (field) {
       _currUrl = field;
     } else {
-      _currUrl = "";
+      _currUrl = '';
     }
-    if (type === "monitor" || type === "dashboard" || type === "network") {
+    if (type === 'monitor' || type === 'dashboard' || type === 'network') {
       setCallSideMenu(false);
     } else {
       setCallSideMenu(true);
     }
     setActiveMenu({
       param: _currUrl,
-      query: type === "dashboard" ? query?.area : null,
+      query: type === 'dashboard' ? query?.area : null,
     });
   }, [type, field, menu, location.search]);
 
@@ -157,21 +157,21 @@ function HomeContainer() {
   };
 
   const onLogout = () => {
-    storage.remove("user");
+    storage.remove('user');
     // dispatch(logOutAsync());
     navigate(`/amons/signin`);
   };
 
   const callSideMenuHandler = useCallback(() => {
-    console.log("callSideMenuHandler");
+    console.log('callSideMenuHandler');
     setCallSideMenu(!callSideMenu);
   }, [callSideMenu]);
 
   const handleTableClose = (e: any) => {
     const targetElement = e.target;
-    const tableButton = e.target.closest(".button-box");
-    const digTablePanel = e.target.closest(".dig-table-component");
-    const accessTablePanel = e.target.closest(".access-list-container");
+    const tableButton = e.target.closest('.button-box');
+    const digTablePanel = e.target.closest('.dig-table-component');
+    const accessTablePanel = e.target.closest('.access-list-container');
     if (
       digInfoAction &&
       targetElement &&
@@ -223,14 +223,14 @@ function HomeContainer() {
               callSideMenu={callSideMenu}
               activeMenu={activeMenu}
               userInfo={{
-                login_date: "2023-08-24 11:39:31.497",
-                created_date: "2023-08-18 15:01:22.000",
+                login_date: '2023-08-24 11:39:31.497',
+                created_date: '2023-08-18 15:01:22.000',
                 acc_id: 1,
-                acc_name: "오픈웍스",
-                acc_user_id: "admin",
-                acc_phone: "02-495-1801",
+                acc_name: '오픈웍스',
+                acc_user_id: 'admin',
+                acc_phone: '02-495-1801',
                 acc_tel: null,
-                acc_mail: "024951801@naver.com",
+                acc_mail: '024951801@naver.com',
                 acc_role: 0,
               }}
               siteItem={sitesData[0]}

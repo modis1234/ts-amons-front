@@ -3,24 +3,24 @@ import React, {
   useCallback,
   useLayoutEffect,
   useEffect,
-} from "react";
-import OneByTwoLayout from "../../opwsUI/layout/OneByTwoLayout";
-import { styled } from "styled-components";
-import LocalInput from "components/field/local/LocalInput";
-import initConfigData from "opwsUI/initConfigData";
+} from 'react';
+import OneByTwoLayout from '../../opwsUI/layout/OneByTwoLayout';
+import { styled } from 'styled-components';
+import LocalInput from 'components/field/local/LocalInput';
+import initConfigData from 'opwsUI/initConfigData';
 import {
   deleteLocal,
   getLocals,
   LocalErrorType,
   LocalType,
   putLocal,
-} from "modules/locals";
-import { useAppDispatch, useAppSelector } from "modules/hooks";
-import { addComma } from "opwsUI/util";
-import LocalTable from "components/field/local/LocalTable";
-import { getSites } from "modules/sites";
-import { PageInfoType, SelectedRowType } from "opwsUI/table/types";
-import { ModalDataType } from "opwsUI/form/FormElement";
+} from 'modules/locals';
+import { useAppDispatch, useAppSelector } from 'modules/hooks';
+import { addComma } from 'opwsUI/util';
+import LocalTable from 'components/field/local/LocalTable';
+import { getSites } from 'modules/sites';
+import { PageInfoType, SelectedRowType } from 'opwsUI/table/types';
+import { ModalDataType } from 'opwsUI/form/FormElement';
 
 const LocalCmpt = styled.div`
   width: 100%;
@@ -102,7 +102,7 @@ function LocalContainer() {
           }
           return acc;
         },
-        [{ key: 0, text: "지정안함", value: null }]
+        [{ key: 0, text: '지정안함', value: null }],
       );
       setEntranceOptions(reduceEntranceOption);
     }
@@ -129,14 +129,14 @@ function LocalContainer() {
 
       let _value = value;
       let _tempValue;
-      if (name === "local_plan_length") {
+      if (name === 'local_plan_length') {
         //eslint-disable-next-line no-restricted-globals
-        _value = String(_value).replaceAll(",", "");
+        _value = String(_value).replaceAll(',', '');
         const _isNaN = isNaN(Number(_value));
         if (_isNaN) {
           setError({
             ...error,
-            local_plan_length: "계획 연장은 숫자만 입력 가능합니다.",
+            local_plan_length: '계획 연장은 숫자만 입력 가능합니다.',
           });
           return;
         } else if (!_isNaN) {
@@ -147,12 +147,12 @@ function LocalContainer() {
         }
 
         _value = addComma(Number(_value));
-      } else if (name === "local_name" && _value && error.local_name) {
+      } else if (name === 'local_name' && _value && error.local_name) {
         setError({
           ...error,
           local_name: null,
         });
-      } else if (name === "local_type") {
+      } else if (name === 'local_type') {
         if (value) {
           let _monitorNumber = 0; // monitor_number 자동 할당
           let _localNumber = 0;
@@ -190,7 +190,7 @@ function LocalContainer() {
         ..._tempValue,
       });
     },
-    [formData, error]
+    [formData, error],
   );
 
   /**@descrition form 컴포넌트 onSubmit 핸들러 */
@@ -219,7 +219,7 @@ function LocalContainer() {
       setModalData({
         ...modalData,
         open: true,
-        type: "update",
+        type: 'update',
       });
     }
   };
@@ -248,13 +248,13 @@ function LocalContainer() {
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [selectedRow.selectedId]
+    [selectedRow.selectedId],
   );
 
   /**@descrition delete 버튼 클릭 이벤트 핸들러 */
   const onDelete = (
     e: React.MouseEvent<SVGSVGElement, MouseEvent>,
-    id: number
+    id: number,
   ): void => {
     const _items: LocalType[] | null = localsData;
     if (!_items) return;
@@ -263,7 +263,7 @@ function LocalContainer() {
       setModalData({
         ...modalData,
         open: true,
-        type: "delete",
+        type: 'delete',
       });
     }
   };
@@ -287,14 +287,14 @@ function LocalContainer() {
         clickedIndex: null,
       });
     },
-    [pageInfo]
+    [pageInfo],
   );
 
   /**@descrition modal button Action */
   const setOpen = ({ action, open }: { action: boolean; open: boolean }) => {
     setModalData((prev) => {
-      if (prev.type === "update" && action) updateDispatch();
-      else if (prev.type === "delete" && action) deleteDispatch();
+      if (prev.type === 'update' && action) updateDispatch();
+      else if (prev.type === 'delete' && action) deleteDispatch();
 
       return {
         open: open,
@@ -309,14 +309,14 @@ function LocalContainer() {
     if (!formData.local_name) {
       setError({
         ...error,
-        local_name: "노선명을 입력해 주세요.",
+        local_name: '노선명을 입력해 주세요.',
       });
       return false;
     }
     if (!formData.local_type) {
       setError({
         ...error,
-        local_type: "굴진방향을 선택해 주세요.",
+        local_type: '굴진방향을 선택해 주세요.',
       });
       return false;
     }
@@ -368,8 +368,8 @@ function LocalContainer() {
   return (
     <LocalCmpt className="local-container">
       <OneByTwoLayout
-        inputTitle={"노선 등록"}
-        tableTitle={"노선 목록"}
+        inputTitle={'노선 등록'}
+        tableTitle={'노선 목록'}
         firstRender={
           <LocalInput
             formData={formData}

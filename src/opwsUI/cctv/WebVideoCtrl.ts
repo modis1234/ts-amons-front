@@ -1,7 +1,7 @@
 /* eslint-disable */
 //@ts-nocheck
-import $ from "jquery";
-import { Foundation, Map } from "./foundation";
+import $ from 'jquery';
+import { Foundation, Map } from './foundation';
 
 export const WebVideoCtrl = (objectId) =>
   (function (e) {
@@ -36,61 +36,61 @@ export const WebVideoCtrl = (objectId) =>
     //이벤트 처리 기능
     function handleEvent(message) {
       let messageObject = $.parseJSON(message);
-      if ("event" in messageObject) {
-        let eventType = messageObject["event"];
+      if ('event' in messageObject) {
+        let eventType = messageObject['event'];
         //다른 이벤트 유형에 따라 프로세스
-        if ("SelectedDirectory" === eventType) {
+        if ('SelectedDirectory' === eventType) {
           //분석 유형 및 경로
-          let pathType = messageObject["params"]["Type"];
-          let pathName = messageObject["params"]["PathName"];
+          let pathType = messageObject['params']['Type'];
+          let pathName = messageObject['params']['PathName'];
           //경로를 설정하십시오
           WebVideoObject[objectId].pluginObject.SetStoragePath(
             pathType,
-            pathName
+            pathName,
           );
           WebVideoObject[objectId].eventHandler.selectDir(pathName);
-        } else if ("SelectedView" === eventType) {
+        } else if ('SelectedView' === eventType) {
           let callBackList =
-            WebVideoObject[objectId].SignalMap.get("SelectedView");
+            WebVideoObject[objectId].SignalMap.get('SelectedView');
           //콜백 함수를 호출하십시오
           for (let i = 0; i < callBackList.length; i++) {
             callBackList[i](
-              messageObject["params"]["nodeIndex"],
-              messageObject["params"]["viewIndex"],
-              messageObject["params"]["winID"]
+              messageObject['params']['nodeIndex'],
+              messageObject['params']['viewIndex'],
+              messageObject['params']['winID'],
             );
           }
-        } else if ("DetectedDeviceInfo" === eventType) {
+        } else if ('DetectedDeviceInfo' === eventType) {
           let callBackList =
-            WebVideoObject[objectId].SignalMap.get("DetectedDeviceInfo");
+            WebVideoObject[objectId].SignalMap.get('DetectedDeviceInfo');
           //콜백 함수를 호출하십시오
           for (let i = 0; i < callBackList.length; i++) {
             callBackList[i](
-              messageObject["params"]["deviceIP"],
-              messageObject["params"]["svrPort"],
-              messageObject["params"]["state"]
+              messageObject['params']['deviceIP'],
+              messageObject['params']['svrPort'],
+              messageObject['params']['state'],
             );
           }
-        } else if ("SnapManagerEvent" === eventType) {
+        } else if ('SnapManagerEvent' === eventType) {
           let szTip =
-            "<div>" +
-            Foundation.dateFormat(new Date(), "yyyy-MM-dd hh:mm:ss") +
-            " " +
-            JSON.stringify(messageObject["params"]);
-          szTip += "</div>";
-          $("#eventMessage").html(szTip);
-        } else if ("PointTemper" === eventType) {
-          let szTemper = messageObject["params"]["Temper"];
+            '<div>' +
+            Foundation.dateFormat(new Date(), 'yyyy-MM-dd hh:mm:ss') +
+            ' ' +
+            JSON.stringify(messageObject['params']);
+          szTip += '</div>';
+          $('#eventMessage').html(szTip);
+        } else if ('PointTemper' === eventType) {
+          let szTemper = messageObject['params']['Temper'];
           let callBackList =
-            WebVideoObject[objectId].SignalMap.get("PointTemper");
+            WebVideoObject[objectId].SignalMap.get('PointTemper');
           //콜백 함수를 호출하십시오
           for (let i = 0; i < callBackList.length; i++) {
             callBackList[i](szTemper);
           }
-        } else if ("downloadLink" === eventType) {
-        } else if ("RealTimeVideoException" === eventType) {
-          let deviceID = messageObject["params"]["deviceID"];
-          let errorCode = messageObject["params"]["error"];
+        } else if ('downloadLink' === eventType) {
+        } else if ('RealTimeVideoException' === eventType) {
+          let deviceID = messageObject['params']['deviceID'];
+          let errorCode = messageObject['params']['error'];
           if (1 === errorCode) {
             //인증 실패
             // showOpInfo(
@@ -109,8 +109,8 @@ export const WebVideoCtrl = (objectId) =>
         } else {
         }
       } else {
-        let id = messageObject["id"];
-        WebVideoObject[objectId].defMap[id].resolve(messageObject["result"]);
+        let id = messageObject['id'];
+        WebVideoObject[objectId].defMap[id].resolve(messageObject['result']);
         WebVideoObject[objectId].defMap[id] = null;
       }
     }
@@ -124,7 +124,7 @@ export const WebVideoCtrl = (objectId) =>
         if (browser().msie) {
           try {
             // eslint-disable-next-line no-undef
-            new ActiveXObject("WebActiveX.Plugin.4.0.0.0");
+            new ActiveXObject('WebActiveX.Plugin.4.0.0.0');
             def.resolve();
           } catch (n) {
             def.reject();
@@ -132,7 +132,7 @@ export const WebVideoCtrl = (objectId) =>
         } else if (browser().npapi) {
           for (let r = 0, s = navigator.mimeTypes.length; s > r; r++) {
             if (
-              "application/media-plugin-version-4.0.0.0" ===
+              'application/media-plugin-version-4.0.0.0' ===
               navigator.mimeTypes[r].type.toLowerCase()
             ) {
               def.resolve();
@@ -141,14 +141,14 @@ export const WebVideoCtrl = (objectId) =>
           def.reject();
         } else {
           // eslint-disable-next-line no-array-constructor
-          WebVideoObject[objectId].SignalMap.put("SelectedView", new Array());
+          WebVideoObject[objectId].SignalMap.put('SelectedView', new Array());
           // eslint-disable-next-line no-array-constructor
           WebVideoObject[objectId].SignalMap.put(
-            "DetectedDeviceInfo",
-            new Array()
+            'DetectedDeviceInfo',
+            new Array(),
           );
           // eslint-disable-next-line no-array-constructor
-          WebVideoObject[objectId].SignalMap.put("PointTemper", new Array());
+          WebVideoObject[objectId].SignalMap.put('PointTemper', new Array());
           let port = 23480;
 
           connect(port)
@@ -156,10 +156,10 @@ export const WebVideoCtrl = (objectId) =>
               def.resolve();
             })
             .fail(function () {
-              if (document.querySelector("iframe")) return false;
-              let ele = document.createElement("iframe");
-              ele.src = "CustomerWebSocketServer://" + port;
-              ele.style.display = "none";
+              if (document.querySelector('iframe')) return false;
+              let ele = document.createElement('iframe');
+              ele.src = 'CustomerWebSocketServer://' + port;
+              ele.style.display = 'none';
               document.body.appendChild(ele);
               // port++;
               // setTimeout(function () {
@@ -188,16 +188,16 @@ export const WebVideoCtrl = (objectId) =>
     let connect = function (port) {
       return $.Deferred(function (def) {
         try {
-          let url = "ws://127.0.0.1:" + port;
+          let url = 'ws://127.0.0.1:' + port;
           WebVideoObject[objectId].socket = new WebSocket(url);
           WebVideoObject[objectId].socket.onopen = function () {
-            console.log("open");
+            console.log('open');
           };
           WebVideoObject[objectId].socket.onerror = function (e) {
-            console.log("error:" + e.code);
+            console.log('error:' + e.code);
             if (port === 23481) {
               const result = window.confirm(
-                "카메라 연결에 실패 했습니다. 새로고침 하시겠습니까?"
+                '카메라 연결에 실패 했습니다. 새로고침 하시겠습니까?',
               );
               if (result) {
                 location.reload();
@@ -207,7 +207,7 @@ export const WebVideoCtrl = (objectId) =>
             }
           };
           WebVideoObject[objectId].socket.onmessage = function (msg) {
-            if (msg.data === "websocketserver connect ok") {
+            if (msg.data === 'websocketserver connect ok') {
               //올바른 웹 소프트 서비스를 나타냅니다
               def.resolve();
             } else {
@@ -215,7 +215,7 @@ export const WebVideoCtrl = (objectId) =>
             }
           };
           WebVideoObject[objectId].socket.onclose = function () {
-            console.log("close");
+            console.log('close');
 
             WebVideoObject[objectId].socket = undefined;
             def.reject();
@@ -244,19 +244,19 @@ export const WebVideoCtrl = (objectId) =>
           n.exec(i) ||
           r.exec(i) ||
           s.exec(i) ||
-          (i.indexOf("compatible") < 0 && o.exec(i)) || ["unknow", "0"];
-      a.length > 0 && a[1].indexOf("trident") > -1 && (a[1] = "msie");
+          (i.indexOf('compatible') < 0 && o.exec(i)) || ['unknow', '0'];
+      a.length > 0 && a[1].indexOf('trident') > -1 && (a[1] = 'msie');
       let c = {};
-      let verArr = a[2].split(".");
-      if (a[1] === "chrome") {
+      let verArr = a[2].split('.');
+      if (a[1] === 'chrome') {
         // eslint-disable-next-line no-unused-expressions
         verArr[0] - 0 < 42 ? (c.npapi = true) : (c.websocket = true),
-          (c.type = "chrome");
+          (c.type = 'chrome');
       }
-      if (a[1] === "mozilla") {
+      if (a[1] === 'mozilla') {
         // eslint-disable-next-line no-unused-expressions
         verArr[0] - 0 < 52 ? (c.npapi = true) : (c.websocket = true),
-          (c.type = "firefox");
+          (c.type = 'firefox');
       }
       return (c[a[1]] = !0), (c.version = a[2]), c;
     };
@@ -273,11 +273,11 @@ export const WebVideoCtrl = (objectId) =>
       //IE 브라우저라면
       if (browser().msie) {
         let sSize =
-          " width=" +
+          ' width=' +
           '"' +
           iWidth.toString() +
           '"' +
-          " height=" +
+          ' height=' +
           '"' +
           iHeight.toString() +
           '"';
@@ -285,15 +285,15 @@ export const WebVideoCtrl = (objectId) =>
           '<object classid="CLSID:95AF23C8-F168-4602-91F9-DB8D733BF200"' +
           sSize +
           'id="dhVideo">' +
-          "</object>";
-        $("#" + sContainerID).html(sHtmlValue);
+          '</object>';
+        $('#' + sContainerID).html(sHtmlValue);
       } else if (browser().npapi) {
         let sSize =
-          " width=" +
+          ' width=' +
           '"' +
           iWidth.toString() +
           '"' +
-          " height=" +
+          ' height=' +
           '"' +
           iHeight.toString() +
           '"';
@@ -301,11 +301,11 @@ export const WebVideoCtrl = (objectId) =>
           '<object type="application/media-plugin-version-4.0.0.0"' +
           sSize +
           'id="dhVideo">' +
-          "</object>";
-        $("#" + sContainerID).html(sHtmlValue);
+          '</object>';
+        $('#' + sContainerID).html(sHtmlValue);
       } else if (browser().websocket) {
       } else {
-        $("#" + sContainerID).html("Do not support this browser");
+        $('#' + sContainerID).html('Do not support this browser');
       }
       return true;
     }
@@ -316,9 +316,9 @@ export const WebVideoCtrl = (objectId) =>
      *@param{Num}    port  서비스 포트
      */
     function startDevciceDetection(ip, port) {
-      return WebVideoObject["loc001"].pluginObject.StartDevciceDetection(
+      return WebVideoObject['loc001'].pluginObject.StartDevciceDetection(
         ip,
-        port
+        port,
       );
     }
 
@@ -335,146 +335,146 @@ export const WebVideoCtrl = (objectId) =>
     };
 
     let MethodTable = {
-      StartDevciceDetection: ["ip", "port"], //개방형 장치 사전 등록 정보
-      CreatePluginWindow: ["browser"], //창을 만듭니다,WebSocket.
-      ResizeVideo: ["left", "top", "width", "height"], //창 위치 크기, WebSocket.
-      ShowWindow: ["show"], //창이 표시되는지 여부에 관계없이 WebSocket 솔루션이 사용됩니다.
-      SetProductType: ["type"], //제품 유형 설정
-      SetSplitNum: ["num"], //부서 수를 설정하십시오
-      GetLastError: ["svrName"], //오류 코드 가져 오기
-      GetChannelTotal: ["deviceID"], //장비 채널 수를 얻으십시오
+      StartDevciceDetection: ['ip', 'port'], //개방형 장치 사전 등록 정보
+      CreatePluginWindow: ['browser'], //창을 만듭니다,WebSocket.
+      ResizeVideo: ['left', 'top', 'width', 'height'], //창 위치 크기, WebSocket.
+      ShowWindow: ['show'], //창이 표시되는지 여부에 관계없이 WebSocket 솔루션이 사용됩니다.
+      SetProductType: ['type'], //제품 유형 설정
+      SetSplitNum: ['num'], //부서 수를 설정하십시오
+      GetLastError: ['svrName'], //오류 코드 가져 오기
+      GetChannelTotal: ['deviceID'], //장비 채널 수를 얻으십시오
       GetSelectedNodeIndex: [], //현재 선택된 노드 색인을 가져옵니다
       GetSelectedViewIndex: null, //현재 선택보기 인덱스를 가져옵니다
       GetSelectedWinID: [], //현재 선택한 창 색인을 가져옵니다
       ConnectRealVideo: [
-        "deviceID",
-        "nodeIndex",
-        "viewIndex",
-        "channel",
-        "stream",
-        "protocol",
+        'deviceID',
+        'nodeIndex',
+        'viewIndex',
+        'channel',
+        'stream',
+        'protocol',
       ], //열린 비디오
       GetUserDirectory: null, //로컬 시스템에 대한 사용자 경로를 가져옵니다
-      SetStoragePath: ["pathKey", "path"], //저장소 경로를 설정합니다 pathKey: LiveRecord|LiveSnapshot|PlaybackSnapshot|PlaybackRecord|VideoClips|HeatMap
-      GetStoragePath: ["pathKey"], //저장된 경로를 얻으십시오
+      SetStoragePath: ['pathKey', 'path'], //저장소 경로를 설정합니다 pathKey: LiveRecord|LiveSnapshot|PlaybackSnapshot|PlaybackRecord|VideoClips|HeatMap
+      GetStoragePath: ['pathKey'], //저장된 경로를 얻으십시오
       NoticeInitializedSignal: null, //플러그인 응용 프로그램 정보 초기화를 알립니다
-      CreateMultiNodeDisplay: ["num", "viewConfig"], //지정된 수의보기 만들기 여러 채널보기 ViewConfig 기본 에어 문자열보기
+      CreateMultiNodeDisplay: ['num', 'viewConfig'], //지정된 수의보기 만들기 여러 채널보기 ViewConfig 기본 에어 문자열보기
       SetFullscreen: null, //전체 화면 디스플레이
       ExitFullscreen: null, //전체 화면을 종료하십시오
-      ClosePlayer: ["playerID"], //지정된 플레이어를 끕니다 playerID ConnectRealTimeVideo의 반환 값
+      ClosePlayer: ['playerID'], //지정된 플레이어를 끕니다 playerID ConnectRealTimeVideo의 반환 값
       LoginDevice: [
-        "ip",
-        "svrPort",
-        "userName",
-        "password",
-        "rtspPort",
-        "specCap",
-        "timeout",
+        'ip',
+        'svrPort',
+        'userName',
+        'password',
+        'rtspPort',
+        'specCap',
+        'timeout',
       ], // 로그인 프로토콜 프런트 엔드는 Dahua3 SVRPort 로그인 포트 SpecCap 0 : TCP 로그인 모드 2 : 능동적 인 등록 로그인 모드 3 : 멀티 캐스트 로그인 모드 4 : UDP 로그인 모드
-      LogoutDevice: ["deviceID"], //로그 아웃하십시오
-      SetNetProtocolType: ["protocol"], //로그인 프로토콜 설정
-      PlaybackRemoteRecord: ["fileInfo", "locateTime"], //재생 비디오(locateTime이 재생 시간을 시작합니다)
+      LogoutDevice: ['deviceID'], //로그 아웃하십시오
+      SetNetProtocolType: ['protocol'], //로그인 프로토콜 설정
+      PlaybackRemoteRecord: ['fileInfo', 'locateTime'], //재생 비디오(locateTime이 재생 시간을 시작합니다)
       StopPlayBack: null, //재생 중지
       PausePlayBack: null, //일시 중지 재생
       ResumePlayBack: null, //회복
       FastPlayBack: null, //표현하다
       SlowPlayBack: null, //느린
       PlayOneFrame: null, //단일 프레임
-      SelectDirectory: ["type"], //로컬 경로 선택 상자 호출 로컬 경로를 선택하여 선택한 경로 이름을 가져옵니다.
-      StartIntercom: ["deviceID"], //오픈 인터컴
-      StopIntercom: ["deviceID"], //확대
-      CrabOnePicture: ["format", "path", "open"], //그래픽
-      ControlRecordingVideo: ["path", "format", "enable"], //비디오
-      SetVolume: ["volume"], //볼륨 설정
-      ControlAudio: ["playerID", "enable"], //오디오 스위치
-      MoveUpperLeft: ["verticalSpeed", "levelSpeed", "flag"], //구름 왼쪽에
-      MoveUpperRight: ["verticalSpeed", "levelSpeed", "flag"], //Yuntai는 오른쪽으로 움직입니다
-      MoveLowerLeft: ["verticalSpeed", "levelSpeed", "flag"], //Yuntai가 왼쪽으로 옮겼습니다
-      MoveLowerRight: ["verticalSpeed", "levelSpeed", "flag"], //Yuntai의 올바른 운동
-      MoveUpwards: ["verticalSpeed", "flag"], //삿교리 시프트
-      MoveLeft: ["levelSpeed", "flag"], //Yuntai 왼쪽 시프트
-      MoveRight: ["levelSpeed", "flag"], //Yuntai 오른쪽 시프트
-      MoveLower: ["verticalSpeed", "flag"], //하위
-      ActivePTZLocate: ["enable"], //3D 위치 결정
-      ControlZoom: ["nMultiple", "flag", "flag1"], //제어
-      ControlFocus: ["nMultiple", "flag", "flag1"], //컨트롤 줌
-      ControlAperture: ["nMultiple", "flag", "flag1"], //제어 조리개
+      SelectDirectory: ['type'], //로컬 경로 선택 상자 호출 로컬 경로를 선택하여 선택한 경로 이름을 가져옵니다.
+      StartIntercom: ['deviceID'], //오픈 인터컴
+      StopIntercom: ['deviceID'], //확대
+      CrabOnePicture: ['format', 'path', 'open'], //그래픽
+      ControlRecordingVideo: ['path', 'format', 'enable'], //비디오
+      SetVolume: ['volume'], //볼륨 설정
+      ControlAudio: ['playerID', 'enable'], //오디오 스위치
+      MoveUpperLeft: ['verticalSpeed', 'levelSpeed', 'flag'], //구름 왼쪽에
+      MoveUpperRight: ['verticalSpeed', 'levelSpeed', 'flag'], //Yuntai는 오른쪽으로 움직입니다
+      MoveLowerLeft: ['verticalSpeed', 'levelSpeed', 'flag'], //Yuntai가 왼쪽으로 옮겼습니다
+      MoveLowerRight: ['verticalSpeed', 'levelSpeed', 'flag'], //Yuntai의 올바른 운동
+      MoveUpwards: ['verticalSpeed', 'flag'], //삿교리 시프트
+      MoveLeft: ['levelSpeed', 'flag'], //Yuntai 왼쪽 시프트
+      MoveRight: ['levelSpeed', 'flag'], //Yuntai 오른쪽 시프트
+      MoveLower: ['verticalSpeed', 'flag'], //하위
+      ActivePTZLocate: ['enable'], //3D 위치 결정
+      ControlZoom: ['nMultiple', 'flag', 'flag1'], //제어
+      ControlFocus: ['nMultiple', 'flag', 'flag1'], //컨트롤 줌
+      ControlAperture: ['nMultiple', 'flag', 'flag1'], //제어 조리개
       GetPresetInfo: null, //사전 설정 정보를 얻으십시오
-      GotoPreset: ["index", "nSpeed"], //포인트를 미리 설정 한 위치
-      RemovePreset: ["index"], //미리 설정된 포인트 삭제
-      SetPreset: ["index", "name"], //선호도를 설정하십시오
+      GotoPreset: ['index', 'nSpeed'], //포인트를 미리 설정 한 위치
+      RemovePreset: ['index'], //미리 설정된 포인트 삭제
+      SetPreset: ['index', 'name'], //선호도를 설정하십시오
       StartTrafficDataQuery: [
-        "deviceID",
-        "channel",
-        "startTime",
-        "endTime",
-        "ruleType",
-        "granularity",
-        "MinStayTime",
+        'deviceID',
+        'channel',
+        'startTime',
+        'endTime',
+        'ruleType',
+        'granularity',
+        'MinStayTime',
       ], //열린 사람들 트래픽 통계 쿼리
-      GetTrafficDataTotalCount: ["token"], //정보 수
-      QueryTrafficData: ["token", "beginIndex", "count"], //검색 정보
-      StopTrafficDataQuery: ["token"], //문의를 중지하십시오
+      GetTrafficDataTotalCount: ['token'], //정보 수
+      QueryTrafficData: ['token', 'beginIndex', 'count'], //검색 정보
+      StopTrafficDataQuery: ['token'], //문의를 중지하십시오
       CreateVideoAnalyseContainer: [], //지능형지도 컨테이너를 만듭니다
-      EnableVideoAnalyseContainer: ["containerID", "enable"], //지능형지도 컨테이너를 활성화합니다
+      EnableVideoAnalyseContainer: ['containerID', 'enable'], //지능형지도 컨테이너를 활성화합니다
       CreateMainVideoAnalyseShape: [
-        "containerID",
-        "eventName",
-        "shapeType",
-        "shapeName",
-        "data",
-        "param",
+        'containerID',
+        'eventName',
+        'shapeType',
+        'shapeName',
+        'data',
+        'param',
       ], //주 그래프를 추가하십시오
       AddSubVideoAnalyseShape: [
-        "containerID",
-        "mainShapeID",
-        "markedName",
-        "data",
-        "param",
+        'containerID',
+        'mainShapeID',
+        'markedName',
+        'data',
+        'param',
       ], //하위 그래픽을 추가하십시오
-      GetVideoAnalyseShapeConfigData: ["containerID", "shapeID"], //그래픽 데이터 가져 오기
-      EnableCrowdDistriMap: ["nodeIndex", "enable"], //해당 노드를 활성화하는 군중 프로필
-      SetShowMultiScreenMode: ["mode"], //개체 추적 분할 화면 디스플레이 모드를 설정합니다
-      SetIVSEnable: ["enable"], //IVS 미리보기 Enable을 설정하십시오
-      StartVideoJoin: ["channel"], //많은 바느질을 열어 라
-      SetLensInfo: ["leninfo"], //렌즈 매개 변수 설정 (더 많은 접합 필수)
-      SubscribeEvent: ["channel", "event"], //구독 행사
-      UnSubscribeEvent: ["channel", "event"], //구독 이벤트를 취소하십시오
+      GetVideoAnalyseShapeConfigData: ['containerID', 'shapeID'], //그래픽 데이터 가져 오기
+      EnableCrowdDistriMap: ['nodeIndex', 'enable'], //해당 노드를 활성화하는 군중 프로필
+      SetShowMultiScreenMode: ['mode'], //개체 추적 분할 화면 디스플레이 모드를 설정합니다
+      SetIVSEnable: ['enable'], //IVS 미리보기 Enable을 설정하십시오
+      StartVideoJoin: ['channel'], //많은 바느질을 열어 라
+      SetLensInfo: ['leninfo'], //렌즈 매개 변수 설정 (더 많은 접합 필수)
+      SubscribeEvent: ['channel', 'event'], //구독 행사
+      UnSubscribeEvent: ['channel', 'event'], //구독 이벤트를 취소하십시오
       // recordtype은 녹화 유형 0입니다. 0 : 모든 녹음, 1 : 외부 알람, 2 : 연간 검사 테스트 알람, 3 : 모든 알람,
       StartRecordInfoQuerying: [
-        "deviceID",
-        "channel",
-        "streamType",
-        "recordType",
-        "startTime",
-        "endTime",
-        "cardInfo",
+        'deviceID',
+        'channel',
+        'streamType',
+        'recordType',
+        'startTime',
+        'endTime',
+        'cardInfo',
       ], //쿼리 녹음 시작 (인덱스 만 설정)
-      StopRecordInfoQuerying: ["handle"], //쿼리 비디오를 중지하십시오
-      FindNextRecordInfo: ["handle", "count"], //쿼리 비디오
+      StopRecordInfoQuerying: ['handle'], //쿼리 비디오를 중지하십시오
+      FindNextRecordInfo: ['handle', 'count'], //쿼리 비디오
       QueryRecordFileBitmap: [
-        "deviceID",
-        "channel",
-        "recordType",
-        "year",
-        "month",
-        "cardInfo",
+        'deviceID',
+        'channel',
+        'recordType',
+        'year',
+        'month',
+        'cardInfo',
       ], //월간 비디오 마스크 쿼리
-      GetWinID: ["nodeIndex", "viewIndex"],
-      OpenVoiceTalk: ["deviceID", "sampleRate", "depth", "encode"], //지정된 매개 변수 오픈 인터콤
-      CloseVoiceTalk: ["deviceID"], //확대
-      GetDeviceConfig: ["deviceID", "name"], //장비 구성 가져 오기
-      StartTour: ["index"], //열린 크루즈
-      StopTour: ["index"], //크루즈를 중지하십시오
-      EnableCheck: ["bFlag"], //생산 능력
-      SetSplitRowAndCol: ["row", "col"], //분할 화면 수를 설정하십시오
-      DownloadByLink: ["link", "fileName"], //Weci 다운로드 파일
-      StopDownloadByLink: ["requestID"], //다운로드를 중지하십시오
-      GetDownoadProgress: ["requestID"], //다운로드 진행을하십시오
-      SetOEM: ["oem"], //사용자 정의 정보를 설정하십시오
-      SelectWindow: ["nodeIndex", "viewIndex"], //창을 선택하십시오
-      OpenPath: ["path"], //경로를 엽니 다
-      StartTourByChannel: ["channel", "index"], //채널로 크루즈를 켜십시오
+      GetWinID: ['nodeIndex', 'viewIndex'],
+      OpenVoiceTalk: ['deviceID', 'sampleRate', 'depth', 'encode'], //지정된 매개 변수 오픈 인터콤
+      CloseVoiceTalk: ['deviceID'], //확대
+      GetDeviceConfig: ['deviceID', 'name'], //장비 구성 가져 오기
+      StartTour: ['index'], //열린 크루즈
+      StopTour: ['index'], //크루즈를 중지하십시오
+      EnableCheck: ['bFlag'], //생산 능력
+      SetSplitRowAndCol: ['row', 'col'], //분할 화면 수를 설정하십시오
+      DownloadByLink: ['link', 'fileName'], //Weci 다운로드 파일
+      StopDownloadByLink: ['requestID'], //다운로드를 중지하십시오
+      GetDownoadProgress: ['requestID'], //다운로드 진행을하십시오
+      SetOEM: ['oem'], //사용자 정의 정보를 설정하십시오
+      SelectWindow: ['nodeIndex', 'viewIndex'], //창을 선택하십시오
+      OpenPath: ['path'], //경로를 엽니 다
+      StartTourByChannel: ['channel', 'index'], //채널로 크루즈를 켜십시오
     };
 
     let RegisterMethod = function () {
@@ -482,14 +482,14 @@ export const WebVideoCtrl = (objectId) =>
         WebVideoObject[objectId].pluginObject[method] = function () {
           let args = arguments;
           let methodParams = {};
-          methodParams["method"] = method;
-          methodParams["params"] = {};
+          methodParams['method'] = method;
+          methodParams['params'] = {};
           if (WebVideoObject[objectId].g_id === Number.MAX_VALUE) {
             WebVideoObject[objectId].g_id = Number.MIN_VALUE;
           }
-          methodParams["id"] = WebVideoObject[objectId].g_id;
+          methodParams['id'] = WebVideoObject[objectId].g_id;
           for (let i = 0; i < args.length; i++) {
-            methodParams["params"][params[i]] = args[i];
+            methodParams['params'][params[i]] = args[i];
           }
           //console.log(JSON.stringify(methodParams));
           let defer = $.Deferred();
@@ -503,7 +503,7 @@ export const WebVideoCtrl = (objectId) =>
             WebVideoObject[objectId].socket.send(JSON.stringify(methodParams));
           } else {
             document
-              .getElementById("dhVideo")
+              .getElementById('dhVideo')
               .PostMessage(JSON.stringify(methodParams));
           }
           return defer;
@@ -518,22 +518,22 @@ export const WebVideoCtrl = (objectId) =>
         if (browser().msie || browser().npapi) {
           //모니터 이벤트
           document
-            .getElementById("dhVideo")
-            .AddEventListener("message", handleEvent);
+            .getElementById('dhVideo')
+            .AddEventListener('message', handleEvent);
         } else if (browser().websocket) {
           if (!WebVideoObject[objectId].pluginObject) return;
           WebVideoObject[objectId].pluginObject.CreatePluginWindow(
-            browser().type
+            browser().type,
           );
           WebVideoObject[objectId].pluginObject.ShowWindow(true);
         }
         //제품 정보를 설정하십시오
-        WebVideoObject[objectId].pluginObject.SetProductType("Customer");
+        WebVideoObject[objectId].pluginObject.SetProductType('Customer');
         //사용자 정의 유형 설정
         //pluginObject.SetOEM("SenseTime");
         //통신 프로토콜을 설정하십시오
         WebVideoObject[objectId].pluginObject.SetNetProtocolType(
-          WebVideoObject[objectId].sProtocol
+          WebVideoObject[objectId].sProtocol,
         );
         //종료 플러그인 초기화
         WebVideoObject[objectId].pluginObject
@@ -567,7 +567,7 @@ export const WebVideoCtrl = (objectId) =>
           left,
           top,
           width,
-          height
+          height,
         );
       }
     };
@@ -588,7 +588,7 @@ export const WebVideoCtrl = (objectId) =>
      */
     function registerEvent(event, cb) {
       let callBackList = WebVideoObject[objectId].SignalMap.get(event);
-      if (typeof callBackList !== "undefined") {
+      if (typeof callBackList !== 'undefined') {
         callBackList.push(cb);
       }
       return true;
@@ -604,7 +604,7 @@ export const WebVideoCtrl = (objectId) =>
      */
     function getDeviceInfo(ip) {
       let info = WebVideoObject[objectId].deviceInfoMap.get(objectId);
-      if (typeof info !== "undefined") {
+      if (typeof info !== 'undefined') {
         return info;
       } else {
         return;
@@ -618,7 +618,7 @@ export const WebVideoCtrl = (objectId) =>
      */
     let logout = function (ip) {
       let info = getDeviceInfo(ip);
-      if (typeof info !== "undefined") {
+      if (typeof info !== 'undefined') {
         WebVideoObject[objectId].pluginObject
           .LogoutDevice(info.deviceID)
           .done(function (ret) {
@@ -653,7 +653,7 @@ export const WebVideoCtrl = (objectId) =>
       iChannel,
       iStream,
       fnSuccess,
-      fnFail
+      fnFail,
     ) {
       WebVideoObject[objectId].pluginObject
         .GetWinID(iIndex, 0)
@@ -667,12 +667,12 @@ export const WebVideoCtrl = (objectId) =>
               0,
               iChannel - 1,
               iStream,
-              ODeviceInfo.protocol
+              ODeviceInfo.protocol,
             )
             .done(function (iRet) {
               if (iRet > 0) {
                 //성공을하십시오
-                if (typeof fnSuccess !== "undefined") {
+                if (typeof fnSuccess !== 'undefined') {
                   fnSuccess(iRet);
                   insertPlayer(
                     iWinID,
@@ -682,15 +682,15 @@ export const WebVideoCtrl = (objectId) =>
                     ODeviceInfo.protocol,
                     iChannel,
                     iStream,
-                    0
+                    0,
                   );
                 }
               } else if (iRet <= 0) {
-                if (typeof fnSuccess !== "undefined") {
+                if (typeof fnSuccess !== 'undefined') {
                   //오류 메시지가 나타납니다
                   let errorInfo =
                     WebVideoObject[objectId].pluginObject.GetLastError(
-                      "ConnectRealVideo"
+                      'ConnectRealVideo',
                     );
                   //분석 오류 설명
                   fnFail(iRet, parseError(errorInfo));
@@ -719,7 +719,7 @@ export const WebVideoCtrl = (objectId) =>
       iProtocol,
       iChannle,
       iStreamType,
-      iPlayerType
+      iPlayerType,
     ) {
       let info = {
         winID: iWinID,
@@ -741,8 +741,8 @@ export const WebVideoCtrl = (objectId) =>
      */
     let parseError = function (errorInfo) {
       let errorObject = $.parseJSON(errorInfo);
-      if ("error" in errorObject) {
-        return errorObject["error"];
+      if ('error' in errorObject) {
+        return errorObject['error'];
       }
     };
 
@@ -767,7 +767,7 @@ export const WebVideoCtrl = (objectId) =>
       iProtocol,
       iTimeout,
       fnSuccess,
-      fnFail
+      fnFail,
     ) {
       if (WebVideoObject[objectId].pluginObject) {
         WebVideoObject[objectId].pluginObject
@@ -778,7 +778,7 @@ export const WebVideoCtrl = (objectId) =>
             sPassword,
             iRtspPort,
             iProtocol,
-            iTimeout
+            iTimeout,
           )
           .done(function (ret) {
             if (ret > 0) {
@@ -795,14 +795,14 @@ export const WebVideoCtrl = (objectId) =>
                     iProtocol,
                     channelNum,
                     ret,
-                    objectId
+                    objectId,
                   );
                   fnSuccess(sIp, ret);
                 });
             } else if (ret <= 0) {
               //오류 메시지가 나타납니다
               WebVideoObject[objectId].pluginObject
-                .GetLastError("LoginDevice")
+                .GetLastError('LoginDevice')
                 .done(function (err) {
                   //분석 오류 설명
                   fnFail(ret, parseError(err));
@@ -832,7 +832,7 @@ export const WebVideoCtrl = (objectId) =>
       protocol,
       channelNum,
       deviceID,
-      objectId
+      objectId,
     ) {
       let info = {
         ip: ip,
@@ -861,7 +861,7 @@ export const WebVideoCtrl = (objectId) =>
       iChannel,
       iStream,
       fnSuccess,
-      fnFail
+      fnFail,
     ) {
       if (!WebVideoObject?.[objectId]?.pluginObject) return;
       WebVideoObject[objectId]?.pluginObject
@@ -879,12 +879,12 @@ export const WebVideoCtrl = (objectId) =>
                     iViewIndex,
                     iChannel - 1,
                     iStream,
-                    ODeviceInfo.protocol
+                    ODeviceInfo.protocol,
                   )
                   .done(function (iRet) {
                     if (iRet > 0) {
                       //성공을하십시오
-                      if (typeof fnSuccess !== "undefined") {
+                      if (typeof fnSuccess !== 'undefined') {
                         fnSuccess(iRet);
                         WebVideoObject[objectId].pluginObject
                           .GetSelectedWinID()
@@ -897,15 +897,15 @@ export const WebVideoCtrl = (objectId) =>
                               ODeviceInfo.protocol,
                               iChannel,
                               iStream,
-                              0
+                              0,
                             );
                           });
                       }
                     } else if (iRet <= 0) {
-                      if (typeof fnSuccess !== "undefined") {
+                      if (typeof fnSuccess !== 'undefined') {
                         //오류 메시지가 나타납니다
                         WebVideoObject[objectId].pluginObject
-                          .GetLastError("ConnectRealVideo")
+                          .GetLastError('ConnectRealVideo')
                           .done(function (errorInfo) {
                             //분석 오류 설명
                             fnFail(iRet, parseError(errorInfo));
@@ -929,7 +929,7 @@ export const WebVideoCtrl = (objectId) =>
         ?.done(function (iWinID) {
           //플레이어 ID를 얻으십시오
           var oInfo = WebVideoObject[objectId].playerInfoMap.get(iWinID);
-          if (typeof oInfo != "undefined") {
+          if (typeof oInfo != 'undefined') {
             WebVideoObject[objectId].pluginObject.ClosePlayer(oInfo.playerID);
             return true;
           } else {
@@ -937,7 +937,7 @@ export const WebVideoCtrl = (objectId) =>
           }
         })
         .fail(function () {
-          console.log("Close Player Error!!!!");
+          console.log('Close Player Error!!!!');
           // port++;
           // setTimeout(function () {
           //     reconnect(port, def);
@@ -960,7 +960,7 @@ export const WebVideoCtrl = (objectId) =>
       return WebVideoObject[objectId].pluginObject.MoveUpperLeft(
         iVerticalSpeed,
         iLevelSpeed,
-        flag
+        flag,
       );
     };
 
@@ -974,7 +974,7 @@ export const WebVideoCtrl = (objectId) =>
       return WebVideoObject[objectId].pluginObject.MoveUpperRight(
         iVerticalSpeed,
         iLevelSpeed,
-        flag
+        flag,
       );
     };
 
@@ -988,7 +988,7 @@ export const WebVideoCtrl = (objectId) =>
       return WebVideoObject[objectId].pluginObject.MoveLowerLeft(
         iVerticalSpeed,
         iLevelSpeed,
-        flag
+        flag,
       );
     };
 
@@ -1002,7 +1002,7 @@ export const WebVideoCtrl = (objectId) =>
       return WebVideoObject[objectId].pluginObject.MoveLowerRight(
         iVerticalSpeed,
         iLevelSpeed,
-        flag
+        flag,
       );
     };
 
@@ -1014,7 +1014,7 @@ export const WebVideoCtrl = (objectId) =>
     var moveUpwards = function (iVerticalSpeed, flag) {
       return WebVideoObject[objectId].pluginObject.MoveUpwards(
         iVerticalSpeed,
-        flag
+        flag,
       );
     };
 
@@ -1026,7 +1026,7 @@ export const WebVideoCtrl = (objectId) =>
     var moveLower = function (iVerticalSpeed, flag) {
       return WebVideoObject[objectId].pluginObject.MoveLower(
         iVerticalSpeed,
-        flag
+        flag,
       );
     };
 
@@ -1074,7 +1074,7 @@ export const WebVideoCtrl = (objectId) =>
       return WebVideoObject[objectId].pluginObject.ControlZoom(
         iSpeed,
         flag,
-        flag1
+        flag1,
       );
     };
 
@@ -1090,7 +1090,7 @@ export const WebVideoCtrl = (objectId) =>
       return WebVideoObject[objectId].pluginObject.ControlFocus(
         speed,
         flag,
-        flag1
+        flag1,
       );
     };
 
@@ -1107,7 +1107,7 @@ export const WebVideoCtrl = (objectId) =>
       return WebVideoObject[objectId].pluginObject.ControlAperture(
         speed,
         flag,
-        flag1
+        flag1,
       );
     };
 

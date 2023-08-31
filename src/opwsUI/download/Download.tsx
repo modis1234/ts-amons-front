@@ -1,9 +1,9 @@
-import { faFileArrowDown } from "@fortawesome/pro-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from "axios";
-import React from "react";
-import { saveAs } from "file-saver";
-import styled from "styled-components";
+import { faFileArrowDown } from '@fortawesome/pro-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axios from 'axios';
+import React from 'react';
+import { saveAs } from 'file-saver';
+import styled from 'styled-components';
 
 const DownloadCmpt = styled.div`
   /* width: 100%; */
@@ -59,9 +59,9 @@ export const downloadAction = async ({
 }: DownLoadActionType) => {
   try {
     const response = await axios({
-      method: "POST",
+      method: 'POST',
       url: `${API}${url}`,
-      responseType: "blob",
+      responseType: 'blob',
       data: {
         data,
         ts_index: TS_INDEX,
@@ -88,7 +88,7 @@ type DownLoadType = {
 export const Download = ({ onDownload, disabled }: DownLoadType) => {
   return (
     <DownloadCmpt
-      className={`download-button ${disabled ? "disabled" : ""}`}
+      className={`download-button ${disabled ? 'disabled' : ''}`}
       onClick={disabled ? undefined : onDownload}
     >
       <span className="button-name">다운로드</span>

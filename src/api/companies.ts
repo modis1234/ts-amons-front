@@ -1,5 +1,5 @@
-import axios from "axios";
-import { CompanyType } from "modules/companies";
+import axios from 'axios';
+import { CompanyType } from 'modules/companies';
 
 const API = `http://${process.env.REACT_APP_API_SERVER}`;
 const TS_INDEX = process.env.REACT_APP_TS_INDEX;
@@ -7,7 +7,7 @@ const TS_INDEX = process.env.REACT_APP_TS_INDEX;
 // 포스트 목록을 가져오는 비동기 함수
 export const getCompanies = async () => {
   const response = await axios.get(
-    `${API}/api/company/companies?siteIndex=${TS_INDEX}`
+    `${API}/api/company/companies?siteIndex=${TS_INDEX}`,
   );
   return response.data;
 };

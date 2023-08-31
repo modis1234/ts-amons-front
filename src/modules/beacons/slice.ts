@@ -1,11 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 import {
   asyncState,
   AsyncStateType,
   createActionHandler,
   deleteActionHandler,
   updateActionHandler,
-} from "lib/reducerUtils";
+} from 'lib/reducerUtils';
 import {
   DELETE_BEACON_FULFILLED,
   DELETE_BEACON_PENDING,
@@ -25,20 +25,20 @@ import {
   PUT_BEACON_FULFILLED,
   PUT_BEACON_PENDING,
   PUT_BEACON_REJECTED,
-} from "./actions";
-import { BeaconType } from "./types";
+} from './actions';
+import { BeaconType } from './types';
 
 const initialState: AsyncStateType<BeaconType[], Error> = asyncState.initial();
 
 const postBeaconrHandler = createActionHandler<BeaconType>();
-const putBeaconrHandler = updateActionHandler<BeaconType>("bc_id");
-const deleteBeaconrHandler = deleteActionHandler<BeaconType>("bc_id");
+const putBeaconrHandler = updateActionHandler<BeaconType>('bc_id');
+const deleteBeaconrHandler = deleteActionHandler<BeaconType>('bc_id');
 
 const postSearchBeaconsByWorkerNameReducer = createActionHandler<BeaconType>();
 const postSearchBeaconsByVehicleNameReducer = createActionHandler<BeaconType>();
 
 export const workerSlice = createSlice({
-  name: "workers",
+  name: 'workers',
   initialState,
   reducers: {},
   extraReducers: {

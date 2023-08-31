@@ -6,8 +6,8 @@ import {
   Input,
   Modal,
   Radio,
-} from "semantic-ui-react";
-import styled from "styled-components";
+} from 'semantic-ui-react';
+import styled from 'styled-components';
 
 // label CSS
 export const LabelTag = styled.label`
@@ -268,10 +268,10 @@ export const FormFieldCmpt = styled(Form.Field)`
     resize: none !important;
   }
 
-  .ui[class*="right labeled"].input {
+  .ui[class*='right labeled'].input {
     font-family: NotoSansCJKkr-Regular;
   }
-  .ui[class*="right labeled"].input > input:focus {
+  .ui[class*='right labeled'].input > input:focus {
     border-right-color: var(--company-identity-color, #0000ff) !important;
   }
 `;
@@ -307,7 +307,7 @@ export const ButtonCmpt = styled(Button)`
   font-family: NotoSansCJKkr-Regular;
 
   &.button,
-  &[type="submit"] {
+  &[type='submit'] {
     position: absolute;
     bottom: 10px;
     font-size: 18px;
@@ -375,7 +375,7 @@ export const RadioCmpt = styled.div`
   margin-top: 10px;
   line-height: 1.8;
 
-  input[type="radio"] {
+  input[type='radio'] {
     border-radius: 50%;
     width: 18px;
     height: 18px;

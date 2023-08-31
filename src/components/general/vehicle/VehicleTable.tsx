@@ -1,4 +1,4 @@
-import { VehicleType } from "modules/vehicles";
+import { VehicleType } from 'modules/vehicles';
 import {
   OnDeleteType,
   OnRowClickType,
@@ -6,12 +6,12 @@ import {
   SelectedRowType,
   TableDataType,
   TableOptionType,
-} from "opwsUI/table/types";
-import React, { useCallback, useEffect, useState } from "react";
-import { PaginationProps } from "semantic-ui-react";
-import styled from "styled-components";
-import TableElement from "../../../opwsUI/table/TableElement";
-import { splitByColonInput, zeroFill } from "../../../opwsUI/util";
+} from 'opwsUI/table/types';
+import React, { useCallback, useEffect, useState } from 'react';
+import { PaginationProps } from 'semantic-ui-react';
+import styled from 'styled-components';
+import TableElement from '../../../opwsUI/table/TableElement';
+import { splitByColonInput, zeroFill } from '../../../opwsUI/util';
 
 const VehicleTableCmpt = styled.div`
   width: 100%;
@@ -40,54 +40,54 @@ const VehicleTable = ({
   const [tableData, setTableData] = useState<TableDataType<VehicleType>>({
     header: [
       {
-        id: "no",
-        name: "NO",
-        field: "no",
-        textAlign: "center",
+        id: 'no',
+        name: 'NO',
+        field: 'no',
+        textAlign: 'center',
         width: 1,
       },
       {
-        id: "companyName",
-        name: "소속사",
-        field: "co_name",
+        id: 'companyName',
+        name: '소속사',
+        field: 'co_name',
         width: 2,
-        sorting: "true",
+        sorting: 'true',
       },
       {
-        id: "vhName",
-        name: "차량 종류",
-        field: "vh_name",
+        id: 'vhName',
+        name: '차량 종류',
+        field: 'vh_name',
         width: 2,
-        sorting: "true",
+        sorting: 'true',
       },
       {
-        id: "vhNumber",
-        name: "차량 번호",
-        field: "vh_number",
+        id: 'vhNumber',
+        name: '차량 번호',
+        field: 'vh_number',
         width: 3,
       },
       {
-        id: "beaconAddress",
-        name: "비콘 사용 정보",
-        field: "bc_address",
+        id: 'beaconAddress',
+        name: '비콘 사용 정보',
+        field: 'bc_address',
         width: 3,
-        textAlign: "center",
-        sorting: "true",
+        textAlign: 'center',
+        sorting: 'true',
         callback: (item: VehicleType) => {
           if (item.bc_index) {
             return `${
-              item.bc_management ? zeroFill(item.bc_management, 3) : "000"
-            } - ${item.bc_address ? splitByColonInput(item.bc_address) : ""}`;
+              item.bc_management ? zeroFill(item.bc_management, 3) : '000'
+            } - ${item.bc_address ? splitByColonInput(item.bc_address) : ''}`;
           } else {
-            return "미할당";
+            return '미할당';
           }
         },
       },
       {
-        id: "description",
-        name: "비고",
-        field: "vh_description",
-        textAlign: "center",
+        id: 'description',
+        name: '비고',
+        field: 'vh_description',
+        textAlign: 'center',
         width: 4,
       },
     ],
@@ -114,11 +114,11 @@ const VehicleTable = ({
   const onPageChange = useCallback(
     (
       e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
-      data: PaginationProps
+      data: PaginationProps,
     ): void => {
       e.preventDefault();
       const activePage: string | number | undefined = data.activePage;
-      if (typeof activePage === "number") {
+      if (typeof activePage === 'number') {
         const _activePage = Math.ceil(activePage);
         const PreState = pageInfo;
         setPageInfoHandler({
@@ -131,7 +131,7 @@ const VehicleTable = ({
       initForm();
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [pageInfo]
+    [pageInfo],
   );
 
   return (
@@ -144,11 +144,11 @@ const VehicleTable = ({
           onPageChange={onPageChange}
           onRowClick={onRowClick}
           activeDelete={{
-            keys: "vh_id", // delete ActionKey
+            keys: 'vh_id', // delete ActionKey
             callback: onDelete, // delete ActionHandler
           }}
           activeRow={{
-            keys: "vh_index",
+            keys: 'vh_index',
             index: selectedRow.selectedId,
           }}
         />

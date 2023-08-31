@@ -1,11 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 import {
   asyncState,
   AsyncStateType,
   createActionHandler,
   deleteActionHandler,
   updateActionHandler,
-} from "lib/reducerUtils";
+} from 'lib/reducerUtils';
 import {
   DELETE_WORKER_FULFILLED,
   DELETE_WORKER_PENDING,
@@ -22,17 +22,17 @@ import {
   PUT_WORKER_FULFILLED,
   PUT_WORKER_PENDING,
   PUT_WORKER_REJECTED,
-} from "./actions";
-import { WorkerType } from "./types";
+} from './actions';
+import { WorkerType } from './types';
 
 const initialState: AsyncStateType<WorkerType[], Error> = asyncState.initial();
 
 const postWorkerHandler = createActionHandler<WorkerType>();
-const putWorkerHandler = updateActionHandler<WorkerType>("wk_id");
-const deleteWorkerHandler = deleteActionHandler<WorkerType>("wk_id");
+const putWorkerHandler = updateActionHandler<WorkerType>('wk_id');
+const deleteWorkerHandler = deleteActionHandler<WorkerType>('wk_id');
 
 export const workerSlice = createSlice({
-  name: "workers",
+  name: 'workers',
   initialState,
   reducers: {},
   extraReducers: {

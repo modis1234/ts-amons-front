@@ -1,5 +1,5 @@
-import { AnyAction } from "@reduxjs/toolkit";
-import { WritableDraft } from "immer/dist/internal";
+import { AnyAction } from '@reduxjs/toolkit';
+import { WritableDraft } from 'immer/dist/internal';
 
 export type AsyncStateType<T, E = any, P = any> = {
   loading: boolean;
@@ -44,12 +44,12 @@ export function asyncActions(type: string) {
 export function createActionHandler<T = any>() {
   return (
     state: WritableDraft<AsyncStateType<T[], Error, any>>,
-    action: AnyAction
+    action: AnyAction,
   ) => {
-    console.log("123213.state->", state.data);
-    console.log("data->", state.data);
-    console.log("action->", action);
-    console.log("action.payload->", action.payload);
+    console.log('123213.state->', state.data);
+    console.log('data->', state.data);
+    console.log('action->', action);
+    console.log('action.payload->', action.payload);
     state.loading = false;
     state.data = state?.data
       ? state?.data?.concat(action.payload)
@@ -70,10 +70,10 @@ export function createActionHandler<T = any>() {
 export function updateActionHandler<T>(key: string) {
   return (
     state: WritableDraft<AsyncStateType<T[], Error, any>>,
-    action: AnyAction
+    action: AnyAction,
   ) => {
-    console.log("state->", state);
-    console.log("action->", action);
+    console.log('state->', state);
+    console.log('action->', action);
     state.loading = false;
     state.data = state?.data?.map((item: any) => {
       return item?.[key] === action.payload?.[key]
@@ -102,13 +102,13 @@ export function updateActionHandler<T>(key: string) {
 export function deleteActionHandler<T>(key: string) {
   return (
     state: WritableDraft<AsyncStateType<T[], Error, any>>,
-    action: AnyAction
+    action: AnyAction,
   ) => {
-    console.log("state->", state);
-    console.log("action->", action);
+    console.log('state->', state);
+    console.log('action->', action);
     state.loading = false;
     state.data = state?.data?.filter(
-      (item: any) => item?.[key] !== Number(action.payload?.param) && item
+      (item: any) => item?.[key] !== Number(action.payload?.param) && item,
     ) ?? [...[action.payload]];
     state.error = null;
   };

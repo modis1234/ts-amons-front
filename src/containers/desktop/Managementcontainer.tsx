@@ -1,18 +1,18 @@
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import {
   faHardHat,
   faIdCardAlt,
   faRoad,
   faTruck,
-} from "@fortawesome/pro-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import LocalContainer from "containers/field/LocalContainer";
-import CompanyContainer from "containers/general/CompanyContainer";
-import VehicleContainer from "containers/general/VehicleContainer";
-import WorkerContainer from "containers/general/WorkerContainer";
-import React, { useState, useEffect } from "react";
-import { useOutletContext } from "react-router-dom";
-import { styled } from "styled-components";
+} from '@fortawesome/pro-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import LocalContainer from 'containers/field/LocalContainer';
+import CompanyContainer from 'containers/general/CompanyContainer';
+import VehicleContainer from 'containers/general/VehicleContainer';
+import WorkerContainer from 'containers/general/WorkerContainer';
+import React, { useState, useEffect } from 'react';
+import { useOutletContext } from 'react-router-dom';
+import { styled } from 'styled-components';
 
 const ManagementCmpt = styled.div`
   width: 100%;
@@ -76,22 +76,22 @@ type ActiveMenuType = {
 
 const contentsList: ContentsListType = {
   local: {
-    title: "노선관리",
+    title: '노선관리',
     icon: faRoad,
     component: <LocalContainer />,
   },
   company: {
-    title: "소속사 관리",
+    title: '소속사 관리',
     icon: faIdCardAlt,
     component: <CompanyContainer />,
   },
   worker: {
-    title: "작업자 관리",
+    title: '작업자 관리',
     icon: faHardHat,
     component: <WorkerContainer />,
   },
   vehicle: {
-    title: "차량 관리",
+    title: '차량 관리',
     icon: faTruck,
     component: <VehicleContainer />,
   },

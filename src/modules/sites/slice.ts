@@ -1,11 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 import {
   asyncState,
   AsyncStateType,
   createActionHandler,
   deleteActionHandler,
   updateActionHandler,
-} from "lib/reducerUtils";
+} from 'lib/reducerUtils';
 import {
   DELETE_SITE_FULFILLED,
   DELETE_SITE_PENDING,
@@ -19,19 +19,19 @@ import {
   PUT_SITES_FULFILLED,
   PUT_SITES_PENDING,
   PUT_SITES_REJECTED,
-} from "./actions";
-import { SiteType } from "./types";
+} from './actions';
+import { SiteType } from './types';
 // import { SiteType } from "./types";
 
 const initialState: AsyncStateType<SiteType[], Error> = asyncState.initial();
 
 const postSiteHandler = createActionHandler<SiteType>();
-const putSiteHandler = updateActionHandler<SiteType>("site_id");
-const deleteSIteHandler = deleteActionHandler<SiteType>("site_id");
+const putSiteHandler = updateActionHandler<SiteType>('site_id');
+const deleteSIteHandler = deleteActionHandler<SiteType>('site_id');
 // const deleteSiteHandler = updateActionHandler<SiteType>("site_id");
 
 export const siteSlice = createSlice({
-  name: "sites",
+  name: 'sites',
   initialState,
   reducers: {},
   extraReducers: {

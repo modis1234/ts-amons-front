@@ -39,7 +39,7 @@ export const deleteDig = async (id: number) => {
 // 굴진 이력 조회 (log) 현재 일시로 부터 한 달 전까지
 export const getLogDigMonth = async () => {
   const response = await axios.get(
-    `${API}/api/dig/digs/local?siteIndex=${TS_INDEX}`
+    `${API}/api/dig/digs/local?siteIndex=${TS_INDEX}`,
   );
   return response.data;
 };

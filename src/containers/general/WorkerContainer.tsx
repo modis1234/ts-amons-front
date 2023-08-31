@@ -1,20 +1,20 @@
-import WorkerInput from "components/general/worker/WorkerInput";
-import WorkerSearch from "components/general/worker/WorkerSearch";
-import WorkerTable from "components/general/worker/WorkerTable";
-import { useAppDispatch, useAppSelector } from "modules/hooks";
-import moment from "moment";
-import { ModalDataType } from "opwsUI/form/FormElement";
-import { PageInfoType, SelectedRowType } from "opwsUI/table/types";
+import WorkerInput from 'components/general/worker/WorkerInput';
+import WorkerSearch from 'components/general/worker/WorkerSearch';
+import WorkerTable from 'components/general/worker/WorkerTable';
+import { useAppDispatch, useAppSelector } from 'modules/hooks';
+import moment from 'moment';
+import { ModalDataType } from 'opwsUI/form/FormElement';
+import { PageInfoType, SelectedRowType } from 'opwsUI/table/types';
 import React, {
   useCallback,
   useEffect,
   useLayoutEffect,
   useState,
-} from "react";
-import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
-import { BeaconType, getUnUsedBeacons } from "../../modules/beacons";
-import { getCompanies } from "../../modules/companies";
+} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
+import { BeaconType, getUnUsedBeacons } from '../../modules/beacons';
+import { getCompanies } from '../../modules/companies';
 import {
   deleteWorker,
   getWorkers,
@@ -23,16 +23,16 @@ import {
   WorkerErrorType,
   WorkerSearchDataType,
   WorkerType,
-} from "../../modules/workers";
-import initConfigData from "../../opwsUI/initConfigData";
-import OneByTwoLayout from "../../opwsUI/layout/OneByTwoLayout";
+} from '../../modules/workers';
+import initConfigData from '../../opwsUI/initConfigData';
+import OneByTwoLayout from '../../opwsUI/layout/OneByTwoLayout';
 import {
   autoHypenPhone,
   isKorean,
   sortFn,
   splitByColonInput,
   zeroFill,
-} from "../../opwsUI/util";
+} from '../../opwsUI/util';
 
 const WorkerCmpt = styled.div`
   width: 100%;
@@ -75,7 +75,7 @@ const WorkerContainer = () => {
         companiesData: state.companies.data,
         beaconsData: state.beacons.data,
       };
-    }
+    },
   );
 
   const dispatch = useAppDispatch();
@@ -96,7 +96,7 @@ const WorkerContainer = () => {
   const [imageFile, setImageFile] = useState<ImageFileType>({
     preview: false,
     fileName: null,
-    file: "",
+    file: '',
     src: null,
   });
 
@@ -133,20 +133,20 @@ const WorkerContainer = () => {
           acc.push(tempObj);
           return acc;
         },
-        []
+        [],
       );
       setCompanyOptions(_companiesOption);
     }
 
     if (beaconsData) {
-      const sortBeaconsData = sortFn(beaconsData, "bc_address");
+      const sortBeaconsData = sortFn(beaconsData, 'bc_address');
       const _beaconsOption = sortBeaconsData.reduce(
         (acc, curr, index) => {
           const { bc_id, bc_index, bc_address, bc_management } = curr;
           const tempObj = {
             key: bc_id,
             text: `${
-              bc_management ? zeroFill(bc_management, 3) : "000"
+              bc_management ? zeroFill(bc_management, 3) : '000'
             } - ${splitByColonInput(bc_address)}`,
             address: splitByColonInput(bc_address),
             mgtNumber: bc_management,
@@ -156,7 +156,7 @@ const WorkerContainer = () => {
           acc.push(tempObj);
           return acc;
         },
-        [{ key: 0, text: "할당 없음", value: 0 }]
+        [{ key: 0, text: '할당 없음', value: 0 }],
       );
       if (!formData.bc_id) {
         setBeaconOptions(_beaconsOption);
@@ -208,7 +208,7 @@ const WorkerContainer = () => {
     setImageFile({
       preview: false,
       fileName: null,
-      file: "",
+      file: '',
       src: null,
     });
   }, []);
@@ -233,7 +233,7 @@ const WorkerContainer = () => {
         clickedIndex: null,
       });
     },
-    [pageInfo]
+    [pageInfo],
   );
 
   /**@descrition input 입력란 onChange 핸들러 */
@@ -251,25 +251,25 @@ const WorkerContainer = () => {
       const { name, value } = rest?.option ? rest.option : e.target;
       let _value = value;
       let _tempValue = {};
-      if (name === "bc_index") {
+      if (name === 'bc_index') {
         const _findObj = beaconOptions?.find(
-          (option) => option.value === value && option
+          (option) => option.value === value && option,
         );
 
         _tempValue = {
-          bc_address: _findObj ? _findObj?.address?.replace(/:/g, "") : null,
+          bc_address: _findObj ? _findObj?.address?.replace(/:/g, '') : null,
           bc_management: _findObj ? _findObj?.mgtNumber : null,
         };
-      } else if (name === "co_id") {
+      } else if (name === 'co_id') {
         const _findObj = companyOptions?.find(
-          (option) => option.value === value && option
+          (option) => option.value === value && option,
         );
         _tempValue = {
           co_name: _findObj ? _findObj?.text : null,
         };
-      } else if (name === "wk_phone") {
+      } else if (name === 'wk_phone') {
         _value = autoHypenPhone(String(_value));
-      } else if (name === "wk_sms_yn") {
+      } else if (name === 'wk_sms_yn') {
         _value = e.target.checked ? 1 : 0;
       }
 
@@ -285,16 +285,16 @@ const WorkerContainer = () => {
         ..._tempValue,
       });
     },
-    [formData, beaconOptions, companyOptions, error]
+    [formData, beaconOptions, companyOptions, error],
   );
 
   const onChangeDate = (
     e: React.ChangeEvent<HTMLInputElement>,
-    date: Date | string
+    date: Date | string,
   ) => {
     setFormData({
       ...formData,
-      wk_birth: moment(date).format("YYYY-MM-DD"),
+      wk_birth: moment(date).format('YYYY-MM-DD'),
     });
   };
 
@@ -332,12 +332,12 @@ const WorkerContainer = () => {
     },
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [selectedRow.selectedId, beaconOptions]
+    [selectedRow.selectedId, beaconOptions],
   );
 
   /**@descrition form 컴포넌트 onSubmit 핸들러 */
   const onSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     e.preventDefault();
     const { wk_index: index } = formData;
@@ -346,13 +346,13 @@ const WorkerContainer = () => {
     if (!formData.co_id) {
       setError({
         ...error,
-        co_id: "소속사를 입력해 주세요.",
+        co_id: '소속사를 입력해 주세요.',
       });
       return false;
     } else if (!formData.wk_name || formData.wk_name.length < 1) {
       setError({
         ...error,
-        wk_name: "이름을 입력해 주세요.",
+        wk_name: '이름을 입력해 주세요.',
       });
       return false;
     }
@@ -379,8 +379,8 @@ const WorkerContainer = () => {
         ...postData,
         ...updatedKeys,
       };
-      createData.append("file", imageFile.file);
-      createData.append("reqBody", JSON.stringify(postData));
+      createData.append('file', imageFile.file);
+      createData.append('reqBody', JSON.stringify(postData));
 
       try {
         await dispatch(postWorker(createData));
@@ -390,14 +390,14 @@ const WorkerContainer = () => {
         }
         initForm();
       } catch (error) {
-        console.log("POST ERROR!!");
+        console.log('POST ERROR!!');
       }
     } else {
       //수정
       setModalData({
         ...modalData,
         open: true,
-        type: "update",
+        type: 'update',
       });
     }
   };
@@ -405,8 +405,8 @@ const WorkerContainer = () => {
   /**@descrition modal button Action */
   const setOpen = ({ action, open }: { action: boolean; open: boolean }) => {
     setModalData((prev) => {
-      if (prev.type === "update" && action) updateDispatch();
-      else if (prev.type === "delete" && action) deleteDispatch();
+      if (prev.type === 'update' && action) updateDispatch();
+      else if (prev.type === 'delete' && action) deleteDispatch();
 
       return {
         ...prev,
@@ -440,8 +440,8 @@ const WorkerContainer = () => {
     };
     const updateData = new FormData();
 
-    updateData.append("file", imageFile?.file ?? null);
-    updateData.append("reqBody", JSON.stringify(putData));
+    updateData.append('file', imageFile?.file ?? null);
+    updateData.append('reqBody', JSON.stringify(putData));
     try {
       await dispatch(putWorker(updateData));
       dispatch(getUnUsedBeacons());
@@ -452,18 +452,18 @@ const WorkerContainer = () => {
       setImageFile({
         preview: false,
         fileName: imageFile.fileName,
-        file: "",
+        file: '',
         src: null,
       });
     } catch (error) {
-      console.log("UPDATE ERROR!!");
+      console.log('UPDATE ERROR!!');
     }
   };
 
   /**@descrition delete 버튼 클릭 이벤트 핸들러 */
   const onDelete = (
     e: React.MouseEvent<SVGSVGElement, MouseEvent>,
-    id: number
+    id: number,
   ) => {
     const findItem =
       workersData?.find((item) => item.wk_id === id && item) ?? null;
@@ -471,7 +471,7 @@ const WorkerContainer = () => {
       setModalData({
         ...modalData,
         open: true,
-        type: "delete",
+        type: 'delete',
       });
     }
   };
@@ -491,7 +491,7 @@ const WorkerContainer = () => {
         clickedIndex: null,
       });
     } catch (error) {
-      console.log("DELETE FAIL");
+      console.log('DELETE FAIL');
     }
   };
 
@@ -503,7 +503,7 @@ const WorkerContainer = () => {
       const target = e.target as HTMLInputElement;
       const theFile = target?.files ? target?.files[0] : null;
       if (!theFile) return;
-      console.log("theFile->", theFile);
+      console.log('theFile->', theFile);
       if (theFile) {
         const reader = new FileReader();
         reader.readAsDataURL(theFile);
@@ -517,7 +517,7 @@ const WorkerContainer = () => {
         };
       }
     },
-    [imageFile]
+    [imageFile],
   );
 
   /**@description image input 미리보기 */
@@ -533,7 +533,7 @@ const WorkerContainer = () => {
     setImageFile({
       preview: false,
       fileName: null,
-      file: "",
+      file: '',
       src: null,
     });
   };
@@ -560,12 +560,12 @@ const WorkerContainer = () => {
 
       let _value;
       let _tempObj = {};
-      if (name === "bc_address") {
-        const _isKorean = typeof value === "string" ? isKorean(value) : false;
+      if (name === 'bc_address') {
+        const _isKorean = typeof value === 'string' ? isKorean(value) : false;
         if (_isKorean) {
           setError({
             ...error,
-            bc_address: "영어 또는 숫자만 입력 가능합니다.",
+            bc_address: '영어 또는 숫자만 입력 가능합니다.',
           });
           return;
         } else if (!_isKorean && error?.bc_address) {
@@ -575,12 +575,12 @@ const WorkerContainer = () => {
           });
         }
         _value =
-          typeof value === "string"
+          typeof value === 'string'
             ? value
                 .toUpperCase()
-                .replace(/[^a-z|^A-Z|^0-9|^ㄱ-ㅎ|^ㅏ-ㅣ]*$/g, "")
+                .replace(/[^a-z|^A-Z|^0-9|^ㄱ-ㅎ|^ㅏ-ㅣ]*$/g, '')
             : value;
-      } else if (name === "wk_search") {
+      } else if (name === 'wk_search') {
         if (value) {
           _tempObj = {
             bc_address: undefined,
@@ -612,7 +612,7 @@ const WorkerContainer = () => {
       });
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [searchData, workersData]
+    [searchData, workersData],
   );
 
   const onSearchAction = () => {
@@ -650,7 +650,7 @@ const WorkerContainer = () => {
        * case3)소속사 검색 조건 X, 이름 검색 조건 X
        * case2)소속사 검색 조건 X, 이름 검색 조건 X
        */
-      const _replaceStr = wk_name ? wk_name.replace(/ /gi, "") : null;
+      const _replaceStr = wk_name ? wk_name.replace(/ /gi, '') : null;
       const wkName =
         _replaceStr && _replaceStr.length !== 0 ? _replaceStr : null;
 
@@ -680,7 +680,7 @@ const WorkerContainer = () => {
       if (bc_address) {
         const filterItems = items.filter(
           (item) =>
-            item?.bc_address && item.bc_address.includes(bc_address) && item
+            item?.bc_address && item.bc_address.includes(bc_address) && item,
         );
 
         setWorkerItems(filterItems);
@@ -692,7 +692,7 @@ const WorkerContainer = () => {
 
   const setBeaconOptionHandler = (
     item: WorkerType,
-    options: BeaconOptionsType[]
+    options: BeaconOptionsType[],
   ) => {
     // if (item.bc_index) {
     //   if (

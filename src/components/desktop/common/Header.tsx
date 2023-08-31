@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React, { useState } from 'react';
+import styled from 'styled-components';
 import {
   faBars,
   faDigging,
@@ -9,9 +9,9 @@ import {
   faSignOutAlt,
   faToggleOff,
   faVolumeSlash,
-} from "@fortawesome/pro-solid-svg-icons";
-import { faRectangleList } from "@fortawesome/pro-regular-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+} from '@fortawesome/pro-solid-svg-icons';
+import { faRectangleList } from '@fortawesome/pro-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const HeaderCmpt = styled.div`
   width: 100%;
@@ -231,11 +231,11 @@ function Header({
   ttsAction,
 }: HeaderProps) {
   const [tunnelTitle, setTunnelTitle] = useState<{ [key: string]: string }>({
-    monitor: "통합 모니터링",
-    type001: "제1구간",
-    type002: "제2구간",
-    type003: "제3구간",
-    network: "NMS 모니터링",
+    monitor: '통합 모니터링',
+    type001: '제1구간',
+    type002: '제2구간',
+    type003: '제3구간',
+    network: 'NMS 모니터링',
   });
 
   return (
@@ -244,9 +244,9 @@ function Header({
         <div
           className={`side-bar  ${activeMenu?.param}`}
           onClick={
-            activeMenu?.param === "dashboard" ||
-            activeMenu?.param === "monitor" ||
-            activeMenu?.param === "network"
+            activeMenu?.param === 'dashboard' ||
+            activeMenu?.param === 'monitor' ||
+            activeMenu?.param === 'network'
               ? callSideMenuHandler
               : undefined
           }
@@ -302,18 +302,18 @@ function Header({
             <div className="button-name">비상방송</div>
           </div>
         )}
-        {type === "dashboard" && (
+        {type === 'dashboard' && (
           <div className="button-box" onClick={onOpenDigTable}>
-            <div className={`button dig-rate ${digInfoAction ? "active" : ""}`}>
+            <div className={`button dig-rate ${digInfoAction ? 'active' : ''}`}>
               <FontAwesomeIcon icon={faDigging} />
             </div>
             <div>굴진율</div>
           </div>
         )}
-        {type === "dashboard" && (
+        {type === 'dashboard' && (
           <div className="button-box" onClick={onOpenAccessTable}>
             <div
-              className={`button access ${accessListAction ? "active" : ""}`}
+              className={`button access ${accessListAction ? 'active' : ''}`}
             >
               <FontAwesomeIcon icon={faRectangleList} />
             </div>
@@ -321,7 +321,7 @@ function Header({
           </div>
         )}
         <div className="button-box">
-          <a href={"/menual/도봉산-옥정1공구_통합매뉴얼.pdf"} download>
+          <a href={'/menual/도봉산-옥정1공구_통합매뉴얼.pdf'} download>
             <div className="button question">
               <FontAwesomeIcon icon={faQuestion} />
             </div>
@@ -334,11 +334,11 @@ function Header({
             <FontAwesomeIcon icon={faToggleOff} />
             <div className="screen-message">
               {`키보드 상단의 F11 키를 누르면 ${
-                screenState === "full" ? "일반화면" : "전체화면"
+                screenState === 'full' ? '일반화면' : '전체화면'
               }으로 전환됩니다.`}
             </div>
           </div>
-          <div>{screenState === "full" ? "일반화면" : "전체화면"}</div>
+          <div>{screenState === 'full' ? '일반화면' : '전체화면'}</div>
         </div>
         <div className="logout" onClick={onLogout}>
           <FontAwesomeIcon icon={faSignOutAlt} />

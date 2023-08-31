@@ -1,20 +1,20 @@
-import React, { useState } from "react";
-import { Form } from "semantic-ui-react";
-import styled from "styled-components";
-import getYear from "date-fns/getYear";
-import _ from "lodash";
+import React, { useState } from 'react';
+import { Form } from 'semantic-ui-react';
+import styled from 'styled-components';
+import getYear from 'date-fns/getYear';
+import _ from 'lodash';
 import FormElement, {
   ModalDataType,
   SetOpenModalType,
-} from "../../../opwsUI/form/FormElement";
-import FormArea from "../../../opwsUI/form/FormArea";
-import { SelectedRowType } from "opwsUI/table/types";
-import { WorkerErrorType, WorkerType } from "modules/workers";
+} from '../../../opwsUI/form/FormElement';
+import FormArea from '../../../opwsUI/form/FormArea';
+import { SelectedRowType } from 'opwsUI/table/types';
+import { WorkerErrorType, WorkerType } from 'modules/workers';
 import {
   BeaconOptionsType,
   ImageFileType,
   OptionsType,
-} from "containers/general/WorkerContainer";
+} from 'containers/general/WorkerContainer';
 
 const WorkerCmpt = styled.div`
   width: 100%;
@@ -43,10 +43,10 @@ const WorkerCmpt = styled.div`
         /* width: 137px; */
         padding-right: 15px;
       }
-      div[name="wk_blood_type"] {
+      div[name='wk_blood_type'] {
         min-width: 12em;
       }
-      div[name="wk_blood_group"] {
+      div[name='wk_blood_group'] {
         min-width: 9em;
       }
     }
@@ -69,7 +69,7 @@ type WorkerInputType = {
   setOpen?: SetOpenModalType;
   onChangeDate: (
     e: React.ChangeEvent<HTMLInputElement>,
-    date: Date | string
+    date: Date | string,
   ) => void;
   smsDisabled: boolean;
   companyOptions: OptionsType[];
@@ -94,16 +94,16 @@ const WorkerInput = ({
   ...rest
 }: WorkerInputType) => {
   const _bloodTypeOptions = [
-    { key: 0, text: "미지정", value: 0 },
-    { key: 1, text: "A", value: 1 },
-    { key: 2, text: "B", value: 2 },
-    { key: 3, text: "O", value: 3 },
-    { key: 4, text: "AB", value: 4 },
+    { key: 0, text: '미지정', value: 0 },
+    { key: 1, text: 'A', value: 1 },
+    { key: 2, text: 'B', value: 2 },
+    { key: 3, text: 'O', value: 3 },
+    { key: 4, text: 'AB', value: 4 },
   ];
   const _bloodGroupOptions = [
-    { key: 0, text: "미지정", value: 0 },
-    { key: 1, text: "Rh+", value: 1 },
-    { key: 2, text: "Rh-", value: 2 },
+    { key: 0, text: '미지정', value: 0 },
+    { key: 1, text: 'Rh+', value: 1 },
+    { key: 2, text: 'Rh-', value: 2 },
   ];
 
   // 노선의 굴진 데이터 최초 입력일 판단 state
@@ -120,7 +120,7 @@ const WorkerInput = ({
             type="submit"
             onClick={onSubmit}
             disabled={!formData.co_id || !formData.wk_name}
-            content={selectedRow?.selectedId ? "수정" : "등록"}
+            content={selectedRow?.selectedId ? '수정' : '등록'}
           />
         }
       >
@@ -145,7 +145,7 @@ const WorkerInput = ({
           label="이름"
           id="wk_name"
           name="wk_name"
-          value={formData.wk_name ?? ""}
+          value={formData.wk_name ?? ''}
           onChange={(e) => onChange({ e })}
           error={
             error?.wk_name && {
@@ -160,7 +160,7 @@ const WorkerInput = ({
           label="직위"
           id="wk_position"
           name="wk_position"
-          value={formData.wk_position ?? ""}
+          value={formData.wk_position ?? ''}
           onChange={(e) => onChange({ e })}
           placeholder="직위를 입력해 주세요."
         />
@@ -171,7 +171,7 @@ const WorkerInput = ({
               label="핸드폰"
               id="wk_phone"
               name="wk_phone"
-              value={formData.wk_phone ?? ""}
+              value={formData.wk_phone ?? ''}
               onChange={(e) => onChange({ e })}
               placeholder="번호를 입력해 주세요."
               maxLength={13}
@@ -197,10 +197,10 @@ const WorkerInput = ({
           name="wk_birth"
           value={formData.wk_birth}
           placeholder="생년월일을 입력해 주세요."
-          startDate={new Date("1990-01-01")}
+          startDate={new Date('1990-01-01')}
           startYears={1945}
           endYears={getYear(new Date()) + 1}
-          minDate={new Date("1945-01-01")}
+          minDate={new Date('1945-01-01')}
           onChange={(e, date) => onChangeDate(e, date)}
           required
         />
@@ -231,7 +231,7 @@ const WorkerInput = ({
           label="국적"
           id="wk_nation"
           name="wk_nation"
-          value={formData.wk_nation ?? ""}
+          value={formData.wk_nation ?? ''}
           onChange={(e) => onChange({ e })}
           placeholder="국적을 입력해 주세요."
         />
@@ -261,7 +261,7 @@ const WorkerInput = ({
               : false
           }
           src={rest?.imageFile.src}
-          type={"worker"}
+          type={'worker'}
           fileName={rest?.imageFile.fileName}
           file={rest?.imageFile.file}
           preview={rest?.imageFile.preview}

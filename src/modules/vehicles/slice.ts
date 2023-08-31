@@ -1,11 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 import {
   asyncState,
   AsyncStateType,
   createActionHandler,
   deleteActionHandler,
   updateActionHandler,
-} from "lib/reducerUtils";
+} from 'lib/reducerUtils';
 import {
   DELETE_VEHICLE_FULFILLED,
   DELETE_VEHICLE_PENDING,
@@ -22,17 +22,17 @@ import {
   PUT_VEHICLE_FULFILLED,
   PUT_VEHICLE_PENDING,
   PUT_VEHICLE_REJECTED,
-} from "./actions";
-import { VehicleType } from "./types";
+} from './actions';
+import { VehicleType } from './types';
 
 const initialState: AsyncStateType<VehicleType[], Error> = asyncState.initial();
 
 const postVehicleHandler = createActionHandler<VehicleType>();
-const putVehicleHandler = updateActionHandler<VehicleType>("vh_id");
-const deleteVehicleHandler = deleteActionHandler<VehicleType>("vh_id");
+const putVehicleHandler = updateActionHandler<VehicleType>('vh_id');
+const deleteVehicleHandler = deleteActionHandler<VehicleType>('vh_id');
 
 export const vehicleSlice = createSlice({
-  name: "vehicles",
+  name: 'vehicles',
   initialState,
   reducers: {},
   extraReducers: {

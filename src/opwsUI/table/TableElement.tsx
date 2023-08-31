@@ -1,12 +1,12 @@
 // @ts-nocheck
-import { faTrash } from "@fortawesome/pro-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect, useLayoutEffect, useState } from "react";
-import { Icon, Pagination, Table } from "semantic-ui-react";
-import styled from "styled-components";
-import moment from "moment";
-import _ from "lodash";
-import { TableElementType } from "./types";
+import { faTrash } from '@fortawesome/pro-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
+import { Icon, Pagination, Table } from 'semantic-ui-react';
+import styled from 'styled-components';
+import moment from 'moment';
+import _ from 'lodash';
+import { TableElementType } from './types';
 
 const TableCmpt = styled.div`
   width: 100%;
@@ -122,10 +122,10 @@ function TableElement({
             ...groupArr,
             ...tableData.header,
             {
-              id: "delete",
-              name: "delete",
-              field: "delete",
-              textAlign: "center",
+              id: 'delete',
+              name: 'delete',
+              field: 'delete',
+              textAlign: 'center',
               width: 1,
             },
           ]
@@ -134,14 +134,14 @@ function TableElement({
             ...groupArr,
             ...tableData.header,
             {
-              id: "kickout",
-              name: "강제퇴출",
-              field: "kickout",
-              textAlign: "center",
+              id: 'kickout',
+              name: '강제퇴출',
+              field: 'kickout',
+              textAlign: 'center',
               width: 1,
             },
           ]
-        : [...groupArr, ...tableData.header]
+        : [...groupArr, ...tableData.header],
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -149,7 +149,7 @@ function TableElement({
   const [currentData, setCurrentData] = useState<{
     column: string | null;
     data: Array<any>;
-    direction: "ascending" | "descending" | null;
+    direction: 'ascending' | 'descending' | null;
   }>({
     column: null,
     data: [],
@@ -161,8 +161,8 @@ function TableElement({
 
   useEffect(() => {
     items && sortingCurrentData();
-    const _sortedEl = document.getElementsByClassName("sorted")[0];
-    if (_sortedEl) _sortedEl.classList.remove("sorted");
+    const _sortedEl = document.getElementsByClassName('sorted')[0];
+    if (_sortedEl) _sortedEl.classList.remove('sorted');
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tableData]);
@@ -173,7 +173,7 @@ function TableElement({
   const totalPages = Math.ceil(currentData.data.length / itemsPerPage);
   const viewItems = currentData.data.slice(
     (activePage - 1) * itemsPerPage,
-    (activePage - 1) * itemsPerPage + itemsPerPage
+    (activePage - 1) * itemsPerPage + itemsPerPage,
   );
 
   const sortingCurrentData = () => {
@@ -200,13 +200,13 @@ function TableElement({
       tempArr.forEach((item, index) => {
         if (
           item.modified_date &&
-          moment(enteredTime).format("YYYY-MM-DD HH:mm:ss") <
-            moment(item.modified_date).format("YYYY-MM-DD HH:mm:ss")
+          moment(enteredTime).format('YYYY-MM-DD HH:mm:ss') <
+            moment(item.modified_date).format('YYYY-MM-DD HH:mm:ss')
         ) {
           newItems.push(item);
         } else if (
-          moment(enteredTime).format("YYYY-MM-DD HH:mm:ss") <
-          moment(item.created_date).format("YYYY-MM-DD HH:mm:ss")
+          moment(enteredTime).format('YYYY-MM-DD HH:mm:ss') <
+          moment(item.created_date).format('YYYY-MM-DD HH:mm:ss')
         ) {
           newItems.push(item);
         } else {
@@ -230,7 +230,7 @@ function TableElement({
         acc.push(rest);
         return acc;
       },
-      []
+      [],
     );
     setFields(reduceItems);
   };
@@ -241,18 +241,18 @@ function TableElement({
       return (
         <Table.HeaderCell
           key={index}
-          className={`table-header-cell ${item?.id ?? ""} ${
+          className={`table-header-cell ${item?.id ?? ''} ${
             item?.sorting &&
             item.sorting.toString() &&
             currentData.column === item?.field
-              ? `${currentData?.direction ?? ""} sorted`
-              : ""
+              ? `${currentData?.direction ?? ''} sorted`
+              : ''
           }`}
           {...rest}
           onClick={item?.sorting && (() => onChangeSort(item?.field))}
         >
           {item?.name ? (
-            item?.field !== "delete" ? (
+            item?.field !== 'delete' ? (
               item.name
             ) : (
               <FontAwesomeIcon icon={faTrash} />
@@ -276,7 +276,7 @@ function TableElement({
       return (
         <Table.Row
           className={`body-row ${
-            tableOption?.rowSelect && item ? "albled-row" : ""
+            tableOption?.rowSelect && item ? 'albled-row' : ''
           }`}
           key={`tableRowKey${Math.random() * 100000}`}
           id={`scroll${index}`}
@@ -300,10 +300,10 @@ function TableElement({
             return (
               <Table.Cell
                 key={Math.random()}
-                className={`table-body-cell ${field ?? ""} ${
-                  item?.[`u_${field}`] ? "update_cell" : ""
+                className={`table-body-cell ${field ?? ''} ${
+                  item?.[`u_${field}`] ? 'update_cell' : ''
                 }`}
-                textAlign={fieldsItem?.textAlign ?? "left"}
+                textAlign={fieldsItem?.textAlign ?? 'left'}
                 verticalAlign="middle"
               >
                 {item?.[field] ||
@@ -314,15 +314,15 @@ function TableElement({
                   ) : (
                     item[field]
                   )
-                ) : field === "no" && item ? (
+                ) : field === 'no' && item ? (
                   (fieldsItem.key ? item?.[fieldsItem.key] : null) ||
                   item?.modified_date !== undefined ||
                   item?.record_time ? (
                     tableNo
                   ) : (
-                    "새등록"
+                    '새등록'
                   )
-                ) : field === "delete" &&
+                ) : field === 'delete' &&
                   item &&
                   item?.[activeRow?.keys ?? 1] ===
                     (activeRow?.index ?? null) ? (
@@ -330,7 +330,7 @@ function TableElement({
                     icon={faTrash}
                     className="delete-icon"
                     onClick={
-                      field === "delete"
+                      field === 'delete'
                         ? (e) => {
                             // 상위 테이블 로우에 걸어줬던 버튼 떄문에 이벤트 버블링 생긴다.
                             // 버블링 막고 독립적인 버튼으로 만들어 주기.
@@ -341,11 +341,11 @@ function TableElement({
                         : undefined
                     }
                   />
-                ) : field === "kickout" && item ? (
+                ) : field === 'kickout' && item ? (
                   <div
                     className="kickout-button"
                     onClick={
-                      field === "kickout"
+                      field === 'kickout'
                         ? (e) => {
                             e.stopPropagation();
                             if (!activeKickout) return undefined;
@@ -372,13 +372,13 @@ function TableElement({
       setCurrentData({
         ...currentData,
         data: data.slice().reverse(),
-        direction: direction === "ascending" ? "descending" : "ascending",
+        direction: direction === 'ascending' ? 'descending' : 'ascending',
       });
     } else {
       setCurrentData({
         column: col,
         data: _.sortBy(data, [col]),
-        direction: "ascending",
+        direction: 'ascending',
       });
     }
   };
@@ -405,10 +405,10 @@ function TableElement({
                 ? [
                     ...tableData.header,
                     {
-                      id: "delete",
-                      name: "delete",
-                      field: "delete",
-                      textAlign: "center",
+                      id: 'delete',
+                      name: 'delete',
+                      field: 'delete',
+                      textAlign: 'center',
                       width: 1,
                     },
                   ]
@@ -416,14 +416,14 @@ function TableElement({
                 ? [
                     ...tableData.header,
                     {
-                      id: "kickout",
-                      name: "강제퇴출",
-                      field: "kickout",
-                      textAlign: "center",
+                      id: 'kickout',
+                      name: '강제퇴출',
+                      field: 'kickout',
+                      textAlign: 'center',
                       width: 1,
                     },
                   ]
-                : tableData.header
+                : tableData.header,
             )}
           </Table.Row>
         </Table.Header>
@@ -436,7 +436,7 @@ function TableElement({
           <Table.Footer className="table-footer">
             <Table.Row className="table-pagination-row">
               <Table.HeaderCell
-                colSpan={fields ? fields.length : "5"}
+                colSpan={fields ? fields.length : '5'}
                 className="table-pagination-row"
               >
                 {totalPages > 1 && (
@@ -448,14 +448,14 @@ function TableElement({
                     firstItem={
                       // 페이지 수가 5개 이상일 때 >> << 맨 앞 맨 뒤 페이지 호출
                       totalPages <= 5 || {
-                        "aria-label": "First item",
+                        'aria-label': 'First item',
                         content: <Icon name="angle double left" />,
                         icon: true,
                       }
                     }
                     lastItem={
                       totalPages <= 5 || {
-                        "aria-label": "Last item",
+                        'aria-label': 'Last item',
                         content: <Icon name="angle double right" />,
                         icon: true,
                       }

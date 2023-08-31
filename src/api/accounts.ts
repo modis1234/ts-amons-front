@@ -1,5 +1,5 @@
-import axios from "axios";
-import { AccountType } from "types/accounts";
+import axios from 'axios';
+import { AccountType } from 'types/accounts';
 
 const API = `http://${process.env.REACT_APP_API_SERVER}`;
 
@@ -8,7 +8,7 @@ const TS_INDEX = process.env.REACT_APP_TS_INDEX ?? null;
 // 포스트 목록을 가져오는 비동기 함수
 export const getAccounts = async () => {
   const response = await axios.get<AccountType[]>(
-    `${API}/api/account/accounts?siteIndex=${TS_INDEX}`
+    `${API}/api/account/accounts?siteIndex=${TS_INDEX}`,
   );
   return response.data;
 };
@@ -16,7 +16,7 @@ export const getAccounts = async () => {
 // INDEX로 조회하는 비동기 함수
 export const getAccountById = async (index: string) => {
   const response = await axios.get<AccountType[]>(
-    `${API}/api/account/accounts/${index}`
+    `${API}/api/account/accounts/${index}`,
   );
   return response.data;
 };
@@ -25,7 +25,7 @@ export const getAccountById = async (index: string) => {
 export const postAccount = async (data: AccountType) => {
   const response = await axios.post<AccountType>(
     `${API}/api/account/accounts`,
-    data
+    data,
   );
   return response.data;
 };
@@ -34,7 +34,7 @@ export const postAccount = async (data: AccountType) => {
 export const putAccount = async (index: number, data: AccountType) => {
   const response = await axios.put<AccountType>(
     `${API}/api/account/accounts/${index}`,
-    data
+    data,
   );
   return response.data;
 };
@@ -49,7 +49,7 @@ export const deleteAccount = async (id: number) => {
 export const postAccoutDoubleCheck = async (data: AccountType) => {
   const response = await axios.post(
     `${API}/api/account/doubleCheck?siteIndex=${TS_INDEX}`,
-    data
+    data,
   );
   return response.data;
 };

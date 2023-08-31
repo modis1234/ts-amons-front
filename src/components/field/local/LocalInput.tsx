@@ -1,15 +1,15 @@
-import { EntranceOptionType } from "containers/field/LocalContainer";
-import { LocalErrorType, LocalType } from "modules/locals";
-import { SelectedRowType } from "opwsUI/table/types";
-import React, { useState } from "react";
-import { Form } from "semantic-ui-react";
-import styled from "styled-components";
-import FormArea from "../../../opwsUI/form/FormArea";
+import { EntranceOptionType } from 'containers/field/LocalContainer';
+import { LocalErrorType, LocalType } from 'modules/locals';
+import { SelectedRowType } from 'opwsUI/table/types';
+import React, { useState } from 'react';
+import { Form } from 'semantic-ui-react';
+import styled from 'styled-components';
+import FormArea from '../../../opwsUI/form/FormArea';
 import FormElement, {
   ModalDataType,
   SetOpenModalType,
-} from "../../../opwsUI/form/FormElement";
-import { addComma } from "../../../opwsUI/util";
+} from '../../../opwsUI/form/FormElement';
+import { addComma } from '../../../opwsUI/util';
 
 const LocalInputCmpt = styled.div`
   width: 100%;
@@ -52,44 +52,44 @@ const LocalInput = ({
 }: LocalInputType) => {
   const [tunnelOptions, setTunnelOptions] = useState([
     // { key: 0, text: '수직구', value: 0 },
-    { key: 1, text: "제1터널", value: 1 },
-    { key: 2, text: "제2터널", value: 2 },
-    { key: 3, text: "제3터널", value: 3 },
-    { key: 4, text: "제4터널", value: 4 },
+    { key: 1, text: '제1터널', value: 1 },
+    { key: 2, text: '제2터널', value: 2 },
+    { key: 3, text: '제3터널', value: 3 },
+    { key: 4, text: '제4터널', value: 4 },
   ]);
 
   const [localTypeOptions, setLocalTypeOptions] = useState([
-    { key: 0, text: "굴진 방향을 선택해주세요.", value: 0 },
-    { key: 1, text: "왕십리방향", value: 1, description: "시점방향" },
-    { key: 2, text: "종암동방향", value: 2, description: "종점방향" },
-    { key: 3, text: "환기구", value: 3 },
-    { key: 4, text: "정거장", value: 4 },
-    { key: 5, text: "환승통로", value: 5 },
+    { key: 0, text: '굴진 방향을 선택해주세요.', value: 0 },
+    { key: 1, text: '왕십리방향', value: 1, description: '시점방향' },
+    { key: 2, text: '종암동방향', value: 2, description: '종점방향' },
+    { key: 3, text: '환기구', value: 3 },
+    { key: 4, text: '정거장', value: 4 },
+    { key: 5, text: '환승통로', value: 5 },
   ]);
 
   const [localNumberOption, setLocalNumberOptions] = useState({
     type_1: [
-      { key: 0, text: "지정안함", value: 0 },
-      { key: 1, text: "상단 좌측", value: 1, description: "광명방향" },
-      { key: 2, text: "상단 우측", value: 2, description: "시흥방향" },
-      { key: 3, text: "하단 좌측", value: 3, description: "광명방향" },
-      { key: 4, text: "하단 우측", value: 4, description: "시흥방향" },
+      { key: 0, text: '지정안함', value: 0 },
+      { key: 1, text: '상단 좌측', value: 1, description: '광명방향' },
+      { key: 2, text: '상단 우측', value: 2, description: '시흥방향' },
+      { key: 3, text: '하단 좌측', value: 3, description: '광명방향' },
+      { key: 4, text: '하단 우측', value: 4, description: '시흥방향' },
     ],
     type_2: [
-      { key: 0, text: "지정안함", value: 0 },
-      { key: 1, text: "패널-1", value: 1, description: "광명방향" },
-      { key: 2, text: "패널-2", value: 2, description: "시흥방향" },
-      { key: 3, text: "패널-3", value: 3, description: "광명방향" },
-      { key: 4, text: "패널-4", value: 4, description: "시흥방향" },
+      { key: 0, text: '지정안함', value: 0 },
+      { key: 1, text: '패널-1', value: 1, description: '광명방향' },
+      { key: 2, text: '패널-2', value: 2, description: '시흥방향' },
+      { key: 3, text: '패널-3', value: 3, description: '광명방향' },
+      { key: 4, text: '패널-4', value: 4, description: '시흥방향' },
     ],
   });
 
   const [monitorNumberOption, setMonitorNumberOptions] = useState([
-    { key: 0, text: "지정안함", value: 0 },
-    { key: 1, text: "상단 좌측 패널", value: 1 },
-    { key: 2, text: "상단 우측 패널", value: 2 },
-    { key: 3, text: "하단 좌측 패널", value: 3 },
-    { key: 4, text: "하단 우측 패널", value: 4 },
+    { key: 0, text: '지정안함', value: 0 },
+    { key: 1, text: '상단 좌측 패널', value: 1 },
+    { key: 2, text: '상단 우측 패널', value: 2 },
+    { key: 3, text: '하단 좌측 패널', value: 3 },
+    { key: 4, text: '하단 우측 패널', value: 4 },
   ]);
 
   return (
@@ -107,7 +107,7 @@ const LocalInput = ({
               !formData?.local_type
             }
             onClick={onSubmit}
-            content={selectedRow?.selectedId ? "수정" : "등록"}
+            content={selectedRow?.selectedId ? '수정' : '등록'}
           />
         }
       >
@@ -176,7 +176,7 @@ const LocalInput = ({
           value={formData?.local_plan_length ?? 0}
           onChange={(e) => onChange({ e })}
           placeholder="굴착 계획 연장 거리를 입력해 주세요."
-          unit={{ basic: true, content: "m" }}
+          unit={{ basic: true, content: 'm' }}
           labelPosition="right"
           maxLength="6"
           error={

@@ -3,7 +3,7 @@ const storage = {
   set: (key, object) => {
     if (!sessionStorage) return;
     sessionStorage[key] =
-      typeof object === "string" ? object : JSON.stringify(object);
+      typeof object === 'string' ? object : JSON.stringify(object);
   },
   get: (key) => {
     if (!sessionStorage) return null;

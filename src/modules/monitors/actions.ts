@@ -1,58 +1,58 @@
-import { asyncActions } from "lib/reducerUtils";
+import { asyncActions } from 'lib/reducerUtils';
 
-export const SET_INIT_MONITOR = "monitor/SET_INIT_MONITOR";
-export const SET_INIT_ALL = "monitor/SET_INIT_ALL";
-export const GET_RECEIVE_SOCKET = "monitor/GET_RECEIVE_SOCKET";
-export const RECEIVE_MONITOR = "monitor/RECEIVE_MONITOR";
-export const TOGGLE_DRILLRATE_PANEL = "monitor/TOGGLE_DRILLRATE_PANEL";
-export const TOGGLE_CAMERA_REPOSITION = "monitor/TOGGLE_CAMERA_REPOSITION";
-export const CLOSED_ALARM_PANEL = "monitor/CLOSED_ALARM_PANEL";
-export const SET_SOS_SITUACTION = "monitor/SET_SOS_SITUACTION";
-export const INIT_SOS_SITUACTION = "monitor/INIT_SOS_SITUACTION";
-export const CLOSED_GAS_ALARM_PANEL = "monitor/CLOSED_GAS_ALARM_PANEL";
-export const SET_GAS_ALARM_SITUACTION = "monitor/SET_GAS_ALARM_SITUACTION";
-export const INIT_GAS_ALARM_SITUACTION = "monitor/INIT_GAS_ALARM_SITUACTION";
-export const AlARM_SOUND_OFF = "monitor/AlARM_SOUND_OFF";
-export const SOCKET_ERROR = "monitor/SOCKET_ERROR";
+export const SET_INIT_MONITOR = 'monitor/SET_INIT_MONITOR';
+export const SET_INIT_ALL = 'monitor/SET_INIT_ALL';
+export const GET_RECEIVE_SOCKET = 'monitor/GET_RECEIVE_SOCKET';
+export const RECEIVE_MONITOR = 'monitor/RECEIVE_MONITOR';
+export const TOGGLE_DRILLRATE_PANEL = 'monitor/TOGGLE_DRILLRATE_PANEL';
+export const TOGGLE_CAMERA_REPOSITION = 'monitor/TOGGLE_CAMERA_REPOSITION';
+export const CLOSED_ALARM_PANEL = 'monitor/CLOSED_ALARM_PANEL';
+export const SET_SOS_SITUACTION = 'monitor/SET_SOS_SITUACTION';
+export const INIT_SOS_SITUACTION = 'monitor/INIT_SOS_SITUACTION';
+export const CLOSED_GAS_ALARM_PANEL = 'monitor/CLOSED_GAS_ALARM_PANEL';
+export const SET_GAS_ALARM_SITUACTION = 'monitor/SET_GAS_ALARM_SITUACTION';
+export const INIT_GAS_ALARM_SITUACTION = 'monitor/INIT_GAS_ALARM_SITUACTION';
+export const AlARM_SOUND_OFF = 'monitor/AlARM_SOUND_OFF';
+export const SOCKET_ERROR = 'monitor/SOCKET_ERROR';
 
 export const [
   GET_MONITOR,
   GET_MONITOR_PENDING,
   GET_MONITOR_FULFILLED,
   GET_MONITOR_REJECTED,
-] = asyncActions("monitor/GET_MONITOR");
+] = asyncActions('monitor/GET_MONITOR');
 
 export const [
   GET_SCANNER,
   GET_SCANNER_PENDING,
   GET_SCANNER_FULFILLED,
   GET_SCANNER_REJECTED,
-] = asyncActions("monitor/GET_SCANNER");
+] = asyncActions('monitor/GET_SCANNER');
 
 export const [
   GET_BLE_BEACON,
   GET_BLE_BEACON_PENDING,
   GET_BLE_BEACON_FULFILLED,
   GET_BLE_BEACON_REJECTED,
-] = asyncActions("monitor/GET_BLE_BEACON");
+] = asyncActions('monitor/GET_BLE_BEACON');
 
 export const [
   GET_WEATHER,
   GET_WEATHER_PENDING,
   GET_WEATHER_FULFILLED,
   GET_WEATHER_REJECTED,
-] = asyncActions("monitor/GET_WEATHER");
+] = asyncActions('monitor/GET_WEATHER');
 
 export const [
   GET_ENVIRONMENT,
   GET_ENVIRONMENT_PENDING,
   GET_ENVIRONMENT_FULFILLED,
   GET_ENVIRONMENT_REJECTED,
-] = asyncActions("monitor/GET_ENVIRONMENT");
+] = asyncActions('monitor/GET_ENVIRONMENT');
 
 export const [
   GET_SITE_DEVICE,
   GET_SITE_DEVICE_PENDING,
   GET_SITE_DEVICE_FULFILLED,
   GET_SITE_DEVICE_REJECTED,
-] = asyncActions("monitor/GET_SITE_DEVICE");
+] = asyncActions('monitor/GET_SITE_DEVICE');

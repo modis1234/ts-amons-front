@@ -1,16 +1,16 @@
-import { combineReducers } from "@reduxjs/toolkit";
+import { combineReducers } from '@reduxjs/toolkit';
 // import postReducer from "./posts";
 // import countReducer from "./counter/counterSlice";
-import localReducer from "./locals";
-import companyReducer from "./companies";
-import siteReducer from "./sites";
-import monitorReducer from "./monitors";
+import localReducer from './locals';
+import companyReducer from './companies';
+import siteReducer from './sites';
+import monitorReducer from './monitors';
 
-import beaconReducer from "./beacons";
-import workerReducer from "./workers";
-import vehicleReducer from "./vehicles";
+import beaconReducer from './beacons';
+import workerReducer from './workers';
+import vehicleReducer from './vehicles';
 
-import announcesReducer from "./announces";
+import announcesReducer from './announces';
 
 const rootReducer = combineReducers({
   // 3번에서 만들 slice를 여기에 넣을 예정

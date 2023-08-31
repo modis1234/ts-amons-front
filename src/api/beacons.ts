@@ -1,5 +1,5 @@
-import axios from "axios";
-import { BeaconType } from "modules/beacons";
+import axios from 'axios';
+import { BeaconType } from 'modules/beacons';
 
 const API = `http://${process.env.REACT_APP_API_SERVER}`;
 const TS_INDEX = process.env.REACT_APP_TS_INDEX ?? null;
@@ -7,7 +7,7 @@ const TS_INDEX = process.env.REACT_APP_TS_INDEX ?? null;
 // 포스트 목록을 가져오는 비동기 함수
 export const getBeacons = async () => {
   const response = await axios.get(
-    `${API}/api/beacon/beacons?siteIndex=${TS_INDEX}`
+    `${API}/api/beacon/beacons?siteIndex=${TS_INDEX}`,
   );
   return response.data;
 };
@@ -40,7 +40,7 @@ export const deleteBeacon = async (id: number) => {
 export const getUnUsedBeacons = async () => {
   const TS_INDEX = process.env.REACT_APP_TS_INDEX;
   const response = await axios.get(
-    `${API}/api/beacon/unused?siteIndex=${TS_INDEX}`
+    `${API}/api/beacon/unused?siteIndex=${TS_INDEX}`,
   );
   return response.data;
 };
@@ -50,7 +50,7 @@ export const postSearchBeaconsByWorkerName = async (data: BeaconType) => {
   const TS_INDEX = process.env.REACT_APP_TS_INDEX;
   const response = await axios.post(
     `${API}/api/beacon/beacons/search/worker?siteIndex=${TS_INDEX}`,
-    data
+    data,
   );
   return response.data;
 };
@@ -59,7 +59,7 @@ export const postSearchBeaconsByVehicleName = async (data: BeaconType) => {
   const TS_INDEX = process.env.REACT_APP_TS_INDEX;
   const response = await axios.post(
     `${API}/api/beacon/beacons/search/vehicle?siteIndex=${TS_INDEX}`,
-    data
+    data,
   );
   return response.data;
 };

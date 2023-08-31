@@ -2,17 +2,17 @@ import {
   BeaconOptionsType,
   ImageFileType,
   OptionsType,
-} from "containers/general/VehicleContainer";
-import { VehicleErrorType, VehicleType } from "modules/vehicles";
-import { SelectedRowType } from "opwsUI/table/types";
-import React from "react";
-import { Form } from "semantic-ui-react";
-import styled from "styled-components";
-import FormArea from "../../../opwsUI/form/FormArea";
+} from 'containers/general/VehicleContainer';
+import { VehicleErrorType, VehicleType } from 'modules/vehicles';
+import { SelectedRowType } from 'opwsUI/table/types';
+import React from 'react';
+import { Form } from 'semantic-ui-react';
+import styled from 'styled-components';
+import FormArea from '../../../opwsUI/form/FormArea';
 import FormElement, {
   ModalDataType,
   SetOpenModalType,
-} from "../../../opwsUI/form/FormElement";
+} from '../../../opwsUI/form/FormElement';
 
 const VehicleCmpt = styled.div`
   width: 100%;
@@ -68,11 +68,11 @@ const VehicleInput = ({
             type="submit"
             // disabled={!formData.vh_name}
             onClick={onSubmit}
-            content={selectedRow?.selectedId ? "수정" : "등록"}
+            content={selectedRow?.selectedId ? '수정' : '등록'}
           />
         }
       >
-        {" "}
+        {' '}
         <FormElement
           kind="select"
           label="소속사"
@@ -94,7 +94,7 @@ const VehicleInput = ({
           label="차량 종류"
           id="vh_name"
           name="vh_name"
-          value={formData.vh_name ?? ""}
+          value={formData.vh_name ?? ''}
           onChange={(e) => onChange({ e })}
           error={
             error?.vh_name && {
@@ -109,7 +109,7 @@ const VehicleInput = ({
           label="차량 번호"
           id="vh_number"
           name="vh_number"
-          value={formData.vh_number ?? ""}
+          value={formData.vh_number ?? ''}
           onChange={(e) => onChange({ e })}
           error={
             error?.vh_number && {
@@ -145,7 +145,7 @@ const VehicleInput = ({
               : false
           }
           src={rest?.imageFile.src}
-          type={"vehicle"}
+          type={'vehicle'}
           fileName={rest?.imageFile.fileName}
           file={rest?.imageFile.file}
           preview={rest?.imageFile.preview}
@@ -159,7 +159,7 @@ const VehicleInput = ({
           label="비고"
           id="vh_description"
           name="vh_description"
-          value={formData.vh_description ?? ""}
+          value={formData.vh_description ?? ''}
           onChange={(e) => onChange({ e })}
           placeholder="비고 입력란"
         />

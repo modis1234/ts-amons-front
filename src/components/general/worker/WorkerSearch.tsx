@@ -1,7 +1,7 @@
-import { OptionsType } from "containers/general/WorkerContainer";
-import { WorkerErrorType, WorkerSearchDataType } from "modules/workers";
-import FormElement from "opwsUI/form/FormElement";
-import React from "react";
+import { OptionsType } from 'containers/general/WorkerContainer';
+import { WorkerErrorType, WorkerSearchDataType } from 'modules/workers';
+import FormElement from 'opwsUI/form/FormElement';
+import React from 'react';
 import {
   Button,
   Dropdown,
@@ -9,8 +9,8 @@ import {
   Icon,
   Input,
   Menu,
-} from "semantic-ui-react";
-import styled from "styled-components";
+} from 'semantic-ui-react';
+import styled from 'styled-components';
 
 const WorkerSearchCmpt = styled.div`
   width: 100%;
@@ -84,7 +84,7 @@ const WorkerSearchCmpt = styled.div`
             }
             &.error {
               &::before {
-                content: "영문 또는 숫자만 입력하세요.";
+                content: '영문 또는 숫자만 입력하세요.';
                 position: absolute;
                 top: 40px;
                 font-size: 13px;
@@ -156,8 +156,8 @@ const WorkerSearch = ({
               name="wk_search"
               className="dropdown-component search-type"
               options={[
-                { key: 1, text: "작업자", value: true },
-                { key: 2, text: "비콘", value: false },
+                { key: 1, text: '작업자', value: true },
+                { key: 2, text: '비콘', value: false },
               ]}
               value={searchData?.wk_search ?? null}
               placeholder="작업자"
@@ -192,14 +192,14 @@ const WorkerSearch = ({
                   className="input-component input-worker-name"
                   id="wk_name"
                   name="wk_name"
-                  value={searchData?.wk_name ?? ""}
+                  value={searchData?.wk_name ?? ''}
                   icon={{
-                    name: "search",
+                    name: 'search',
                     link: true,
                     onClick: onSearchAction,
                   }}
                   onKeyPress={(e: React.KeyboardEvent<HTMLInputElement>) => {
-                    if (e.key === "Enter") onSearchAction();
+                    if (e.key === 'Enter') onSearchAction();
                   }}
                   placeholder="작업자 이름을 입력해 주세요."
                   onChange={(e) => onSearchChange({ e })}
@@ -220,12 +220,12 @@ const WorkerSearch = ({
                 className="input-component input-beacon-address"
                 id="bc_address"
                 name="bc_address"
-                value={searchData?.bc_address ?? ""}
-                icon={{ name: "search", link: true, onClick: onSearchAction }}
+                value={searchData?.bc_address ?? ''}
+                icon={{ name: 'search', link: true, onClick: onSearchAction }}
                 placeholder="비콘정보를 입력해 주세요."
                 onChange={(e) => onSearchChange({ e })}
                 onKeyPress={(e: React.KeyboardEvent<HTMLImageElement>) => {
-                  if (e.key === "Enter") onSearchAction();
+                  if (e.key === 'Enter') onSearchAction();
                 }}
                 error={error?.bc_address ? true : false}
                 maxLength={12}

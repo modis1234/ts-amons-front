@@ -1,6 +1,6 @@
-import React from "react";
-import { Form } from "semantic-ui-react";
-import styled from "styled-components";
+import React from 'react';
+import { Form } from 'semantic-ui-react';
+import styled from 'styled-components';
 
 const FormAreaCmpt = styled(Form)`
   height: 100%;
@@ -25,7 +25,7 @@ type FormAreaType = {
 
 const FormArea = ({ children, submitButton, id, className }: FormAreaType) => {
   return (
-    <FormAreaCmpt id={id} className={`form-body ${className ? className : ""}`}>
+    <FormAreaCmpt id={id} className={`form-body ${className ? className : ''}`}>
       <div className="resizable-area">{children}</div>
       {submitButton}
     </FormAreaCmpt>

@@ -1,11 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 import {
   asyncState,
   AsyncStateType,
   createActionHandler,
   deleteActionHandler,
   updateActionHandler,
-} from "lib/reducerUtils";
+} from 'lib/reducerUtils';
 import {
   DELETE_LOCAL_FULFILLED,
   DELETE_LOCAL_PENDING,
@@ -22,17 +22,17 @@ import {
   PUT_LOCAL_FULFILLED,
   PUT_LOCAL_PENDING,
   PUT_LOCAL_REJECTED,
-} from "./actions";
-import { LocalType } from "./types";
+} from './actions';
+import { LocalType } from './types';
 
 const initialState: AsyncStateType<LocalType[], Error> = asyncState.initial();
 
 const postLocalHandler = createActionHandler<LocalType>();
-const putLocalHandler = updateActionHandler<LocalType>("site_id");
-const deleteLocalHandler = deleteActionHandler<LocalType>("site_id");
+const putLocalHandler = updateActionHandler<LocalType>('site_id');
+const deleteLocalHandler = deleteActionHandler<LocalType>('site_id');
 
 export const localSlice = createSlice({
-  name: "locals",
+  name: 'locals',
   initialState,
   reducers: {},
   extraReducers: {

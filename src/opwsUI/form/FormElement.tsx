@@ -6,17 +6,17 @@ import {
   faCircleMinus,
   faImage,
   faUpload,
-} from "@fortawesome/pro-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useCallback, useState } from "react";
-import DatePicker, { registerLocale } from "react-datepicker";
-import { Icon, Image, Input, Loader } from "semantic-ui-react";
-import "react-datepicker/dist/react-datepicker.css";
-import getYear from "date-fns/getYear";
-import getMonth from "date-fns/getMonth";
-import ko from "date-fns/locale/ko";
-import "moment/locale/ko";
-import _ from "lodash";
+} from '@fortawesome/pro-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useCallback, useState } from 'react';
+import DatePicker, { registerLocale } from 'react-datepicker';
+import { Icon, Image, Input, Loader } from 'semantic-ui-react';
+import 'react-datepicker/dist/react-datepicker.css';
+import getYear from 'date-fns/getYear';
+import getMonth from 'date-fns/getMonth';
+import ko from 'date-fns/locale/ko';
+import 'moment/locale/ko';
+import _ from 'lodash';
 import {
   ButtonCmpt,
   CalendarCmpt,
@@ -29,13 +29,13 @@ import {
   LabelTag,
   ModalCmpt,
   RadioCmpt,
-} from "./FormElementStyled";
+} from './FormElementStyled';
 
-registerLocale("ko", ko);
+registerLocale('ko', ko);
 
 export type ModalDataType = {
   open: boolean;
-  type: "update" | "delete" | "warning" | null; //type: update/delete/warning
+  type: 'update' | 'delete' | 'warning' | null; //type: update/delete/warning
   content?: string | null;
   header?: string | null;
 };
@@ -72,7 +72,7 @@ type FormElementType = {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>, option?: any) => void;
   onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
   placeholder?: string;
-  labelPosition?: "right" | "left";
+  labelPosition?: 'right' | 'left';
   maxLength?: number | string;
   modalData?: ModalDataType;
   setOpen?: SetOpenModalType;
@@ -94,41 +94,41 @@ type FormElementType = {
 };
 
 const FormElement = ({
-  kind = "text",
-  label = "",
-  name = "",
-  value = "",
+  kind = 'text',
+  label = '',
+  name = '',
+  value = '',
   id,
   required = false,
   // disabled = false,
   ...rest
 }: FormElementType) => {
   const years =
-    kind === "calendar" &&
+    kind === 'calendar' &&
     _.range(
       rest?.startYears ?? 2018,
       rest?.endYears ?? getYear(new Date()) + 5,
-      1
+      1,
     );
-  const months = kind === "calendar" &&
+  const months = kind === 'calendar' &&
     rest?.endYears && [
-      "1월",
-      "2월",
-      "3월",
-      "4월",
-      "5월",
-      "6월",
-      "7월",
-      "8월",
-      "9월",
-      "10월",
-      "11월",
-      "12월",
+      '1월',
+      '2월',
+      '3월',
+      '4월',
+      '5월',
+      '6월',
+      '7월',
+      '8월',
+      '9월',
+      '10월',
+      '11월',
+      '12월',
     ];
 
   return (
     <>
-      {kind === "label" && (
+      {kind === 'label' && (
         <LabelTag
           className={`label-component label-${name}-component`}
           {...rest}
@@ -136,7 +136,7 @@ const FormElement = ({
           {label}
         </LabelTag>
       )}
-      {kind === "text" && (
+      {kind === 'text' && (
         // <FormFieldCmpt
         //   className={`input-component input-${name}-component ${
         //     rest?.className ? rest?.className : ''
@@ -162,14 +162,14 @@ const FormElement = ({
         // </FormFieldCmpt>
         <FormFieldCmpt
           className={`input-component input-${name}-component ${
-            rest?.className ? rest?.className : ""
+            rest?.className ? rest?.className : ''
           }`}
           required={required}
         >
           <LabelTag>{label}</LabelTag>
           <InputCmpt
             name={name}
-            value={value ?? ""}
+            value={value ?? ''}
             label={rest?.unit}
             {...rest}
           />
@@ -180,12 +180,12 @@ const FormElement = ({
               role="alert"
               aria-atomic="true"
             >
-              {rest?.error?.content ?? ""}
+              {rest?.error?.content ?? ''}
             </div>
           )}
         </FormFieldCmpt>
       )}
-      {kind === "number" && (
+      {kind === 'number' && (
         <FormFieldCmpt className="number-input-position" required={required}>
           <LabelTag>{label}</LabelTag>
           <InputCmpt name={name} value={value} label={rest?.unit} {...rest} />
@@ -196,22 +196,22 @@ const FormElement = ({
               role="alert"
               aria-atomic="true"
             >
-              {rest?.error?.content ?? ""}
+              {rest?.error?.content ?? ''}
             </div>
           )}
         </FormFieldCmpt>
       )}
-      {kind === "textarea" && (
+      {kind === 'textarea' && (
         <FormFieldCmpt
           className={`textarea-component input-${name}-component`}
           control="textarea"
           name={name}
-          value={value ?? ""}
+          value={value ?? ''}
           label={label}
           {...rest}
         />
       )}
-      {kind === "select" && (
+      {kind === 'select' && (
         <FormSelectCmpt
           className={`select-component select-${name}-component`}
           // control="select"
@@ -223,7 +223,7 @@ const FormElement = ({
           required={required}
         />
       )}
-      {kind === "checkbox" && (
+      {kind === 'checkbox' && (
         <CheckBoxFieldCmpt
           className={`checkbox-component checkbox-${name}-component`}
         >
@@ -240,19 +240,19 @@ const FormElement = ({
           />
         </CheckBoxFieldCmpt>
       )}
-      {kind === "radio" && (
+      {kind === 'radio' && (
         <RadioCmpt className={`radio-component radio-${name}-component`}>
           <input
             type="radio"
             id={id}
             name={name}
-            value={value || ""}
+            value={value || ''}
             {...rest}
           />
           <LabelTag className="radio-tag">{label}</LabelTag>
         </RadioCmpt>
       )}
-      {kind === "calendar" && (
+      {kind === 'calendar' && (
         <CalendarCmpt
           className={`calendar-component calendar-${name}-component`}
         >
@@ -261,7 +261,7 @@ const FormElement = ({
           <DatePicker
             id={id}
             name={name}
-            value={value || ""}
+            value={value || ''}
             locale="ko"
             selected={rest?.selected ?? new Date()}
             className="calendar-input"
@@ -277,9 +277,9 @@ const FormElement = ({
               <div
                 style={{
                   margin: 10,
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
                 }}
               >
                 <div
@@ -287,7 +287,7 @@ const FormElement = ({
                   onClick={decreaseMonth}
                   disabled={prevMonthButtonDisabled}
                 >
-                  {"<"}
+                  {'<'}
                 </div>
                 <select
                   value={getYear(date)}
@@ -317,7 +317,7 @@ const FormElement = ({
                   onClick={increaseMonth}
                   disabled={nextMonthButtonDisabled}
                 >
-                  {">"}
+                  {'>'}
                 </div>
               </div>
             )}
@@ -328,16 +328,16 @@ const FormElement = ({
           />
         </CalendarCmpt>
       )}
-      {kind === "image" && (
+      {kind === 'image' && (
         <ImageCmpt className={`image-component image-${name}-component`}>
-          <LabelTag className="image-field-label">{label ?? ""}</LabelTag>
+          <LabelTag className="image-field-label">{label ?? ''}</LabelTag>
           {value && (
             <div className="button-box">
               <div
                 className="image-button preview-button"
                 onClick={rest?.onPreview}
               >
-                {!rest?.preview ? "미리보기" : "닫기"}
+                {!rest?.preview ? '미리보기' : '닫기'}
               </div>
               <div
                 className="image-button remove-button"
@@ -364,13 +364,13 @@ const FormElement = ({
             <InputCmpt
               className="upload-name"
               disabled="disabled"
-              value={value ?? ""}
+              value={value ?? ''}
             >
               <label
-                className={`upload-label ${value ? "is-image" : "non-image"}`}
+                className={`upload-label ${value ? 'is-image' : 'non-image'}`}
                 htmlFor="ex_filename"
               >
-                {value ? value : "사진을 등록해 주세요.(jpg,png,gif)"}
+                {value ? value : '사진을 등록해 주세요.(jpg,png,gif)'}
               </label>
               <Input
                 type="file"
@@ -387,7 +387,7 @@ const FormElement = ({
                 role="alert"
                 aria-atomic="true"
               >
-                {rest?.error?.content ?? ""}
+                {rest?.error?.content ?? ''}
               </div>
             )}
 
@@ -402,21 +402,21 @@ const FormElement = ({
           </div>
         </ImageCmpt>
       )}
-      {kind === "button" && (
+      {kind === 'button' && (
         <FormFieldCmpt
           className={`button-field ${
-            rest?.type === "submit" ? "submit-button" : ""
+            rest?.type === 'submit' ? 'submit-button' : ''
           } ${name}`}
           id={id}
           control={ButtonCmpt}
           // type={rest?.type ?? 'button'}
           // disabled={disabled}
           primary
-          content={rest?.content ?? "등록"}
+          content={rest?.content ?? '등록'}
           {...rest}
         />
       )}
-      {kind === "modal" && (
+      {kind === 'modal' && (
         <ModalCmpt
           className="confirm-modal"
           open={rest?.modalData.open ?? false}
@@ -425,30 +425,30 @@ const FormElement = ({
             {/* {wk_name || vh_name ? '안내' : '수정'} */}
             {rest?.modalData?.header}
             {!rest?.modalData?.header &&
-              rest?.modalData.type === "update" &&
-              "수정"}
+              rest?.modalData.type === 'update' &&
+              '수정'}
             {!rest?.modalData?.header &&
-              rest?.modalData.type === "delete" &&
-              "삭제"}
+              rest?.modalData.type === 'delete' &&
+              '삭제'}
             {!rest?.modalData?.header &&
-              rest?.modalData.type === "warning" &&
-              "안내"}
+              rest?.modalData.type === 'warning' &&
+              '안내'}
             {!rest?.modalData?.header &&
-              rest?.modalData.type === "kickout" &&
-              `${rest?.modalData.usedType === "worker" ? "작업자" : "차량"}
+              rest?.modalData.type === 'kickout' &&
+              `${rest?.modalData.usedType === 'worker' ? '작업자' : '차량'}
               퇴출`}
             {!rest?.modalData?.header &&
-              rest?.modalData.type === "complete" &&
-              "확인"}
+              rest?.modalData.type === 'complete' &&
+              '확인'}
           </ModalCmpt.Header>
           <ModalCmpt.Content className="confirm-modal content">
             <ModalCmpt.Description className="confirm-modal description">
               <FontAwesomeIcon
                 className={`modal-icon ${rest?.modalData.type}-icon`}
                 icon={
-                  rest?.modalData.type === "update"
+                  rest?.modalData.type === 'update'
                     ? faCircleExclamation
-                    : rest?.modalData.type === "complete"
+                    : rest?.modalData.type === 'complete'
                     ? faCheckCircle
                     : faCircleMinus
                 }
@@ -456,47 +456,47 @@ const FormElement = ({
               <div className="confirm-modal text">
                 {rest?.modalData?.content}
                 {!rest?.modalData?.content &&
-                  rest?.modalData.type === "update" &&
-                  "입력한 내용으로 수정하시겠습니까?"}
+                  rest?.modalData.type === 'update' &&
+                  '입력한 내용으로 수정하시겠습니까?'}
                 {!rest?.modalData?.content &&
-                  rest?.modalData.type === "delete" &&
-                  "선택한 내용으로 삭제하시겠습니까?"}
+                  rest?.modalData.type === 'delete' &&
+                  '선택한 내용으로 삭제하시겠습니까?'}
                 {!rest?.modalData?.content &&
-                  rest?.modalData.type === "warning" &&
-                  "경고 알람!!"}
+                  rest?.modalData.type === 'warning' &&
+                  '경고 알람!!'}
                 {!rest?.modalData?.content &&
-                  rest?.modalData.type === "kickout" && (
+                  rest?.modalData.type === 'kickout' && (
                     <div>
                       <div>관리번호 : {rest?.modalData.mgtNumber}</div>
                       <div>
                         <span className="bold">{rest?.modalData.name}</span>
-                        {rest?.modalData.usedType === "worker"
-                          ? "님을"
-                          : "을(를)"}{" "}
+                        {rest?.modalData.usedType === 'worker'
+                          ? '님을'
+                          : '을(를)'}{' '}
                         퇴출시키겠습니까?
                       </div>
                     </div>
                   )}
                 {!rest?.modalData?.header &&
-                  rest?.modalData.type === "complete" &&
-                  "내용이 저장되었습니다."}
+                  rest?.modalData.type === 'complete' &&
+                  '내용이 저장되었습니다.'}
               </div>
             </ModalCmpt.Description>
           </ModalCmpt.Content>
           <ModalCmpt.Actions className="confirm-modal actions">
-            {rest?.modalData.type !== "warning" &&
-              rest?.modalData.type !== "complete" && (
+            {rest?.modalData.type !== 'warning' &&
+              rest?.modalData.type !== 'complete' && (
                 <ButtonCmpt
                   className={`confirm-modal-button confirm ${
-                    rest?.modalData.type === "update" ? "update" : "delete"
+                    rest?.modalData.type === 'update' ? 'update' : 'delete'
                   }`}
-                  color={rest?.modalData.type === "update" ? "blue" : "red"}
+                  color={rest?.modalData.type === 'update' ? 'blue' : 'red'}
                   content={
-                    rest?.modalData.type === "update"
-                      ? "수정"
-                      : rest?.modalData.type === "kickout"
-                      ? "퇴출"
-                      : "삭제"
+                    rest?.modalData.type === 'update'
+                      ? '수정'
+                      : rest?.modalData.type === 'kickout'
+                      ? '퇴출'
+                      : '삭제'
                   }
                   labelPosition="right"
                   icon="checkmark"
@@ -509,10 +509,10 @@ const FormElement = ({
               color="black"
               onClick={() => rest?.setOpen({ action: false, open: false })}
             >
-              {rest?.modalData.type === "warning" ||
-              rest?.modalData.type === "complete"
-                ? "확인"
-                : "취소"}
+              {rest?.modalData.type === 'warning' ||
+              rest?.modalData.type === 'complete'
+                ? '확인'
+                : '취소'}
             </ButtonCmpt>
           </ModalCmpt.Actions>
         </ModalCmpt>

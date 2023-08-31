@@ -1,2 +1,2 @@
-export { default } from "./slice";
-export * from "./thunks";
+export { default } from './slice';
+export * from './thunks';

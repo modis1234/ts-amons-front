@@ -1,32 +1,32 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import "./index.css";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
 
-import { applyMiddleware, createStore } from "redux";
-import { Provider } from "react-redux";
-import { composeWithDevTools } from "redux-devtools-extension";
-import { BrowserRouter } from "react-router-dom";
-import ReduxThunk from "redux-thunk";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
-import "semantic-ui-css/semantic.min.css";
-import rootReducer from "./modules";
+import { applyMiddleware, createStore } from 'redux';
+import { Provider } from 'react-redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import { BrowserRouter } from 'react-router-dom';
+import ReduxThunk from 'redux-thunk';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+import 'semantic-ui-css/semantic.min.css';
+import rootReducer from './modules';
 
 const store = createStore(
   rootReducer,
   composeWithDevTools(
     applyMiddleware(
-      ReduxThunk
+      ReduxThunk,
       // .withExtraArgument({
       //     history: customHistory,
       // }),
       // logger,
-    )
-  )
+    ),
+  ),
 );
 
 const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
+  document.getElementById('root') as HTMLElement,
 );
 root.render(
   // <React.StrictMode>
@@ -35,7 +35,7 @@ root.render(
       {/* <ScrollToTop /> */}
       <App />
     </Provider>
-  </BrowserRouter>
+  </BrowserRouter>,
   // </React.StrictMode>
 );
 

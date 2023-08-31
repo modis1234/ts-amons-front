@@ -1,10 +1,10 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
-import { Menu } from "semantic-ui-react";
-import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from 'react';
+import { Menu } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
-import styled from "styled-components";
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import styled from 'styled-components';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 const MenuItemCmpt = styled(Menu.Item)`
   &::before {
@@ -80,8 +80,8 @@ type MenuItemProps = {
 function MenuItem({ items }: MenuItemProps) {
   return (
     <MenuItemCmpt>
-      {" "}
-      {items?.type !== "single" ? (
+      {' '}
+      {items?.type !== 'single' ? (
         <>
           {items?.header && <Menu.Header>{items?.header}</Menu.Header>}
           <Menu.Menu>
@@ -92,14 +92,14 @@ function MenuItem({ items }: MenuItemProps) {
                     <Menu.Item
                       key={item.key}
                       as={item?.as ?? Link}
-                      to={item?.to ?? "/amons"}
-                      className={`item-menu ${item?.class ?? ""}`}
+                      to={item?.to ?? '/amons'}
+                      className={`item-menu ${item?.class ?? ''}`}
                       active={item?.active ?? false}
                       {...item?.rest}
                     >
                       {item?.name ?? `Menu-${item.key}`}
                     </Menu.Item>
-                  )
+                  ),
               )}
           </Menu.Menu>
         </>
@@ -108,8 +108,8 @@ function MenuItem({ items }: MenuItemProps) {
           <Menu.Item
             key={item.key}
             as={item?.as ?? Link}
-            to={item?.to ?? "/amons"}
-            className={`single-menu item-menu ${item?.class ?? ""}`}
+            to={item?.to ?? '/amons'}
+            className={`single-menu item-menu ${item?.class ?? ''}`}
             active={item?.active ?? false}
             {...item?.rest}
           >

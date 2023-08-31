@@ -1,10 +1,10 @@
-import { PaginationProps } from "semantic-ui-react";
+import { PaginationProps } from 'semantic-ui-react';
 
 export type GroupType = {
   id?: string;
   name?: string;
   field: string;
-  textAlign?: "center" | "left" | "right";
+  textAlign?: 'center' | 'left' | 'right';
   sorting?: string | boolean;
   width?: number;
   rowSpan?: number | string;
@@ -18,7 +18,7 @@ export type HeaderType<T> = {
   id?: string;
   name?: string;
   field: string;
-  textAlign?: "center" | "left" | "right";
+  textAlign?: 'center' | 'left' | 'right';
   width?: number;
   sorting?: string | boolean;
   callback?: (param: any) => any;
@@ -45,12 +45,12 @@ export type PageInfoType = {
 
 export type OnRowClickType = (
   e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  item?: any
+  item?: any,
 ) => void;
 
 export type OnDeleteType = (
   e: React.MouseEvent<SVGSVGElement, MouseEvent>,
-  item?: any
+  item?: any,
 ) => void;
 
 export type TableElementType = {
@@ -65,7 +65,7 @@ export type TableElementType = {
     keys: string;
     callback: (
       e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-      item?: any
+      item?: any,
     ) => void;
   };
   activeRow?: {
@@ -75,7 +75,7 @@ export type TableElementType = {
   pageInfo: PageInfoType;
   onPageChange?: (
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
-    data: PaginationProps
+    data: PaginationProps,
   ) => void;
 };
 

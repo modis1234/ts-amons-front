@@ -1,18 +1,18 @@
 //@ts-nocheck
-import { faCaretDown } from "@fortawesome/pro-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import DatePicker, { registerLocale } from "react-datepicker";
-import "./react-datepicker.css";
-import ko from "date-fns/locale/ko";
+import { faCaretDown } from '@fortawesome/pro-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import DatePicker, { registerLocale } from 'react-datepicker';
+import './react-datepicker.css';
+import ko from 'date-fns/locale/ko';
 // import getYear from 'date-fns/getYear';
 // import getMonth from 'date-fns/getMonth';
-import { getYear, getMonth } from "date-fns";
-import React, { useEffect, useState } from "react";
-import _ from "lodash";
-import moment from "moment";
-import styled from "styled-components";
+import { getYear, getMonth } from 'date-fns';
+import React, { useEffect, useState } from 'react';
+import _ from 'lodash';
+import moment from 'moment';
+import styled from 'styled-components';
 
-import { Icon } from "semantic-ui-react";
+import { Icon } from 'semantic-ui-react';
 
 const CalendarUICmpt = styled.div`
   /* date picker customize 시작 */
@@ -58,7 +58,7 @@ const CalendarUICmpt = styled.div`
     font-family: NotoSansCJKkr-Regular;
     font-size: 14px;
   }
-  .react-datepicker-time__input input[type="time"] {
+  .react-datepicker-time__input input[type='time'] {
     height: 30px;
     font-family: NotoSansCJKkr-Regular;
   }
@@ -143,10 +143,10 @@ type CalendarUIType = {
 type DateType = Date;
 
 const CalendarUI = ({
-  type = "from", //from/to/daily
+  type = 'from', //from/to/daily
   className,
   icon = false,
-  headerText = "시작일을 선택하세요.",
+  headerText = '시작일을 선택하세요.',
   onChangeDate,
   setDate,
   error = false,
@@ -155,26 +155,33 @@ const CalendarUI = ({
 
   const years = _.range(2018, getYear(new Date()) + 5, 1); // 수정
   const months = [
-    "1월",
-    "2월",
-    "3월",
-    "4월",
-    "5월",
-    "6월",
-    "7월",
-    "8월",
-    "9월",
-    "10월",
-    "11월",
-    "12월",
+    '1월',
+    '2월',
+    '3월',
+    '4월',
+    '5월',
+    '6월',
+    '7월',
+    '8월',
+    '9월',
+    '10월',
+    '11월',
+    '12월',
   ];
 
   const [startDate, setStartDate] = useState<DateType>(
-    new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0)
+    new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0),
   );
 
   const [endDate, setEndDate] = useState<DateType>(
-    new Date(today.getFullYear(), today.getMonth(), today.getDate(), 23, 59, 59)
+    new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate(),
+      23,
+      59,
+      59,
+    ),
   );
 
   const [initDate, setInitDate] = useState<DateType | null>(null);
@@ -190,20 +197,20 @@ const CalendarUI = ({
 
   // 요일 반환
   const getDayName = (date: DateType) => {
-    return date.toLocaleDateString("ko-KR", { weekday: "long" }).substr(0, 1);
+    return date.toLocaleDateString('ko-KR', { weekday: 'long' }).substr(0, 1);
   };
 
   // 날짜 비교시 년 월 일까지만 비교하게끔
   const createDate = (date: DateType) => {
     return new Date(
-      new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0)
+      new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0),
     );
   };
 
   const StartDateInput = ({ onClick }: { onClick: () => void }) => (
     <div className="date-picker-custom-input wrapper">
       <div className="date-picker-custom-input start" onClick={onClick}>
-        {moment(initDate).format("YYYY-MM-DD HH:mm")}
+        {moment(initDate).format('YYYY-MM-DD HH:mm')}
         <FontAwesomeIcon className="custom-triangle" icon={faCaretDown} />
       </div>
     </div>
@@ -211,8 +218,8 @@ const CalendarUI = ({
 
   return (
     <CalendarUICmpt
-      className={`calendarui-component ${error ? "error" : ""} ${
-        className ? className : ""
+      className={`calendarui-component ${error ? 'error' : ''} ${
+        className ? className : ''
       }`}
     >
       {icon && (
@@ -236,8 +243,8 @@ const CalendarUI = ({
             <div
               style={{
                 margin: 10,
-                display: "flex",
-                justifyContent: "center",
+                display: 'flex',
+                justifyContent: 'center',
               }}
             >
               <div
@@ -245,7 +252,7 @@ const CalendarUI = ({
                 onClick={decreaseMonth}
                 disabled={prevMonthButtonDisabled}
               >
-                {"<"}
+                {'<'}
               </div>
 
               <select
@@ -276,7 +283,7 @@ const CalendarUI = ({
                 onClick={increaseMonth}
                 disabled={nextMonthButtonDisabled}
               >
-                {">"}
+                {'>'}
               </div>
             </div>
           </>
@@ -293,10 +300,10 @@ const CalendarUI = ({
         // endDate={new Date('2022-12-28')}
         customInput={<StartDateInput />}
         dayClassName={(date: Date) =>
-          getDayName(createDate(date)) === "토"
-            ? "saturday"
-            : getDayName(createDate(date)) === "일"
-            ? "sunday"
+          getDayName(createDate(date)) === '토'
+            ? 'saturday'
+            : getDayName(createDate(date)) === '일'
+            ? 'sunday'
             : undefined
         }
         showTimeInput

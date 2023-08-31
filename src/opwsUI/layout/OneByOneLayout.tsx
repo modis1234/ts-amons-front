@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 const OneByOneCmpt = styled.div<{ rightHeader?: boolean | undefined }>`
   width: 100%;
@@ -12,9 +12,9 @@ const OneByOneCmpt = styled.div<{ rightHeader?: boolean | undefined }>`
   }
   .table-body {
     width: 100%;
-    height: ${(props) => (props.rightHeader ? "calc(100% - 58px)" : "100%")};
+    height: ${(props) => (props.rightHeader ? 'calc(100% - 58px)' : '100%')};
     /* padding-top: 22px; */
-    padding-top: ${(props) => (props.rightHeader ? "10px" : "22px")};
+    padding-top: ${(props) => (props.rightHeader ? '10px' : '22px')};
     padding-left: 17px;
     padding-right: 17px;
     padding-bottom: 18px;

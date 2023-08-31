@@ -1,5 +1,5 @@
-import _ from "lodash";
-import { WorkerType } from "modules/workers";
+import _ from 'lodash';
+import { WorkerType } from 'modules/workers';
 import {
   OnDeleteType,
   OnRowClickType,
@@ -7,17 +7,17 @@ import {
   SelectedRowType,
   TableDataType,
   TableOptionType,
-} from "opwsUI/table/types";
-import React, { useCallback, useEffect, useState } from "react";
-import { Checkbox, PaginationProps } from "semantic-ui-react";
-import styled from "styled-components";
-import TableElement from "../../../opwsUI/table/TableElement";
+} from 'opwsUI/table/types';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Checkbox, PaginationProps } from 'semantic-ui-react';
+import styled from 'styled-components';
+import TableElement from '../../../opwsUI/table/TableElement';
 import {
   splitByColonInput,
   TransBloodGroup,
   TransBloodType,
   zeroFill,
-} from "../../../opwsUI/util";
+} from '../../../opwsUI/util';
 
 const WorkerTableCmpt = styled.div`
   width: 100%;
@@ -46,39 +46,39 @@ const WorkerTable = ({
   const [tableData, setTableData] = useState<TableDataType<WorkerType>>({
     header: [
       {
-        id: "no",
-        name: "NO",
-        field: "no",
-        textAlign: "center",
+        id: 'no',
+        name: 'NO',
+        field: 'no',
+        textAlign: 'center',
         width: 1,
       },
       {
-        id: "company",
-        name: "소속사",
-        field: "co_name",
+        id: 'company',
+        name: '소속사',
+        field: 'co_name',
         width: 2,
-        sorting: "true",
+        sorting: 'true',
       },
       {
-        id: "name",
-        name: "이름",
-        field: "wk_name",
+        id: 'name',
+        name: '이름',
+        field: 'wk_name',
         width: 2,
       },
       {
-        id: "position",
-        name: "직위",
-        field: "wk_position",
+        id: 'position',
+        name: '직위',
+        field: 'wk_position',
         width: 2,
-        textAlign: "center",
-        sorting: "true",
+        textAlign: 'center',
+        sorting: 'true',
       },
       {
-        id: "sms",
-        name: "SMS",
-        field: "wk_sms_yn",
+        id: 'sms',
+        name: 'SMS',
+        field: 'wk_sms_yn',
         width: 1,
-        textAlign: "center",
+        textAlign: 'center',
         callback: (item: WorkerType) => {
           const _smsYN = item.wk_sms_yn;
 
@@ -92,11 +92,11 @@ const WorkerTable = ({
         },
       },
       {
-        id: "age",
-        name: "나이",
-        field: "wk_birth",
+        id: 'age',
+        name: '나이',
+        field: 'wk_birth',
         width: 1,
-        textAlign: "center",
+        textAlign: 'center',
         callback: (item: WorkerType) => {
           const birth = item?.wk_birth ?? null;
           if (!birth) return null;
@@ -108,39 +108,39 @@ const WorkerTable = ({
         },
       },
       {
-        id: "blood",
-        name: "혈액형",
-        field: "wk_blood_type",
+        id: 'blood',
+        name: '혈액형',
+        field: 'wk_blood_type',
         width: 3,
-        textAlign: "center",
+        textAlign: 'center',
         callback: (item: WorkerType) => {
           const { wk_blood_type, wk_blood_group } = item;
 
           return `${TransBloodType(wk_blood_type)} ${TransBloodGroup(
-            wk_blood_group
+            wk_blood_group,
           )}`;
         },
       },
       {
-        id: "nation",
-        name: "국적",
-        field: "wk_nation",
+        id: 'nation',
+        name: '국적',
+        field: 'wk_nation',
         width: 2,
       },
       {
-        id: "beacon",
-        name: "비콘 사용 정보",
-        field: "bc_address",
+        id: 'beacon',
+        name: '비콘 사용 정보',
+        field: 'bc_address',
         width: 2,
-        textAlign: "center",
-        sorting: "true",
+        textAlign: 'center',
+        sorting: 'true',
         callback: (item: WorkerType) => {
           if (item.bc_index) {
             return `${
-              item.bc_management ? zeroFill(item.bc_management, 3) : "000"
-            } - ${item?.bc_address ? splitByColonInput(item.bc_address) : ""}`;
+              item.bc_management ? zeroFill(item.bc_management, 3) : '000'
+            } - ${item?.bc_address ? splitByColonInput(item.bc_address) : ''}`;
           } else {
-            return "미할당";
+            return '미할당';
           }
         },
       },
@@ -158,7 +158,7 @@ const WorkerTable = ({
   });
 
   useEffect(() => {
-    const sortData = _.sortBy(data, "wk_id").reverse();
+    const sortData = _.sortBy(data, 'wk_id').reverse();
 
     setTableData({
       ...tableData,
@@ -169,11 +169,11 @@ const WorkerTable = ({
   const onPageChange = useCallback(
     (
       e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
-      data: PaginationProps
+      data: PaginationProps,
     ): void => {
       e.preventDefault();
       const activePage: string | number | undefined = data.activePage;
-      if (typeof activePage === "number") {
+      if (typeof activePage === 'number') {
         const _activePage = Math.ceil(activePage);
         const PreState = pageInfo;
         setPageInfoHandler({
@@ -186,7 +186,7 @@ const WorkerTable = ({
       initForm();
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [pageInfo]
+    [pageInfo],
   );
 
   return (
@@ -199,11 +199,11 @@ const WorkerTable = ({
           onPageChange={onPageChange}
           onRowClick={onRowClick}
           activeDelete={{
-            keys: "wk_id", // delete ActionKey
+            keys: 'wk_id', // delete ActionKey
             callback: onDelete, // delete ActionHandler
           }}
           activeRow={{
-            keys: "wk_index",
+            keys: 'wk_index',
             index: selectedRow.selectedId,
           }}
         />

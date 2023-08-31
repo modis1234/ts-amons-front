@@ -1,6 +1,6 @@
-import _ from "lodash";
-import { CompanyType } from "modules/companies";
-import moment from "moment";
+import _ from 'lodash';
+import { CompanyType } from 'modules/companies';
+import moment from 'moment';
 import {
   OnDeleteType,
   OnRowClickType,
@@ -8,11 +8,11 @@ import {
   SelectedRowType,
   TableDataType,
   TableOptionType,
-} from "opwsUI/table/types";
-import React, { useCallback, useEffect, useState } from "react";
-import { PaginationProps } from "semantic-ui-react";
-import styled from "styled-components";
-import TableElement from "../../../opwsUI/table/TableElement";
+} from 'opwsUI/table/types';
+import React, { useCallback, useEffect, useState } from 'react';
+import { PaginationProps } from 'semantic-ui-react';
+import styled from 'styled-components';
+import TableElement from '../../../opwsUI/table/TableElement';
 
 const CompanyTableCmpt = styled.div`
   width: 100%;
@@ -41,30 +41,30 @@ const CompanyTable = ({
   const [tableData, setTableData] = useState<TableDataType<CompanyType>>({
     header: [
       {
-        id: "no",
-        name: "NO",
-        field: "no",
-        textAlign: "center",
+        id: 'no',
+        name: 'NO',
+        field: 'no',
+        textAlign: 'center',
         width: 1,
       },
       {
-        id: "company",
-        name: "소속사",
-        field: "co_name",
+        id: 'company',
+        name: '소속사',
+        field: 'co_name',
         width: 3,
       },
       {
-        id: "sector",
-        name: "업종",
-        field: "co_sectors",
-        textAlign: "center",
+        id: 'sector',
+        name: '업종',
+        field: 'co_sectors',
+        textAlign: 'center',
         width: 3,
       },
       {
-        id: "description",
-        name: "비고",
-        field: "co_description",
-        textAlign: "center",
+        id: 'description',
+        name: '비고',
+        field: 'co_description',
+        textAlign: 'center',
         width: 8,
       },
     ],
@@ -81,7 +81,7 @@ const CompanyTable = ({
 
   useEffect(() => {
     if (data) {
-      const sortData = _.sortBy(data, "co_id").reverse();
+      const sortData = _.sortBy(data, 'co_id').reverse();
 
       setTableData({
         ...tableData,
@@ -94,11 +94,11 @@ const CompanyTable = ({
   const onPageChange = useCallback(
     (
       e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
-      data: PaginationProps
+      data: PaginationProps,
     ): void => {
       e.preventDefault();
       const activePage: string | number | undefined = data.activePage;
-      if (typeof activePage === "number") {
+      if (typeof activePage === 'number') {
         const _activePage = Math.ceil(activePage);
         const PreState = pageInfo;
         setPageInfoHandler({
@@ -111,7 +111,7 @@ const CompanyTable = ({
       initForm();
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [pageInfo]
+    [pageInfo],
   );
 
   return (
@@ -124,11 +124,11 @@ const CompanyTable = ({
           onPageChange={onPageChange}
           onRowClick={onRowClick}
           activeDelete={{
-            keys: "co_id", // delete ActionKey
+            keys: 'co_id', // delete ActionKey
             callback: onDelete, // delete ActionHandler
           }}
           activeRow={{
-            keys: "co_id",
+            keys: 'co_id',
             index: selectedRow.selectedId,
           }}
         />

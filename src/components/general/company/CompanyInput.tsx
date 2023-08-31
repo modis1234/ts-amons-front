@@ -1,13 +1,13 @@
-import { CompanyErrorType, CompanyType } from "modules/companies";
-import { SelectedRowType } from "opwsUI/table/types";
-import React, { useEffect } from "react";
-import { Button, Form } from "semantic-ui-react";
-import styled from "styled-components";
-import FormArea from "../../../opwsUI/form/FormArea";
+import { CompanyErrorType, CompanyType } from 'modules/companies';
+import { SelectedRowType } from 'opwsUI/table/types';
+import React, { useEffect } from 'react';
+import { Button, Form } from 'semantic-ui-react';
+import styled from 'styled-components';
+import FormArea from '../../../opwsUI/form/FormArea';
 import FormElement, {
   ModalDataType,
   SetOpenModalType,
-} from "../../../opwsUI/form/FormElement";
+} from '../../../opwsUI/form/FormElement';
 
 const CompanyInputCmpt = styled.div`
   width: 100%;
@@ -52,7 +52,7 @@ const CompanyInput = ({
             type="submit"
             onClick={onSubmit}
             disabled={!formData.co_name || !formData.co_sectors}
-            content={selectedId ? "수정" : "등록"}
+            content={selectedId ? '수정' : '등록'}
           />
         }
       >

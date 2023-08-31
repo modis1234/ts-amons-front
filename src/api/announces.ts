@@ -7,7 +7,7 @@ const TS_INDEX = process.env.REACT_APP_TS_INDEX ?? null;
 // 포스트 목록을 가져오는 비동기 함수
 export const getAnnounces = async () => {
   const response = await axios.get(
-    `${API}/api/announce/announces?siteIndex=${TS_INDEX}`
+    `${API}/api/announce/announces?siteIndex=${TS_INDEX}`,
   );
   return response.data;
 };

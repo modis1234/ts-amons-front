@@ -1,5 +1,5 @@
-import axios from "axios";
-import { LocalType } from "modules/locals";
+import axios from 'axios';
+import { LocalType } from 'modules/locals';
 
 const API = `http://${process.env.REACT_APP_API_SERVER}`;
 const TS_INDEX = process.env.REACT_APP_TS_INDEX ?? null;
@@ -7,7 +7,7 @@ const TS_INDEX = process.env.REACT_APP_TS_INDEX ?? null;
 // 포스트 목록을 가져오는 비동기 함수
 export const getLocals = async () => {
   const response = await axios.get(
-    `${API}/api/local/locals?siteIndex=${TS_INDEX}`
+    `${API}/api/local/locals?siteIndex=${TS_INDEX}`,
   );
   return response.data;
 };

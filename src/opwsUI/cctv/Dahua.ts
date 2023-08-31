@@ -1,8 +1,8 @@
 /* eslint-disable */
 
 //@ts-nocheck
-import { Foundation } from "./foundation";
-import { WebVideoCtrl } from "./WebVideoCtrl";
+import { Foundation } from './foundation';
+import { WebVideoCtrl } from './WebVideoCtrl';
 export default function Dahua(objectId) {
   /**
    * @param objectId string-영상 출력 Div 엘리먼트 id
@@ -68,11 +68,11 @@ Dahua.prototype = {
         _WebVideoCtrl[_this.objectId].insertPluginObject(
           _this.objectId,
           300,
-          300
+          300,
         );
 
         //초기화 플러그인
-        _WebVideoCtrl[_this.objectId].initPlugin("Protocol2", function () {
+        _WebVideoCtrl[_this.objectId].initPlugin('Protocol2', function () {
           _WebVideoCtrl[_this.objectId].setOpInfoCallback(_this.showOPInfo);
           // let left = (_this.position.left =
           //     _this.camOCX.offsetLeft);
@@ -137,8 +137,8 @@ Dahua.prototype = {
           _WebVideoCtrl[_this.objectId].setSplitNum(_this.splitNum);
           //등록 문제
           _WebVideoCtrl[_this.objectId].registerEvent(
-            "SelectedView",
-            _this.responseSelectedViewSignal
+            'SelectedView',
+            _this.responseSelectedViewSignal,
           );
           _this.isLogin = login;
           _this.cctvIndex = cctvIndex;
@@ -211,14 +211,14 @@ Dahua.prototype = {
   },
   showOPInfo(szInfo, status, error) {
     var szTip =
-      "<div>" +
-      Foundation.dateFormat(new Date(), "yyyy-MM-dd hh:mm:ss") +
-      " " +
+      '<div>' +
+      Foundation.dateFormat(new Date(), 'yyyy-MM-dd hh:mm:ss') +
+      ' ' +
       szInfo;
-    if (typeof status != "undefined") {
-      szTip += "(" + status.toString() + ", " + error.toString() + ")";
+    if (typeof status != 'undefined') {
+      szTip += '(' + status.toString() + ', ' + error.toString() + ')';
     }
-    szTip += "</div>";
+    szTip += '</div>';
     // $("#opinfo").html(szTip + $("#opinfo").html());
   },
   clickLogin() {
@@ -235,7 +235,7 @@ Dahua.prototype = {
       szStreamType,
       szChannel,
     } = _this.connectInfo;
-    if ("" === szIP || "" === szPort) {
+    if ('' === szIP || '' === szPort) {
       return;
     }
 
@@ -243,7 +243,7 @@ Dahua.prototype = {
     //현재 장치가 이미 로그인한지 확인하십시오
     var deviceInfo = _this.WebVideoCtrl[_this.objectId].getDeviceInfo(
       szIP,
-      _this.objectId
+      _this.objectId,
     );
     // if (typeof deviceInfo !== 'undefined') {
     //     console.log('Login Success!!!');
@@ -268,8 +268,8 @@ Dahua.prototype = {
       szProtocol,
       szTimeout,
       function (sIp, iDeviceID) {
-        _this.showOPInfo(sIp + ':"' + szPort + " Login Succeed ");
-        console.log(sIp + ':"' + szPort + " Login Succeed ");
+        _this.showOPInfo(sIp + ':"' + szPort + ' Login Succeed ');
+        console.log(sIp + ':"' + szPort + ' Login Succeed ');
         //삽입 장치
         // DemoUI.addDeviceIP(sIp);
         //채널 번호를 가져옵니다
@@ -290,8 +290,8 @@ Dahua.prototype = {
           });
       },
       function (iErrorCode, sError) {
-        _this.showOPInfo(szIP + " Login Fail ", iErrorCode, sError);
-      }
+        _this.showOPInfo(szIP + ' Login Fail ', iErrorCode, sError);
+      },
     );
   },
   clickLogout() {
@@ -302,7 +302,7 @@ Dahua.prototype = {
     if (!_this.WebVideoCtrl[_this.objectId] && !_this.login) return;
     if (_this.WebVideoCtrl[_this.objectId].logout(sIP)) {
       //프롬프트를 추가하십시오
-      _this.showOPInfo(sIP + " Logout Device ");
+      _this.showOPInfo(sIP + ' Logout Device ');
       //장치 정보를 삭제하십시오
       //   DemoUI.removeDeviceInfo(ip);
     }
@@ -343,19 +343,19 @@ Dahua.prototype = {
             }
             _this.showOPInfo(
               sIP +
-                ":" +
+                ':' +
                 szPort +
-                " Channel:" +
+                ' Channel:' +
                 iChannel.toString() +
-                " Live succeed"
+                ' Live succeed',
             );
             console.log(
               sIP +
-                ":" +
+                ':' +
                 szPort +
-                " Channel:" +
+                ' Channel:' +
                 iChannel.toString() +
-                " Live succeed"
+                ' Live succeed',
             );
             if (_this.isLogin) {
               _this.showScreen();
@@ -365,11 +365,11 @@ Dahua.prototype = {
             _this.isRealView = false;
 
             _this.showOPInfo(
-              sIP + " Channel:" + iChannel.toString() + " Live Fail",
+              sIP + ' Channel:' + iChannel.toString() + ' Live Fail',
               status,
-              error
+              error,
             );
-          }
+          },
         );
       } else {
         //창 일련 번호
@@ -384,17 +384,17 @@ Dahua.prototype = {
           _this.objectId,
           function (iPlayerID) {
             _this.showOPInfo(
-              sIP + " Channel:" + iChannel.toString() + " Live succeed"
+              sIP + ' Channel:' + iChannel.toString() + ' Live succeed',
             );
             // _this.showScreen();
           },
           function (status, error) {
             _this.showOPInfo(
-              sIP + " Channel:" + iChannel.toString() + " Live Fail",
+              sIP + ' Channel:' + iChannel.toString() + ' Live Fail',
               status,
-              error
+              error,
             );
-          }
+          },
         );
       }
     } else {
@@ -613,7 +613,7 @@ Dahua.prototype = {
         const headerHeight = 0;
         const dE = document.documentElement;
         const windowBorder = Math.ceil(
-          (window.outerWidth - window.innerWidth) / 2
+          (window.outerWidth - window.innerWidth) / 2,
         );
         const windowHeader =
           window.outerHeight - window.innerHeight - windowBorder;
@@ -626,18 +626,18 @@ Dahua.prototype = {
         const width = Math.min(
           pos.width,
           dE.clientWidth - Math.max(pos.leftToWindow, 0),
-          Math.max(pos.width - (dE.scrollLeft - pos.left), 0)
+          Math.max(pos.width - (dE.scrollLeft - pos.left), 0),
         );
         const height = Math.min(
           pos.height,
           dE.clientHeight - Math.max(headerHeight, pos.topToWindow),
-          Math.max(pos.height - (dE.scrollTop - pos.top) - headerHeight, 0)
+          Math.max(pos.height - (dE.scrollTop - pos.top) - headerHeight, 0),
         );
         _this.WebVideoCtrl[_this.objectId].resizeVideo(
           left,
           top,
           width,
-          height
+          height,
         );
       }
     }

@@ -1,5 +1,5 @@
-import axios from "axios";
-import { SiteType } from "modules/sites/types";
+import axios from 'axios';
+import { SiteType } from 'modules/sites/types';
 
 const API = `http://${process.env.REACT_APP_API_SERVER}`;
 const TS_INDEX = process.env.REACT_APP_TS_INDEX ?? null;
@@ -15,7 +15,7 @@ export const getSite = async (id: number) => {
 };
 
 export async function postSite(data: SiteType) {
-  console.log("postSites->", data);
+  console.log('postSites->', data);
   const response = await axios.post<SiteType>(`${API}/api/site/sites`, data);
   return response.data;
 }
@@ -23,7 +23,7 @@ export async function postSite(data: SiteType) {
 export async function putSite(index: string, data: SiteType) {
   const response = await axios.put<SiteType>(
     `${API}/api/site/sites/${index}`,
-    data
+    data,
   );
   return response.data;
 }
