@@ -50,7 +50,7 @@ const WorkerTable = ({
         name: "NO",
         field: "no",
         textAlign: "center",
-        // width: 1,
+        width: 1,
       },
       {
         id: "company",
@@ -111,7 +111,7 @@ const WorkerTable = ({
         id: "blood",
         name: "혈액형",
         field: "wk_blood_type",
-        width: 1,
+        width: 3,
         textAlign: "center",
         callback: (item: WorkerType) => {
           const { wk_blood_type, wk_blood_group } = item;
@@ -131,7 +131,7 @@ const WorkerTable = ({
         id: "beacon",
         name: "비콘 사용 정보",
         field: "bc_address",
-        width: 3,
+        width: 2,
         textAlign: "center",
         sorting: "true",
         callback: (item: WorkerType) => {
