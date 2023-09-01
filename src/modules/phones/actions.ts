@@ -1,0 +1,27 @@
+import { asyncActions } from 'lib/reducerUtils';
+
+export const [GET_PHONES, GET_PHONES_PENDING, GET_PHONES_FULFILLED, GET_PHONES_REJECTED] =
+  asyncActions('phones/GET_PHONES');
+
+export const [GET_PHONE, GET_PHONE_PENDING, GET_PHONE_FULFILLED, GET_PHONE_REJECTED] =
+  asyncActions('phones/GET_PHONE');
+
+export const [POST_PHONE, POST_PHONE_PENDING, POST_PHONE_FULFILLED, POST_PHONE_REJECTED] =
+  asyncActions('phones/POST_PHONE');
+
+export const [PUT_PHONE, PUT_PHONE_PENDING, PUT_PHONE_FULFILLED, PUT_PHONE_REJECTED] =
+  asyncActions('phones/PUT_PHONE');
+
+export const [
+  DELETE_PHONE,
+  DELETE_PHONE_PENDING,
+  DELETE_PHONE_FULFILLED,
+  DELETE_PHONE_REJECTED,
+] = asyncActions('phones/DELETE_PHONE');
+
+export const [
+  PUT_IMAGE_PHONE,
+  PUT_IMAGE_PHONE_PENDING,
+  PUT_IMAGE_PHONE_FULFILLED,
+  PUT_IMAGE_PHONE_REJECTED,
+] = asyncActions('phones/PUT_IMAGE_PHONE');
