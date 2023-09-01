@@ -25,6 +25,12 @@ import {
   PUT_BEACON_FULFILLED,
   PUT_BEACON_PENDING,
   PUT_BEACON_REJECTED,
+  POST_SEARCH_BEACONS_BY_WORKER_NAME_PENDING,
+  POST_SEARCH_BEACONS_BY_WORKER_NAME_FULFILLED,
+  POST_SEARCH_BEACONS_BY_WORKER_NAME_REJECTED,
+  POST_SEARCH_BEACONS_BY_VEHICLE_NAME_PENDING,
+  POST_SEARCH_BEACONS_BY_VEHICLE_NAME_FULFILLED,
+  POST_SEARCH_BEACONS_BY_VEHICLE_NAME_REJECTED,
 } from './actions';
 import { BeaconType } from './types';
 
@@ -45,18 +51,15 @@ export const workerSlice = createSlice({
     // Add reducers for additional action types here, and handle loading state as needed
     /**@GET */
     [GET_BEACONS_PENDING]: (state, action) => asyncState.load(),
-    [GET_BEACONS_FULFILLED]: (state, action) =>
-      asyncState.success(action.payload),
+    [GET_BEACONS_FULFILLED]: (state, action) => asyncState.success(action.payload),
     [GET_BEACONS_REJECTED]: (state, action) => asyncState.error(action.payload),
     /**@GET */
     [GET_BEACON_PENDING]: (state, action) => asyncState.load(),
-    [GET_BEACON_FULFILLED]: (state, action) =>
-      asyncState.success(action.payload),
+    [GET_BEACON_FULFILLED]: (state, action) => asyncState.success(action.payload),
     [GET_BEACON_REJECTED]: (state, action) => asyncState.error(action.payload),
     /**@POST */
     [POST_BEACON_PENDING]: (state, action) => asyncState.load(state.data),
-    [POST_BEACON_FULFILLED]: (state, action) =>
-      postBeaconrHandler(state, action),
+    [POST_BEACON_FULFILLED]: (state, action) => postBeaconrHandler(state, action),
     [POST_BEACON_REJECTED]: (state, action) => asyncState.error(action.payload),
     /**@PUT */
     [PUT_BEACON_PENDING]: (state, action) => asyncState.load(state.data),
@@ -64,15 +67,25 @@ export const workerSlice = createSlice({
     [PUT_BEACON_REJECTED]: (state, action) => asyncState.error(action.payload),
     /**@DELETE */
     [DELETE_BEACON_PENDING]: (state, action) => asyncState.load(state.data),
-    [DELETE_BEACON_FULFILLED]: (state, action) =>
-      deleteBeaconrHandler(state, action),
-    [DELETE_BEACON_REJECTED]: (state, action) =>
-      asyncState.error(action.payload),
-    /**@GET */
+    [DELETE_BEACON_FULFILLED]: (state, action) => deleteBeaconrHandler(state, action),
+    [DELETE_BEACON_REJECTED]: (state, action) => asyncState.error(action.payload),
+    /**@GET_UNUSED_BEACONS */
     [GET_UNUSED_BEACONS_PENDING]: (state, action) => asyncState.load(),
-    [GET_UNUSED_BEACONS_FULFILLED]: (state, action) =>
-      asyncState.success(action.payload),
-    [GET_UNUSED_BEACONS_REJECTED]: (state, action) =>
+    [GET_UNUSED_BEACONS_FULFILLED]: (state, action) => asyncState.success(action.payload),
+    [GET_UNUSED_BEACONS_REJECTED]: (state, action) => asyncState.error(action.payload),
+    /**@POST_SEARCH_BEACONS_BY_WORKER_NAME */
+    [POST_SEARCH_BEACONS_BY_WORKER_NAME_PENDING]: (state, action) =>
+      asyncState.load(state.data),
+    [POST_SEARCH_BEACONS_BY_WORKER_NAME_FULFILLED]: (state, action) =>
+      postBeaconrHandler(state, action),
+    [POST_SEARCH_BEACONS_BY_WORKER_NAME_REJECTED]: (state, action) =>
+      asyncState.error(action.payload),
+    /**@POST_SEARCH_BEACONS_BY_VEHICLE_NAME */
+    [POST_SEARCH_BEACONS_BY_VEHICLE_NAME_PENDING]: (state, action) =>
+      asyncState.load(state.data),
+    [POST_SEARCH_BEACONS_BY_VEHICLE_NAME_FULFILLED]: (state, action) =>
+      postBeaconrHandler(state, action),
+    [POST_SEARCH_BEACONS_BY_VEHICLE_NAME_REJECTED]: (state, action) =>
       asyncState.error(action.payload),
   },
 });

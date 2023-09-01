@@ -1,0 +1,36 @@
+import { asyncActions } from 'lib/reducerUtils';
+
+export const [
+  GET_SCANNERS,
+  GET_SCANNERS_PENDING,
+  GET_SCANNERS_FULFILLED,
+  GET_SCANNERS_REJECTED,
+] = asyncActions('scanners/GET_SCANNERS');
+
+export const [
+  GET_SCANNER,
+  GET_SCANNER_PENDING,
+  GET_SCANNER_FULFILLED,
+  GET_SCANNER_REJECTED,
+] = asyncActions('scanners/GET_SCANNER');
+
+export const [
+  POST_SCANNER,
+  POST_SCANNER_PENDING,
+  POST_SCANNER_FULFILLED,
+  POST_SCANNER_REJECTED,
+] = asyncActions('scanners/POST_SCANNER');
+
+export const [
+  PUT_SCANNER,
+  PUT_SCANNER_PENDING,
+  PUT_SCANNER_FULFILLED,
+  PUT_SCANNER_REJECTED,
+] = asyncActions('scanners/PUT_SCANNER');
+
+export const [
+  DELETE_SCANNER,
+  DELETE_SCANNER_PENDING,
+  DELETE_SCANNER_FULFILLED,
+  DELETE_SCANNER_REJECTED,
+] = asyncActions('scanners/DELETE_SCANNER');

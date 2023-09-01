@@ -1,0 +1,36 @@
+import { asyncActions } from 'lib/reducerUtils';
+
+export const [
+  GET_PROCESSES,
+  GET_PROCESSES_PENDING,
+  GET_PROCESSES_FULFILLED,
+  GET_PROCESSES_REJECTED,
+] = asyncActions('announces/GET_PROCESSES');
+
+export const [
+  GET_PROCESS,
+  GET_PROCESS_PENDING,
+  GET_PROCESS_FULFILLED,
+  GET_PROCESS_REJECTED,
+] = asyncActions('announces/GET_PROCESS');
+
+export const [
+  POST_PROCESS,
+  POST_PROCESS_PENDING,
+  POST_PROCESS_FULFILLED,
+  POST_PROCESS_REJECTED,
+] = asyncActions('announces/POST_PROCESS');
+
+export const [
+  PUT_PROCESS,
+  PUT_PROCESS_PENDING,
+  PUT_PROCESS_FULFILLED,
+  PUT_PROCESS_REJECTED,
+] = asyncActions('announces/PUT_PROCESS');
+
+export const [
+  DELETE_PROCESS,
+  DELETE_PROCESS_PENDING,
+  DELETE_PROCESS_FULFILLED,
+  DELETE_PROCESS_REJECTED,
+] = asyncActions('announces/DELETE_PROCESS');

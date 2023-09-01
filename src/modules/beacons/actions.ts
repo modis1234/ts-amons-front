@@ -7,12 +7,8 @@ export const [
   GET_BEACONS_REJECTED,
 ] = asyncActions('beacons/GET_BEACONS');
 
-export const [
-  GET_BEACON,
-  GET_BEACON_PENDING,
-  GET_BEACON_FULFILLED,
-  GET_BEACON_REJECTED,
-] = asyncActions('beacons/GET_BEACON');
+export const [GET_BEACON, GET_BEACON_PENDING, GET_BEACON_FULFILLED, GET_BEACON_REJECTED] =
+  asyncActions('beacons/GET_BEACON');
 
 export const [
   POST_BEACON,
@@ -21,12 +17,8 @@ export const [
   POST_BEACON_REJECTED,
 ] = asyncActions('beacons/POST_BEACON');
 
-export const [
-  PUT_BEACON,
-  PUT_BEACON_PENDING,
-  PUT_BEACON_FULFILLED,
-  PUT_BEACON_REJECTED,
-] = asyncActions('beacons/PUT_BEACON');
+export const [PUT_BEACON, PUT_BEACON_PENDING, PUT_BEACON_FULFILLED, PUT_BEACON_REJECTED] =
+  asyncActions('beacons/PUT_BEACON');
 
 export const [
   DELETE_BEACON,

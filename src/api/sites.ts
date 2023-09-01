@@ -20,11 +20,8 @@ export async function postSite(data: SiteType) {
   return response.data;
 }
 
-export async function putSite(index: string, data: SiteType) {
-  const response = await axios.put<SiteType>(
-    `${API}/api/site/sites/${index}`,
-    data,
-  );
+export async function putSite(id: number, data: SiteType) {
+  const response = await axios.put<SiteType>(`${API}/api/site/sites/${id}`, data);
   return response.data;
 }
 

@@ -11,10 +11,7 @@ import * as beaconsAPI from '../../api/beacons';
 import { createThunk, deleteThunk, updateThunk } from 'lib/createAsyncThunk';
 import { BeaconType } from './types';
 
-export const getBeacons = createThunk<BeaconType[]>(
-  GET_BEACONS,
-  beaconsAPI.getBeacons,
-);
+export const getBeacons = createThunk<BeaconType[]>(GET_BEACONS, beaconsAPI.getBeacons);
 
 export const postBeacon = createThunk<BeaconType[], BeaconType>(
   POST_BEACON,
@@ -38,15 +35,12 @@ export const getUnUsedBeacons = createThunk<BeaconType[]>(
   beaconsAPI.getUnUsedBeacons,
 );
 
-export const postSearchBeaconsByWorkerName = createThunk<
-  BeaconType[],
-  BeaconType
->(POST_SEARCH_BEACONS_BY_WORKER_NAME, beaconsAPI.postSearchBeaconsByWorkerName);
+export const postSearchBeaconsByWorkerName = createThunk<BeaconType[], BeaconType>(
+  POST_SEARCH_BEACONS_BY_WORKER_NAME,
+  beaconsAPI.postSearchBeaconsByWorkerName,
+);
 
-export const postSearchBeaconsByVehicleName = createThunk<
-  BeaconType[],
-  BeaconType
->(
+export const postSearchBeaconsByVehicleName = createThunk<BeaconType[], BeaconType>(
   POST_SEARCH_BEACONS_BY_VEHICLE_NAME,
   beaconsAPI.postSearchBeaconsByVehicleName,
 );
