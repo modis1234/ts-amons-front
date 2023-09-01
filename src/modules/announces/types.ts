@@ -9,4 +9,8 @@ export type AnnounceType = {
   ts_index: string | null;
 };
 
-export type AnnounceErrorType = {};
+export type AnnounceErrorType = {
+  [keys: string]: string | null;
+  ann_title: string | null;
+  ann_contents: string | null;
+};

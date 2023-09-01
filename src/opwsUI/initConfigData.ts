@@ -103,13 +103,19 @@ export default {
   },
   announce: {
     formData: {
-      ann_title: undefined,
-      ann_contents: undefined,
-      ann_writer: storage.get('user')?.acc_name ?? undefined,
+      ann_id: null,
+      record_date: null,
+      update_date: null,
+      ann_title: null,
+      ann_contents: null,
+      ann_writer: storage.get('user')?.acc_name ?? null,
       ann_preview: 1,
       ts_index: TS_INDEX,
     },
-    error: {},
+    error: {
+      ann_title: null,
+      ann_contents: null,
+    },
     searchData: {},
   },
   local: {

@@ -1,11 +1,13 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import {
+  faBullhorn,
   faHardHat,
   faIdCardAlt,
   faRoad,
   faTruck,
 } from '@fortawesome/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import AnnounceContainer from 'containers/field/AnnounceContainer';
 import LocalContainer from 'containers/field/LocalContainer';
 import CompanyContainer from 'containers/general/CompanyContainer';
 import VehicleContainer from 'containers/general/VehicleContainer';
@@ -75,6 +77,11 @@ type ActiveMenuType = {
 };
 
 const contentsList: ContentsListType = {
+  announce: {
+    title: '공지사항',
+    icon: faBullhorn,
+    component: <AnnounceContainer />,
+  },
   local: {
     title: '노선관리',
     icon: faRoad,

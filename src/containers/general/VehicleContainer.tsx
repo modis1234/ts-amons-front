@@ -131,7 +131,7 @@ const VehicleContainer = () => {
           acc.push(tempObj);
           return acc;
         },
-        [],
+        [{ key: 0, value: null, text: '전체' }],
       );
       setCompanyOptions(_companiesOption);
     }
