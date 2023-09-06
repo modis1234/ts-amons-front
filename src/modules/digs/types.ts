@@ -6,6 +6,7 @@ export type DigType = {
   dig_length: number | null;
   dig_description: string | null;
   dig_type: string | null;
+  // dig_type: 'init' | 'acc' | 'days';
   local_id: number | null;
   local_index: string | null;
   local_name: string | null;
@@ -21,6 +22,10 @@ export type DigType = {
 };
 
 export type DigErrorType = {
-  dig_length: number | null;
+  dig_length: string | null;
+  local_index: string | null;
+};
+
+export type DigSearchDataType = {
   local_index: string | null;
 };

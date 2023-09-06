@@ -3,11 +3,13 @@ import {
   faBullhorn,
   faHardHat,
   faIdCardAlt,
+  faPersonDigging,
   faRoad,
   faTruck,
 } from '@fortawesome/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AnnounceContainer from 'containers/field/AnnounceContainer';
+import DigContainer from 'containers/field/DigContainer';
 import LocalContainer from 'containers/field/LocalContainer';
 import CompanyContainer from 'containers/general/CompanyContainer';
 import VehicleContainer from 'containers/general/VehicleContainer';
@@ -86,6 +88,11 @@ const contentsList: ContentsListType = {
     title: '노선관리',
     icon: faRoad,
     component: <LocalContainer />,
+  },
+  accdig: {
+    title: '누적 굴진량 입력',
+    icon: faPersonDigging,
+    component: <DigContainer />,
   },
   company: {
     title: '소속사 관리',

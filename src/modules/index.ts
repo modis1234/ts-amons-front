@@ -11,6 +11,7 @@ import workerReducer from './workers';
 import vehicleReducer from './vehicles';
 
 import announcesReducer from './announces';
+import digsReducer from './digs';
 
 const rootReducer = combineReducers({
   // 3번에서 만들 slice를 여기에 넣을 예정
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   workers: workerReducer,
   vehicles: vehicleReducer,
   announces: announcesReducer,
+  digs: digsReducer,
 });
 
 export default rootReducer;

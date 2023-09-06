@@ -78,7 +78,8 @@ type FormElementType = {
   setOpen?: SetOpenModalType;
   checked?: boolean;
   startDate?: Date | string;
-  minDate?: Date | string;
+  minDate?: Date | string | Moment;
+  maxDate?: Date | string | Moment;
   search?: boolean;
   uploadAction?: boolean;
   src?: string | ArrayBuffer | null;
