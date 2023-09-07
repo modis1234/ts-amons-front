@@ -664,7 +664,7 @@ const DigContainer = () => {
         [name]: value,
       });
 
-      digFilterItems(String(value));
+      digFilterItems(value);
       initsetPageInfo();
 
       setError({
@@ -704,12 +704,12 @@ const DigContainer = () => {
     });
   };
 
-  const digFilterItems = (index: string) => {
+  const digFilterItems = (localIndex: string | number | null) => {
     if (!digData) return;
-    const filterItem = index
+    const filterItem = localIndex
       ? digData.filter(
           (item) =>
-            item.local_index === index &&
+            item.local_index === localIndex &&
             (item.local_type === 1 ||
               item.local_type === 2 ||
               item.local_type === 5) &&

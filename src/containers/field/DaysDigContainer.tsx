@@ -254,7 +254,7 @@ const DaysDigContainer = () => {
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [searchData]);
 
-  const digFilterItems = (localIndex: string | null) => {
+  const digFilterItems = (localIndex: string | number | null) => {
     const filterItem = localIndex
       ? digData?.filter(
           (item) =>
@@ -735,7 +735,7 @@ const DaysDigContainer = () => {
         [name]: value,
       });
 
-      digFilterItems(String(value));
+      digFilterItems(value);
       initsetPageInfo();
 
       setError({
