@@ -2,7 +2,6 @@ import _ from 'lodash';
 import { DigType } from 'modules/digs';
 import { SiteType } from 'modules/sites';
 import moment from 'moment';
-import TableElement from 'opwsUI/table/TableElement';
 import {
   OnDeleteType,
   OnRowClickType,
@@ -12,7 +11,9 @@ import {
   TableOptionType,
 } from 'opwsUI/table/types';
 import React, { useCallback, useEffect, useState } from 'react';
+import { PaginationProps } from 'semantic-ui-react';
 import styled from 'styled-components';
+import TableElement from '../../../opwsUI/table/TableElement';
 import {
   addComma,
   getLocalType,
@@ -20,7 +21,7 @@ import {
   percentBind,
 } from '../../../opwsUI/util';
 
-const DigTableCmpt = styled.div`
+const DaysDigTableCmpt = styled.div`
   width: 100%;
   height: 100%;
   .color-text {
@@ -28,7 +29,7 @@ const DigTableCmpt = styled.div`
   }
 `;
 
-type DigTableType = {
+type DaysDigTableType = {
   initForm: () => void;
   data: DigType[] | null;
   selectedRow: SelectedRowType;
@@ -39,7 +40,7 @@ type DigTableType = {
   siteItem: SiteType;
 };
 
-const DigTable = ({
+const DaysDigTable = ({
   initForm,
   data,
   selectedRow,
@@ -48,12 +49,7 @@ const DigTable = ({
   onDelete,
   setPageInfoHandler,
   siteItem,
-}: DigTableType) => {
-  const recordDateBinding = (item) => {
-    const { record_date = null } = item;
-    return record_date ? moment(record_date).format('YYYY-MM-DD') : null;
-  };
-
+}: DaysDigTableType) => {
   const [tableData, setTableData] = useState<TableDataType<DigType>>({
     header: [
       {
@@ -79,7 +75,8 @@ const DigTable = ({
         id: 'name',
         name: '노선',
         field: 'local_name',
-        width: 3,
+        width: 2,
+        sorting: true,
         callback: (item: DigType) => {
           const { local_type, local_name } = item;
           return `${local_name} ${getLocalType(local_type)}`;
@@ -92,19 +89,31 @@ const DigTable = ({
         field: 'local_plan_length',
         textAlign: 'center',
         width: 1,
-        callback: (item: DigType) => {
+        callback: (item) => {
           return item?.local_plan_length
             ? `${addComma(item.local_plan_length)}m`
             : '0m';
         },
       },
       {
+        id: 'recordDate',
+        name: '입력일',
+        field: 'record_date',
+        textAlign: 'center',
+        width: 2,
+        callback: (item: DigType) => {
+          return item?.record_date
+            ? moment(item?.record_date).format('YYYY-MM-DD')
+            : null;
+        },
+      },
+      {
         id: 'dig_length',
-        name: '누적 굴진량',
+        name: '일일 굴진량',
         field: 'local_plan_length',
         textAlign: 'center',
         width: 1,
-        callback: (item: DigType) => {
+        callback: (item) => {
           return (
             <span className="color-text">
               {item?.dig_length ? `${addComma(item.dig_length)}m` : '0m'}
@@ -113,39 +122,45 @@ const DigTable = ({
         },
       },
       {
-        id: 'digRate',
-        name: '누적 굴진율',
-        field: 'local_plan_length',
+        id: 'accLength',
+        name: '누적 굴진량',
+        field: 'acc_length',
         textAlign: 'center',
         width: 1,
-        callback: (item: DigType) => {
+        callback: (item) => {
           return (
             <span className="color-text">
-              {item?.dig_length && item?.dig_length !== 0
-                ? `${percentBind(item.dig_length, item.local_plan_length)}%`
-                : '0%'}
+              {item?.acc_length ? `${addComma(item.acc_length)}m` : '0m'}
             </span>
           );
-          //   return '0m';
         },
       },
-      {
-        id: 'recordDate',
-        name: '입력일',
-        field: 'record_date',
-        textAlign: 'center',
-        width: 1,
-        callback: recordDateBinding,
-      },
+      // {
+      //   id: 'digRate',
+      //   name: '누적 굴진량',
+      //   field: 'local_plan_length',
+      //   textAlign: 'center',
+      //   width: 1,
+      //   callback: (item) => {
+      //     return (
+      //       <span className="color-text">
+      //         {item?.dig_length && item?.dig_length !== 0
+      //           ? `${percentBind(item.dig_length, item.local_plan_length)}%`
+      //           : '0%'}
+      //       </span>
+      //     );
+      //     //   return '0m';
+      //   },
+      // },
       {
         id: 'description',
         name: '비고',
         field: 'dig_description',
         textAlign: 'center',
-        width: 3,
+        width: 4,
       },
     ],
-    body: [],
+    body: null,
   });
 
   const [tableOption, setTableOption] = useState<TableOptionType>({
@@ -157,6 +172,8 @@ const DigTable = ({
 
   useEffect(() => {
     if (data) {
+      /**@description 구간 사용 여부 반영 */
+
       const _sortData = _.sortBy(data, 'record_date').reverse();
 
       /**@description 구간 사용 여부 반영 */
@@ -175,14 +192,20 @@ const DigTable = ({
   }, [data]);
 
   const onPageChange = useCallback(
-    (e, { activePage }) => {
+    (
+      e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+      data: PaginationProps,
+    ): void => {
       e.preventDefault();
-      const _activePage = Math.ceil(activePage);
-      const PreState = pageInfo;
-      setPageInfoHandler({
-        ...PreState,
-        activePage: _activePage,
-      });
+      const activePage: string | number | undefined = data.activePage;
+      if (typeof activePage === 'number') {
+        const _activePage = Math.ceil(activePage);
+        const PreState = pageInfo;
+        setPageInfoHandler({
+          ...PreState,
+          activePage: _activePage,
+        });
+      }
       // 활성화된 로우 초기화
       // initActiveRow();
       initForm();
@@ -192,7 +215,7 @@ const DigTable = ({
   );
 
   return (
-    <DigTableCmpt>
+    <DaysDigTableCmpt>
       {tableData.body && (
         <TableElement
           tableData={tableData}
@@ -210,8 +233,8 @@ const DigTable = ({
           }}
         />
       )}
-    </DigTableCmpt>
+    </DaysDigTableCmpt>
   );
 };
 
-export default DigTable;
+export default DaysDigTable;

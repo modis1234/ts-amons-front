@@ -6,7 +6,9 @@ const TS_INDEX = process.env.REACT_APP_TS_INDEX ?? null;
 
 // 포스트 목록을 가져오는 비동기 함수
 export const getSensors = async () => {
-  const response = await axios.get(`${API}/api/sensor/sensors?siteIndex=${TS_INDEX}`);
+  const response = await axios.get(
+    `${API}/api/sensor/sensors?siteIndex=${TS_INDEX}`,
+  );
   return response.data;
 };
 
@@ -52,7 +54,6 @@ export const postSensorAlarmSearch = async (data: SensorType) => {
 export const getSensorAlarmLimit = async (data: SensorType) => {
   const response = await axios.get(
     `${API}/api/sensor/alarms/limit/20?siteIndex=${TS_INDEX}`,
-    data,
   );
   return response.data;
 };

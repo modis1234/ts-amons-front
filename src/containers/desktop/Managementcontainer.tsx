@@ -9,6 +9,7 @@ import {
 } from '@fortawesome/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AnnounceContainer from 'containers/field/AnnounceContainer';
+import DaysDigContainer from 'containers/field/DaysDigContainer';
 import DigContainer from 'containers/field/DigContainer';
 import LocalContainer from 'containers/field/LocalContainer';
 import CompanyContainer from 'containers/general/CompanyContainer';
@@ -93,6 +94,11 @@ const contentsList: ContentsListType = {
     title: '누적 굴진량 입력',
     icon: faPersonDigging,
     component: <DigContainer />,
+  },
+  daysdig: {
+    title: '일일 굴진량 입력',
+    icon: faPersonDigging,
+    component: <DaysDigContainer />,
   },
   company: {
     title: '소속사 관리',

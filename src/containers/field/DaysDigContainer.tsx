@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 
 import moment from 'moment';
+
 import { getLocals, LocalType } from '../../modules/locals';
 import {
   deleteDig,
@@ -18,17 +19,22 @@ import {
   postDig,
   putDig,
 } from '../../modules/digs';
-import { getDecimalPoint, getLocalsOptions, sortFn } from '../../opwsUI/util';
+import {
+  getDecimalPoint,
+  getLocalsOptions,
+  mathRound,
+  sortFn,
+} from '../../opwsUI/util';
 import OneByTwoLayout from '../../opwsUI/layout/OneByTwoLayout';
 import initConfigData from '../../opwsUI/initConfigData';
 import { useAppDispatch, useAppSelector } from 'modules/hooks';
 import { PageInfoType, SelectedRowType } from 'opwsUI/table/types';
 import { ModalDataType } from 'opwsUI/form/FormElement';
-import DigInput from 'components/field/dig/DigInput';
-import DigTable from 'components/field/dig/DigTable';
-import DigSearch from 'components/field/dig/DigSearch';
+import DaysDigInput from 'components/field/daysDig/DaysDigInput';
+import DaysDigTable from 'components/field/daysDig/DaysDigTable';
+import DaysDigSearch from 'components/field/daysDig/DaysDigSearch';
 
-const DigCmpt = styled.div`
+const DaysDigCmpt = styled.div`
   width: 100%;
   height: 100%;
 `;
@@ -54,14 +60,14 @@ export interface PreviewTabelType {
 
 // 초기화 데이터 '../../config/initConfigData'
 const {
-  accdig: {
+  daysdig: {
     formData: initFormData,
     error: initError,
     searchData: initSearchData,
   },
 } = initConfigData;
 
-const DigContainer = () => {
+const DaysDigContainer = () => {
   const { localsData, digData, sitesData } = useAppSelector((state) => {
     return {
       localsData: state.locals.data,
@@ -117,14 +123,15 @@ const DigContainer = () => {
     if (digData) {
       // const _sortDigData = ascByDate(digData, 'record_date');
       const _sortDigData = sortFn(digData, 'record_date');
-      // const _accData = accCalcAction(_sortDigData);
+      const _accData = accCalcAction(_sortDigData);
       if (searchData.local_index) {
-        const _filterItems = _sortDigData.filter(
-          (item) => item.local_index === searchData.local_index && item,
+        const _filterItems = _accData.filter(
+          (item: DigType) =>
+            item.local_index === searchData.local_index && item,
         );
         setDigItems(_filterItems);
       } else {
-        setDigItems(_sortDigData);
+        setDigItems(_accData);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -132,16 +139,12 @@ const DigContainer = () => {
 
   useEffect(() => {
     if (localsData) {
+      setLocalItems(localsData);
+
       const _localsFilter = localsData.filter(
-        (item) =>
-          item.local_area !== 0 &&
-          (item.local_type === 1 ||
-            item.local_type === 2 ||
-            item.local_type === 5) &&
-          item,
+        (item) => item.local_area !== 0 && item.local_type !== 3,
       );
       const _localsOption = getLocalsOptions(_localsFilter, false);
-      setLocalItems(_localsFilter);
       setLocalsOptions(_localsOption);
       if (formData.local_index) {
         setPreviewHandler(formData.local_index);
@@ -170,6 +173,25 @@ const DigContainer = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchData]);
+
+  const accCalcAction = (items: DigType[]) => {
+    const _reduceData = items.reduce((acc: DigType[], curr, index, array) => {
+      const { local_index: localIndex, dig_length } = curr;
+      const _sumCalc = acc.reduce((_acc, curr) => {
+        const { local_index, dig_length } = curr;
+        const _tempAcc =
+          localIndex === local_index ? Number(_acc) + Number(dig_length) : _acc;
+        return Number(_tempAcc);
+      }, 0);
+      acc.push({
+        ...curr,
+        acc_length: Number(_sumCalc) + Number(dig_length),
+      });
+      return acc;
+    }, []);
+
+    return _reduceData;
+  };
 
   const initsetPageInfo = useCallback(() => {
     setPageInfo({
@@ -202,6 +224,57 @@ const DigContainer = () => {
     });
   };
 
+  /**@descrition formData 초기화 */
+  // const initForm = useCallback(() => {
+  //   if (searchData.local_index) {
+  //     const findTodayItem = digItems.find((item) => {
+  //       const _today = moment().format('YYYY-MM-DD');
+  //       const _recordDate = moment(item.record_date).format('YYYY-MM-DD');
+  //       const _isTodayData = moment(_today).isSame(_recordDate);
+  //       if (item.local_index === searchData.local_index && _isTodayData)
+  //         return item;
+  //     });
+
+  //     setFormData(
+  //       findTodayItem
+  //         ? {
+  //             ...findTodayItem,
+  //             record_date: moment(findTodayItem.record_date).format(
+  //               'YYYY-MM-DD',
+  //             ),
+  //           }
+  //         : {
+  //             ...initFormData,
+  //             local_index: searchData.local_index,
+  //           },
+  //     );
+  //   } else {
+  //     setFormData(initFormData);
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [searchData]);
+
+  const digFilterItems = (localIndex: string | null) => {
+    const filterItem = localIndex
+      ? digData?.filter(
+          (item) =>
+            item.local_index === localIndex &&
+            (item.local_type === 1 ||
+              item.local_type === 2 ||
+              item.local_type === 5) &&
+            item,
+        )
+      : digData?.filter(
+          (item) =>
+            (item.local_type === 1 ||
+              item.local_type === 2 ||
+              item.local_type === 5) &&
+            item,
+        );
+    const accItems = filterItem ? accCalcAction(filterItem) : [];
+    setDigItems(accItems);
+  };
+
   /**@descrition input 입력란 onChange 핸들러 */
   const onChange = useCallback(
     ({
@@ -219,13 +292,24 @@ const DigContainer = () => {
       let _tempObj = {};
 
       if (name === 'local_index') {
-        const findItem = localItems?.find(
+        const findItem = digData?.find(
           (item) => item.local_index === value && item,
         );
+
         if (findItem && findItem?.local_index) {
-          setPreviewHandler(findItem.local_index);
-          digFilterItems(findItem.local_index);
+          setPreviewHandler(findItem?.local_index);
         }
+        _tempObj = {
+          dig_length: 0,
+          record_date: null,
+          dig_description: null,
+          local_area: findItem?.local_area ?? null,
+          local_type: findItem?.local_type ?? null,
+          local_name: findItem?.local_name ?? null,
+          local_plan_length: findItem?.local_plan_length ?? null,
+          local_curr_length: findItem?.local_curr_length ?? null,
+          // ...locationFindForm(_value),
+        };
 
         setSelectedRow({
           selectedId: null,
@@ -243,6 +327,8 @@ const DigContainer = () => {
           dig_length: null,
         });
 
+        digFilterItems(findItem?.local_index ?? null);
+
         _tempObj = {
           record_date: null,
           dig_length: null,
@@ -256,6 +342,7 @@ const DigContainer = () => {
         };
       } else if (name === 'dig_length') {
         _value = Number(_value);
+
         if (
           previewTabel.planLength !== null &&
           _value > previewTabel.planLength
@@ -264,19 +351,41 @@ const DigContainer = () => {
             ...error,
             dig_length: '계획연장 길이보다 작은 값을 입력해 주세요.',
           });
+        } else if (!formData.record_date) {
+          setError({
+            ...error,
+            dig_length: '입력일을 등록해주세요.',
+          });
+          return;
         } else if (
-          previewTabel.currentLength !== null &&
-          _value &&
-          _value <= previewTabel.currentLength
+          !selectedRow.selectedId &&
+          previewTabel?.currentLength &&
+          previewTabel?.planLength &&
+          previewTabel.currentLength + Number(_value) > previewTabel.planLength
         ) {
           setError({
             ...error,
-            dig_length: `${previewTabel.currentLength}보다 큰 값을 입력해 주세요.`,
+            dig_length: `${mathRound(
+              previewTabel.planLength - previewTabel.currentLength,
+            )}이하의 값을 입력해 주세요.`,
           });
-        } else if (!_value) {
+        } else if (
+          formData.dig_seq &&
+          previewTabel.currentLength &&
+          selectedRow?.selectedItem?.dig_length &&
+          previewTabel?.planLength &&
+          previewTabel.currentLength -
+            selectedRow.selectedItem.dig_length +
+            Number(_value) >
+            previewTabel.planLength
+        ) {
           setError({
             ...error,
-            dig_length: null,
+            dig_length: `${mathRound(
+              previewTabel.planLength -
+                (previewTabel.currentLength -
+                  selectedRow.selectedItem.dig_length),
+            )}이하의 값을 입력해 주세요.`,
           });
         } else {
           setError({
@@ -287,7 +396,6 @@ const DigContainer = () => {
 
         if (_value !== null) {
           _value = String(_value);
-          checkDigLengthHandler(_value);
           // 정수 0~9999/소수점 1자리
           const regExp = /^([1-9]{1}\d{0,3}|0{1})(\.{1}\d{0,1})?$/g;
           if (!regExp.test(_value)) {
@@ -303,76 +411,33 @@ const DigContainer = () => {
       });
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [digItems, formData, localItems],
+    [digItems, formData, localsData],
   );
-
-  const checkDigLengthHandler = (value: string) => {
-    const _digValue = parseFloat(value);
-    const {
-      local_index: localIndex,
-      dig_seq: digSeq,
-      record_date: recordDate,
-      local_plan_length: localPlanLength,
-    } = formData;
-    const filterDigs =
-      digData?.filter((item) => item.local_index === localIndex && item) ?? [];
-
-    let _maxLength = null;
-    let _minLength = null;
-
-    // const _sortDigs = ascByDate(filterDigs, 'record_date');
-    const _sortDigs = sortFn(filterDigs, 'record_date');
-    _sortDigs.map((item: DigType, index: number, array: DigType[]) => {
-      const _nextItem = array?.[index + 1] ?? array[array.length - 1];
-      if (moment(item.record_date).unix() === moment(recordDate).unix()) {
-        _maxLength = array?.[index + 1]?.dig_length ?? localPlanLength;
-        _minLength = array?.[index - 1]?.dig_length ?? 0;
-      } else if (
-        moment(recordDate).unix() > moment(item.record_date).unix() &&
-        moment(recordDate).unix() < moment(_nextItem.record_date).unix()
-      ) {
-        _maxLength = array?.[index + 1]?.dig_length ?? 0;
-        _minLength = item?.dig_length ?? localPlanLength;
-      } else if (
-        moment(recordDate).unix() >
-        moment(array[array.length - 1].record_date).unix()
-      ) {
-        _maxLength = item.local_plan_length;
-        _minLength = array[array.length - 1].dig_length;
-      }
-      return item;
-    });
-
-    let _errorText = null;
-    if (localPlanLength !== null && _digValue > localPlanLength) {
-      _errorText = `계획 연장 거리(${localPlanLength}m)를 초과하였습니다. 다시 입력해 주세요.`;
-    } else if (_minLength && _digValue <= _minLength) {
-      _errorText = `이전 굴진량(${_minLength}m)보다 커야합니다.`;
-    } else if (_maxLength && _digValue >= _maxLength) {
-      _errorText = `이후 굴진량(${_maxLength}m)보다 작아야합니다.`;
-    }
-    setError({
-      ...error,
-      dig_length: _errorText,
-    });
-  };
 
   const onChangeDate = (
     e: React.ChangeEvent<HTMLInputElement>,
     date: Date | string,
   ) => {
+    if (formData.local_index) {
+      setError({
+        ...error,
+        local_index: null,
+      });
+    } else {
+      setError({
+        ...error,
+        local_index: '노선을 선택해 주세요.',
+      });
+      return;
+    }
     const _date = moment(date).format('YYYY-MM-DD');
-    console.log('onChangeDate->', _date);
-
-    setError(initError);
 
     // 선택된 날짜에 데이터 찾기
-    const findDigItem =
-      digItems?.find((item) => {
-        const _recordDate = moment(item.record_date).format('YYYY-MM-DD');
-        const _isSameDate = moment(_date).isSame(_recordDate);
-        if (_isSameDate) return item;
-      }) ?? null;
+    const findDigItem = digItems?.find((item) => {
+      const _recordDate = moment(item.record_date).format('YYYY-MM-DD');
+      const _isSameDate = moment(_date).isSame(_recordDate);
+      if (_isSameDate) return item;
+    });
     if (findDigItem) {
       setFormData({
         ...formData,
@@ -404,41 +469,55 @@ const DigContainer = () => {
     }
   };
 
-  const onRecordDataChange = (date: Date | string) => {
-    setFormData({
-      ...formData,
-      record_date: moment(date).format('YYYY-MM-DD'),
-    });
-  };
-
   /**@description  table 컴포넌트 Row 클릭 이벤트 핸들러*/
   const onRowClick = useCallback(
     (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, item: DigType) => {
-      const { dig_seq: itemIndex = null, local_index, dig_type } = item;
-      if (dig_type === 'init') return false;
-      if (selectedRow.selectedId === item.dig_seq) {
-        initForm();
+      const {
+        dig_seq: itemIndex = null,
+        record_date,
+        local_plan_length,
+        dig_length,
+        local_index,
+      } = item;
+      if (itemIndex === selectedRow.selectedId) {
         setSelectedRow({
           selectedId: null,
           selectedItem: null,
           clickedIndex: null,
         });
-      } else {
         setFormData({
           ...formData,
-          ...item,
-          record_date: moment(item.record_date).format('YYYY-MM-DD'),
+          local_index: searchData.local_index ? formData.local_index : null,
+          dig_seq: null,
+          record_date: null,
+          dig_length: null,
+          dig_description: null,
         });
+      } else {
+        if (item.dig_type === 'init') return;
         setSelectedRow({
-          selectedId: item.dig_seq,
+          selectedId: itemIndex,
           selectedItem: item,
-          clickedIndex: item.dig_seq,
+          clickedIndex: itemIndex,
         });
-        if (item.local_index) setPreviewHandler(item.local_index);
+        setFormData({
+          ...item,
+          record_date: moment(record_date).format('YYYY-MM-DD'),
+          dig_length: item?.dig_length,
+          dig_description: item.dig_description,
+          local_index: item?.local_index ?? null,
+          local_name: item?.local_name ?? null,
+          local_area: item?.local_area ?? null,
+          local_type: item?.local_type ?? null,
+          local_plan_length: item?.local_plan_length ?? null,
+        });
+        setError(initError);
+
+        setPreviewHandler(item.local_index);
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [selectedRow.selectedId, localItems],
+    [selectedRow.selectedId, localsData, digData],
   );
 
   /**@descrition form 컴포넌트 onSubmit 핸들러 */
@@ -456,13 +535,14 @@ const DigContainer = () => {
 
       const postData = {
         ...formData,
-        record_date: moment(formData.record_date).format('YYYY-MM-DD 00:00:00'),
+        dig_length: Number(formData.dig_length),
+        dig_type: initFormData.dig_type,
       };
 
       try {
         await dispatch(postDig(postData));
         dispatch(getLocals());
-        dispatch(getDigs());
+        // setFormData(initFormData);
         setFormData({
           ...initFormData,
           local_index: postData.local_index,
@@ -486,14 +566,21 @@ const DigContainer = () => {
     }
   };
 
-  const minusComma = useCallback((num: string | number | null) => {
-    if (num !== (null || undefined)) {
-      let _num = String(num).toString();
-      _num = _num.replace(/[^0-9|^.]/g, ''); // 입력값이 숫자가 아니면 공백
-      _num = _num.replace(/,/g, ''); // , 값 공백처리
-      return _num;
-    }
-  }, []);
+  /**@descrition modal button Action */
+  const setOpen = ({ action, open }: { action: boolean; open: boolean }) => {
+    setModalData((prev) => {
+      if (prev.type === 'update' && action) updateDispatch();
+      else if (prev.type === 'delete' && action) deleteDispatch();
+
+      return {
+        ...prev,
+        open: open,
+        type: null,
+        content: null,
+        header: null,
+      };
+    });
+  };
 
   /**@descrition update dispatch action 함수 */
   const updateDispatch = async () => {
@@ -516,15 +603,11 @@ const DigContainer = () => {
     const { dig_seq: _index, dig_length } = updateItem;
     const newDig = {
       ...formData,
-      dig_length: Number(minusComma(dig_length)) ?? null,
-      record_date: moment(formData.record_date).format('YYYY-MM-DD 00:00:00'),
+      // dig_length: minusComma(dig_length),
     };
     try {
-      // await dispatch(putDig(formData.dig_seq, newDig));
-      // dispatch(getLocals());
-      await dispatch(postDig(newDig));
+      await dispatch(putDig(newDig));
       dispatch(getLocals());
-      dispatch(getDigs());
       setFormData({
         ...initFormData,
         local_index: formData.local_index,
@@ -535,7 +618,6 @@ const DigContainer = () => {
         dig_length: null,
         dig_description: null,
       });
-
       setSelectedRow({
         selectedId: null,
         selectedItem: null,
@@ -602,17 +684,6 @@ const DigContainer = () => {
     },
     [pageInfo],
   );
-
-  const getTodayData = (index: string) => {
-    const findTodayItem =
-      digData?.find((item) => {
-        const _today = moment().format('YYYY-MM-DD');
-        const _recordDate = moment(item.record_date).format('YYYY-MM-DD');
-        const _isTodayData = moment(_today).isSame(_recordDate);
-        if (item.local_index === index && _isTodayData) return item;
-      }) ?? null;
-    return findTodayItem;
-  };
 
   /**@description Search Action Area*/
   /**@descrition delete dispatch 액션 실행 함수 */
@@ -688,51 +759,13 @@ const DigContainer = () => {
     initForm();
   };
 
-  /**@descrition modal button Action */
-  const setOpen = ({ action, open }: { action: boolean; open: boolean }) => {
-    setModalData((prev) => {
-      if (prev.type === 'update' && action) updateDispatch();
-      else if (prev.type === 'delete' && action) deleteDispatch();
-
-      return {
-        ...prev,
-        open: open,
-        type: null,
-        content: null,
-        header: null,
-      };
-    });
-  };
-
-  const digFilterItems = (index: string) => {
-    if (!digData) return;
-    const filterItem = index
-      ? digData.filter(
-          (item) =>
-            item.local_index === index &&
-            (item.local_type === 1 ||
-              item.local_type === 2 ||
-              item.local_type === 5) &&
-            item,
-        )
-      : digData.filter(
-          (item) =>
-            (item.local_type === 1 ||
-              item.local_type === 2 ||
-              item.local_type === 5) &&
-            item,
-        );
-
-    setDigItems(filterItem);
-  };
-
   return (
-    <DigCmpt className="dig-container">
+    <DaysDigCmpt className="dig-container">
       <OneByTwoLayout
-        inputTitle="굴진량 입력"
-        tableTitle="최근 누적 굴진 이력"
+        inputTitle="일일 굴진량 입력"
+        tableTitle="일일 굴진 이력"
         firstRender={
-          <DigInput
+          <DaysDigInput
             formData={formData}
             error={error}
             onChange={onChange}
@@ -748,7 +781,7 @@ const DigContainer = () => {
         }
         secondRender={
           sitesData && (
-            <DigTable
+            <DaysDigTable
               data={digItems}
               selectedRow={selectedRow}
               onRowClick={onRowClick}
@@ -762,7 +795,7 @@ const DigContainer = () => {
         }
         searchRender={
           localsOptions && (
-            <DigSearch
+            <DaysDigSearch
               searchData={searchData}
               onSearchChange={onSearchChange}
               onSearchAction={onSearchAction}
@@ -773,8 +806,8 @@ const DigContainer = () => {
         }
         rightHeader
       />
-    </DigCmpt>
+    </DaysDigCmpt>
   );
 };
 
-export default DigContainer;
+export default DaysDigContainer;

@@ -161,7 +161,7 @@ export default {
     error: {},
     searchData: {},
   },
-  dig: {
+  accdig: {
     formData: {
       dig_seq: null,
       created_date: null,
@@ -182,6 +182,38 @@ export default {
       local_type: null,
       local_used: null,
       dig_type: 'acc',
+      dig_sub_length: null,
+      ts_index: TS_INDEX,
+    },
+    error: {
+      dig_length: null,
+      local_index: null,
+    },
+    searchData: {
+      local_index: null,
+    },
+  },
+  daysdig: {
+    formData: {
+      dig_seq: null,
+      created_date: null,
+      modified_date: null,
+      record_date: null,
+      // record_date: moment().format('YYYY-MM-DD'),
+      dig_length: null,
+      dig_description: null,
+      local_index: null,
+      local_area: null,
+      local_curr_length: 0,
+      local_description: null,
+      local_id: null,
+      local_name: null,
+      local_number: null,
+      local_plan_length: null,
+      local_process: null,
+      local_type: null,
+      local_used: null,
+      dig_type: 'days',
       dig_sub_length: null,
       ts_index: TS_INDEX,
     },

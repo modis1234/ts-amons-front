@@ -23,7 +23,7 @@ export const deviceCode = {
  * @param {number} param 노선 local_area 데이터
  * @return {string} * 터널명
  * */
-export const getLocalType = (param: number) => {
+export const getLocalType = (param: number | null) => {
   const _localType = param;
   switch (_localType) {
     case 1:
@@ -46,7 +46,7 @@ export const getLocalType = (param: number) => {
  * @param {number} param 노선 local_area 데이터
  * @return {string} * 터널명
  * */
-export const getTunnelName = (param: number) => {
+export const getTunnelName = (param: number | null) => {
   const _localArea = param;
   switch (_localArea) {
     case 0:

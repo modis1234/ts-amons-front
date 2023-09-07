@@ -19,6 +19,7 @@ export type DigType = {
   local_type: number | null;
   local_area: number | null;
   ts_index: string | null;
+  acc_length?: number | null;
 };
 
 export type DigErrorType = {
