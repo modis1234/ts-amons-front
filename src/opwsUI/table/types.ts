@@ -57,7 +57,7 @@ export type TableElementType = {
   tableData: TableDataType;
   tableOption?: TableOptionType;
   onRowClick?: OnRowClickType;
-  activeDelete: {
+  activeDelete?: {
     keys: string;
     callback: OnDeleteType;
   };

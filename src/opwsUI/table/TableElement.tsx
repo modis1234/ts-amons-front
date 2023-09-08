@@ -248,6 +248,7 @@ function TableElement({
               ? `${currentData?.direction ?? ''} sorted`
               : ''
           }`}
+          width={width}
           {...rest}
           onClick={item?.sorting && (() => onChangeSort(item?.field))}
         >

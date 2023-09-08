@@ -1,11 +1,11 @@
-import { DigSearchDataType } from 'modules/digs';
 import { LocalsOptionType } from 'modules/locals';
+import { ProcessSearchDataType } from 'modules/processes';
 import FormElement from 'opwsUI/form/FormElement';
 import React from 'react';
-import { Dropdown, DropdownItemProps, Menu } from 'semantic-ui-react';
+import { Dropdown, DropdownItemProps } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-const DaysDigSearchCmpt = styled.div`
+const ProcessSearchCmpt = styled.div`
   width: 100%;
   height: 100%;
   .table-search-menu {
@@ -42,8 +42,8 @@ const DaysDigSearchCmpt = styled.div`
   }
 `;
 
-type DaysDigSearchType = {
-  searchData: DigSearchDataType;
+type ProcessSearchType = {
+  searchData: ProcessSearchDataType;
   onSearchChange: ({
     e,
     option,
@@ -56,15 +56,15 @@ type DaysDigSearchType = {
   localsOptions?: LocalsOptionType[] | DropdownItemProps[] | undefined;
 };
 
-const DaysDigSearch = ({
+const ProcessSearch = ({
   searchData,
   onSearchChange,
   onSearchAction,
   onSearchRefresh,
   ...rest
-}: DaysDigSearchType) => {
+}: ProcessSearchType) => {
   return (
-    <DaysDigSearchCmpt>
+    <ProcessSearchCmpt>
       <div className="search-panel">
         <div className="table-search-menu">
           <div className="search-dropdown-menu">
@@ -87,8 +87,8 @@ const DaysDigSearch = ({
           </div>
         </div>
       </div>
-    </DaysDigSearchCmpt>
+    </ProcessSearchCmpt>
   );
 };
 
-export default DaysDigSearch;
+export default ProcessSearch;

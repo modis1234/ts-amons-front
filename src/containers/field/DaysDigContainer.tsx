@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import moment from 'moment';
 
-import { getLocals, LocalType } from '../../modules/locals';
+import { getLocals, LocalsOptionType, LocalType } from '../../modules/locals';
 import {
   deleteDig,
   DigErrorType,
@@ -38,17 +38,6 @@ const DaysDigCmpt = styled.div`
   width: 100%;
   height: 100%;
 `;
-
-export interface LocalsOptionType {
-  key: number;
-  area: number;
-  text: string;
-  value: string | null;
-  type?: number;
-  entrance?: string | null;
-  disabled?: boolean;
-  created_date?: Date;
-}
 
 export interface PreviewTabelType {
   initDate?: string | Date | null;

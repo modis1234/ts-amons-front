@@ -1,9 +1,7 @@
-import {
-  LocalsOptionType,
-  PreviewTabelType,
-} from 'containers/field/DigContainer';
+import { PreviewTabelType } from 'containers/field/DigContainer';
 import { getYear } from 'date-fns';
 import { DigErrorType, DigType } from 'modules/digs';
+import { LocalsOptionType } from 'modules/locals';
 import moment from 'moment';
 import FormArea from 'opwsUI/form/FormArea';
 import FormElement, {

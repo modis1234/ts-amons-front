@@ -13,6 +13,8 @@ import vehicleReducer from './vehicles';
 import announcesReducer from './announces';
 import digsReducer from './digs';
 
+import processesReducer from './processes';
+
 const rootReducer = combineReducers({
   // 3번에서 만들 slice를 여기에 넣을 예정
   // name으로 설정했던 것을 key로 사용한다.
@@ -27,6 +29,7 @@ const rootReducer = combineReducers({
   vehicles: vehicleReducer,
   announces: announcesReducer,
   digs: digsReducer,
+  processes: processesReducer,
 });
 
 export default rootReducer;

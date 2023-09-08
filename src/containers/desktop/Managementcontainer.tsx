@@ -5,6 +5,7 @@ import {
   faIdCardAlt,
   faPersonDigging,
   faRoad,
+  faTasks,
   faTruck,
 } from '@fortawesome/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -12,6 +13,7 @@ import AnnounceContainer from 'containers/field/AnnounceContainer';
 import DaysDigContainer from 'containers/field/DaysDigContainer';
 import DigContainer from 'containers/field/DigContainer';
 import LocalContainer from 'containers/field/LocalContainer';
+import ProcessContainer from 'containers/field/ProcessContainer';
 import CompanyContainer from 'containers/general/CompanyContainer';
 import VehicleContainer from 'containers/general/VehicleContainer';
 import WorkerContainer from 'containers/general/WorkerContainer';
@@ -99,6 +101,11 @@ const contentsList: ContentsListType = {
     title: '일일 굴진량 입력',
     icon: faPersonDigging,
     component: <DaysDigContainer />,
+  },
+  process: {
+    title: '공정상태 변경',
+    icon: faTasks,
+    component: <ProcessContainer />,
   },
   company: {
     title: '소속사 관리',

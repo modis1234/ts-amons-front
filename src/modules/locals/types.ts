@@ -35,3 +35,14 @@ export type LocalErrorType = {
   local_number: string | null;
   monitor_number: string | null;
 };
+
+export type LocalsOptionType = {
+  key: number;
+  area: number;
+  text: string;
+  value: string | null;
+  type?: number;
+  entrance?: string | null;
+  disabled?: boolean;
+  created_date?: Date;
+};

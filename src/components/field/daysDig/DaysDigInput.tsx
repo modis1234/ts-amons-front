@@ -1,9 +1,7 @@
-import {
-  LocalsOptionType,
-  PreviewTabelType,
-} from 'containers/field/DaysDigContainer';
+import { PreviewTabelType } from 'containers/field/DaysDigContainer';
 import { getDate, getYear } from 'date-fns';
 import { DigErrorType, DigType } from 'modules/digs';
+import { LocalsOptionType } from 'modules/locals';
 import moment from 'moment';
 import { SelectedRowType } from 'opwsUI/table/types';
 import React, { useEffect } from 'react';

@@ -89,6 +89,7 @@ type FormElementType = {
   onPreview?: () => void;
   onImageRemove?: () => void;
   onUpload?: () => void;
+  style?: { [key: string]: string };
   // rest?: {
   //   className: string;
   // };

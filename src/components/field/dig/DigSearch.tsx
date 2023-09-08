@@ -1,5 +1,5 @@
-import { LocalsOptionType } from 'containers/field/DigContainer';
 import { DigSearchDataType } from 'modules/digs';
+import { LocalsOptionType } from 'modules/locals';
 import FormElement from 'opwsUI/form/FormElement';
 import React from 'react';
 import { Dropdown, DropdownItemProps } from 'semantic-ui-react';

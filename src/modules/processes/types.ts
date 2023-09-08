@@ -11,7 +11,12 @@ export type ProcessType = {
   local_used: number | null;
   local_type: number | null;
   local_area: number | null;
-  local_process: number | null;
+  local_process: number;
+  pcs_next_state?: number | null;
+};
+
+export type ProcessSearchDataType = {
+  local_index: string | null;
 };
 
 export type ProcessErrorType = {};
