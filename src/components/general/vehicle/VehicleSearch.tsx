@@ -40,6 +40,10 @@ const VehicleSearchCmpt = styled.div`
           &:focus {
             border: 1px solid var(--company-identity-color, #0000ff);
           }
+          .dropdown.selection {
+            width: 100%;
+            background-color: #f2f2f2;
+          }
           .divider.divider.text {
             font-size: 13px;
             font-family: NotoSansCJKkr-Regular;

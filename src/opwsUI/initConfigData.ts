@@ -331,20 +331,26 @@ export default {
   },
   beacon: {
     formData: {
-      bc_address: undefined,
-      bc_management: undefined,
-      bc_description: undefined,
+      created_date: null,
+      modified_date: null,
+      bc_id: null,
+      bc_index: null,
+      bc_used_type: 0,
+      bc_address: null,
+      bc_management: null,
+      bc_description: null,
       // 비콘 관리번호 등록 여부 true: bc_management = 관리번호 자동부여 OR 입력 false:bc_management=null
       management_disabled: false,
       ts_index: TS_INDEX,
     },
     error: {
-      bc_address: undefined,
-      bc_management: undefined,
+      bc_address: null,
+      bc_management: null,
+      scn_address: null,
     },
     searchData: {
-      bc_used_type: undefined,
-      name: undefined,
+      bc_used_type: null,
+      name: null,
     },
   },
   scanner: {

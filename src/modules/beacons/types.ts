@@ -4,32 +4,35 @@ export type BeaconType = {
   bc_id: number | null;
   bc_index: string | null;
   bc_management: number | null;
-  bc_address: string;
+  bc_address: string | null;
   bc_description: string | null;
-  bc_used_type: 0 | 1 | 2;
-  bc_battery_remain: string | null;
-  bc_battery_time: Date | null;
-  bc_scn_group: string | null;
-  bc_receive_time: Date | null;
-  bc_io_state: string | null;
-  bc_input_time: Date | null;
-  bc_out_time: Date | null;
-  bc_pos_x: number | null;
-  bc_emergency: number;
+  bc_used_type: number;
+  bc_battery_remain?: string | null;
+  bc_battery_time?: Date | null;
+  bc_scn_group?: string | null;
+  bc_receive_time?: Date | null;
+  bc_io_state?: string | null;
+  bc_input_time?: Date | null;
+  bc_out_time?: Date | null;
+  bc_pos_x?: number | null;
+  bc_emergency?: number;
   ts_index: string | null;
-  wk_id?: number;
-  wk_index?: string;
-  wk_name?: string;
-  wk_phone?: string;
-  wk_tel?: null;
-  wk_position?: string;
-  wk_nation?: string;
-  wk_birth?: Date;
-  wk_blood_type?: number;
-  wk_blood_group?: number;
-  wk_sms_yn?: number;
-  wk_image?: null;
-  wk_io_state?: string;
+  wk_id?: number | null;
+  wk_index?: string | null;
+  wk_name?: string | null;
+  wk_phone?: string | null;
+  wk_tel?: string | null;
+  wk_position?: string | null;
+  wk_nation?: string | null;
+  wk_birth?: Date | null;
+  wk_blood_type?: number | null;
+  wk_blood_group?: number | null;
+  wk_sms_yn?: number | null;
+  wk_image?: string | null;
+  wk_io_state?: string | null;
+  vh_id?: number | null;
+  vh_index?: string | null;
+  vh_name?: string | null;
   co_id?: number;
   te_index?: string;
   co_main?: number;
@@ -38,6 +41,7 @@ export type BeaconType = {
   co_description?: null;
   te_id?: number;
   te_name?: string;
+  management_disabled?: boolean;
 };
 
 export type BleType = {
@@ -102,4 +106,16 @@ export type BleType = {
   group_name: string;
   group_pos_x: number;
   group_kind: number;
+};
+
+export type BeaconErrorType = {
+  [keys: string]: string | null;
+  bc_address: string | null;
+  bc_management: string | null;
+  scn_address: string | null;
+};
+
+export type BeaconSearchDataType = {
+  bc_used_type: number | null;
+  name: string | null;
 };

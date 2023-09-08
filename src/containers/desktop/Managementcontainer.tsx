@@ -1,5 +1,6 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import {
+  faBluetooth,
   faBullhorn,
   faHardHat,
   faIdCardAlt,
@@ -14,6 +15,7 @@ import DaysDigContainer from 'containers/field/DaysDigContainer';
 import DigContainer from 'containers/field/DigContainer';
 import LocalContainer from 'containers/field/LocalContainer';
 import ProcessContainer from 'containers/field/ProcessContainer';
+import BeaconContainer from 'containers/general/BeaconContainer';
 import CompanyContainer from 'containers/general/CompanyContainer';
 import VehicleContainer from 'containers/general/VehicleContainer';
 import WorkerContainer from 'containers/general/WorkerContainer';
@@ -121,6 +123,11 @@ const contentsList: ContentsListType = {
     title: '차량 관리',
     icon: faTruck,
     component: <VehicleContainer />,
+  },
+  beacon: {
+    title: '비콘 관리',
+    icon: faBluetooth,
+    component: <BeaconContainer />,
   },
 };
 

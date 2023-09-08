@@ -36,7 +36,7 @@ registerLocale('ko', ko);
 export type ModalDataType = {
   open: boolean;
   type: 'update' | 'delete' | 'warning' | null; //type: update/delete/warning
-  content?: string | null;
+  content?: string | React.ReactElement | null;
   header?: string | null;
 };
 
@@ -71,7 +71,7 @@ type FormElementType = {
   content?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>, option?: any) => void;
   onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
-  placeholder?: string;
+  placeholder?: string | null;
   labelPosition?: 'right' | 'left';
   maxLength?: number | string;
   modalData?: ModalDataType;
