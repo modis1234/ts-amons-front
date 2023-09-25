@@ -18,12 +18,12 @@ export const getScanner = createThunk<ScannerType[]>(
   scannerAPI.getScannerById,
 );
 
-export const postScanner = createThunk<ScannerType[], ScannerType>(
+export const postScanner = createThunk<ScannerType[], FormData>(
   POST_SCANNER,
   scannerAPI.postScanner,
 );
 
-export const putScanner = updateThunk<ScannerType, ScannerType>(
+export const putScanner = updateThunk<ScannerType, FormData>(
   'scn_id',
   PUT_SCANNER,
   scannerAPI.putScanner,

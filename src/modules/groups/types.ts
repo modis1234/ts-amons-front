@@ -19,3 +19,13 @@ export type GroupType = {
   local_area: number;
   ts_index: string;
 };
+
+export type GroupOptionsType = {
+  key: number;
+  text: string;
+  value: string;
+  type: number;
+  area: number;
+  index: string;
+  kind: number;
+};

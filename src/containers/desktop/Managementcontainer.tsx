@@ -6,6 +6,7 @@ import {
   faIdCardAlt,
   faPersonDigging,
   faRoad,
+  faRouter,
   faTasks,
   faTruck,
 } from '@fortawesome/pro-solid-svg-icons';
@@ -17,6 +18,7 @@ import LocalContainer from 'containers/field/LocalContainer';
 import ProcessContainer from 'containers/field/ProcessContainer';
 import BeaconContainer from 'containers/general/BeaconContainer';
 import CompanyContainer from 'containers/general/CompanyContainer';
+import ScannerContainer from 'containers/general/ScannerContainer';
 import VehicleContainer from 'containers/general/VehicleContainer';
 import WorkerContainer from 'containers/general/WorkerContainer';
 import React, { useState, useEffect } from 'react';
@@ -128,6 +130,11 @@ const contentsList: ContentsListType = {
     title: '비콘 관리',
     icon: faBluetooth,
     component: <BeaconContainer />,
+  },
+  scanner: {
+    title: '스캐너 관리',
+    icon: faRouter,
+    component: <ScannerContainer />,
   },
 };
 

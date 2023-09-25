@@ -639,6 +639,10 @@ const WorkerContainer = () => {
     });
     initForm();
     setWorkerItems(workersData);
+    setPageInfo({
+      ...pageInfo,
+      activePage: 1,
+    });
   };
 
   const filterWorkerItems = (items: WorkerType[]) => {

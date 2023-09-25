@@ -69,7 +69,7 @@ const BeaconContainer = () => {
 
   const [pageInfo, setPageInfo] = useState<PageInfoType>({
     activePage: 1, // 현재 페이지
-    itemsPerPage: 15, // 페이지 당 item 수
+    itemsPerPage: 14, // 페이지 당 item 수
   });
 
   const beaconLastID = useRef<number>(0);

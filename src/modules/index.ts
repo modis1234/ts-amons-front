@@ -9,11 +9,14 @@ import monitorReducer from './monitors';
 import beaconReducer from './beacons';
 import workerReducer from './workers';
 import vehicleReducer from './vehicles';
+import scannerReducer from './scanners';
 
 import announcesReducer from './announces';
 import digsReducer from './digs';
 
 import processesReducer from './processes';
+
+import groupsReducer from './groups';
 
 const rootReducer = combineReducers({
   // 3번에서 만들 slice를 여기에 넣을 예정
@@ -30,6 +33,8 @@ const rootReducer = combineReducers({
   announces: announcesReducer,
   digs: digsReducer,
   processes: processesReducer,
+  groups: groupsReducer,
+  scanners: scannerReducer,
 });
 
 export default rootReducer;
